@@ -38,7 +38,7 @@ public class PetServiceImp implements PetService{
         if (Objects.nonNull(pet.getBreed())){
             petData.setBreed(pet.getBreed());
         }
-        return petRepository.save(pet);
+        return petRepository.save(petData);
     }
 
     @Override
