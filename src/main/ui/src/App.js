@@ -17,13 +17,35 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
+      <h1>PeJo</h1>
         <img src={logo} className="App-logo" alt="logo" />
         <div className="App-intro">
-        {pets.map(pet =>
-            <div key={pet.id}>
-              {pet.name}
-            </div>
-          )}
+        <table cellspacing="15">
+       <thead>
+         <tr>
+              <td>Id</td>
+              <td>Name</td>
+              <td>Birthdate</td>
+              <td>Type</td>
+              <td>Gender</td>
+              
+         </tr>     
+       </thead>
+       <tbody>
+        {pets.map(pet => (
+        
+        <tr key={pet.id}>
+              <td>{pet.id}</td>
+              <td>{pet.name}</td>
+              <td>{pet.birthDate}</td>
+              <td>{pet.type}</td>
+              <td>{pet.sex}</td>
+        </tr>
+        
+        ))}
+        </tbody>
+        
+        </table>
         </div>
       </header>
     </div>
