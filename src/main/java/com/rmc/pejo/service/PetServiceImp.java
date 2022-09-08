@@ -35,8 +35,11 @@ public class PetServiceImp implements PetService{
         if (Objects.nonNull(pet.getBirthDate())){
             petData.setBirthDate(pet.getBirthDate());
         }
-        if (Objects.nonNull(pet.getBreed())){
-            petData.setBreed(pet.getBreed());
+        if (Objects.nonNull(pet.getType())){
+            petData.setType(pet.getType());
+        }
+        if (Objects.nonNull(pet.getSex())){
+            petData.setSex(pet.getSex());
         }
         return petRepository.save(petData);
     }
