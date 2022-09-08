@@ -23,5 +23,6 @@ public class Pet {
     private long id;
     private String name;
     private LocalDate birthDate;
-    private Breed breed;
+    private PetType type;
+    private Sex sex;
 }
