@@ -1,5 +1,9 @@
 ### IntelliJ IDEA ###
 .idea
+.idea/misc.xml
+.idea/workspace.xml
+.idea/vcs.xml
+
 target/
 *.iws
 *.iml
