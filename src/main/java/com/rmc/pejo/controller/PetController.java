@@ -9,23 +9,27 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/pets")
 public class PetController {
-    @Autowired
-    private PetService petService;
+    private final PetService petService;
 
-    @PostMapping("/pets")
-    public Pet savePet(@Valid @RequestBody Pet pet){
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
+
+    @PostMapping
+    public Pet save(@Valid @RequestBody Pet pet){
         return petService.savePet(pet);
     }
-    @GetMapping("/pets")
+    @GetMapping
     public List<Pet> getPetList(){
         return petService.getPets();
     }
-    @PutMapping("/pets/{id}")
+    @PutMapping("/{id}")
     public Pet updatePet(@RequestBody Pet pet, @PathVariable("id") Long id){
         return petService.updatePet(pet, id);
     }
-    @DeleteMapping("/pets/{id}")
+    @DeleteMapping("/{id}")
     public String deletePetById(@PathVariable("id") Long id){
         petService.deletePet(id);
         return "Deleted successfully";

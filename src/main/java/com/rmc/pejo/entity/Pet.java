@@ -1,9 +1,6 @@
 package com.rmc.pejo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +18,7 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @NonNull
     private String name;
     private LocalDate birthDate;
     private PetType type;
