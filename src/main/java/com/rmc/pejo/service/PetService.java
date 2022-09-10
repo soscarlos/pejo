@@ -7,6 +7,6 @@ import java.util.List;
 public interface PetService {
     Pet savePet(Pet pet);
     List<Pet> getPets();
-    Pet updatePet(Pet pet, Long id);
+    Pet updatePet(Pet pet);
     void deletePet(Long id);
 }

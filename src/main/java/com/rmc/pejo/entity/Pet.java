@@ -20,7 +20,10 @@ public class Pet {
     private long id;
     @NonNull
     private String name;
+    @NonNull
     private LocalDate birthDate;
-    private PetType type;
-    private Sex sex;
+    @NonNull
+    private PetType petType;
+    @NonNull
+    private SexType sexType;
 }

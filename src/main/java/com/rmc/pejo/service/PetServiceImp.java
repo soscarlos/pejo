@@ -24,25 +24,12 @@ public class PetServiceImp implements PetService {
 
     @Override
     public List<Pet> getPets() {
-        return (List<Pet>) petRepository.findAll();
+        return petRepository.findAll();
     }
 
     @Override
-    public Pet updatePet(Pet pet, Long id) {
-        Pet petData = petRepository.findById(id).get();
-
-        petData.setName(pet.getName());
-//        TODO NOT NULL CONSTRAINT ON OTHER PROPERTIES
-        if (Objects.nonNull(pet.getBirthDate())) {
-            petData.setBirthDate(pet.getBirthDate());
-        }
-        if (Objects.nonNull(pet.getType())) {
-            petData.setType(pet.getType());
-        }
-        if (Objects.nonNull(pet.getSex())) {
-            petData.setSex(pet.getSex());
-        }
-        return petRepository.save(petData);
+    public Pet updatePet(Pet pet) {
+        return petRepository.save(pet);
     }
 
     @Override

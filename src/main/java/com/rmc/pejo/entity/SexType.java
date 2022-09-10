@@ -1,6 +1,6 @@
 package com.rmc.pejo.entity;
 
-public enum Sex {
+public enum SexType {
     FEMALE,
     MALE
 }
