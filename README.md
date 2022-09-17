@@ -1,6 +1,6 @@
 # PeJo
 
-<img src="src/main/ui/src/logo.png" alt="PeJo logo" height="100">
+<img src="backend/src/main/ui/src/logo.png" alt="PeJo logo" height="100">
 
 ### A web application that helps you keep your pet healthy and happy!
 

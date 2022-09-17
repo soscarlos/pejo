@@ -1,5 +1,6 @@
 ### IntelliJ IDEA ###
 .idea
+backend/.idea
 .idea/misc.xml
 .idea/workspace.xml
 .idea/vcs.xml
