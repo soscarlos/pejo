@@ -38,8 +38,8 @@ const App = () => {
               <td>{pet.id}</td>
               <td>{pet.name}</td>
               <td>{pet.birthDate}</td>
-              <td>{pet.type}</td>
-              <td>{pet.sex}</td>
+              <td>{pet.petType}</td>
+              <td>{pet.sexType}</td>
         </tr>
         
         ))}
