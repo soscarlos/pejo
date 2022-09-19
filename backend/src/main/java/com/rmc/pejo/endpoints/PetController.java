@@ -1,4 +1,4 @@
-package com.rmc.pejo.controller;
+package com.rmc.pejo.endpoints;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.service.PetService;
@@ -6,34 +6,39 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("pets")
 public class PetController {
-    private final PetService petService;
+    private final PetService service;
 
     public PetController(PetService petService) {
-        this.petService = petService;
+        this.service = petService;
     }
 
     @PostMapping
     public Pet save(@Valid @RequestBody Pet pet) {
-        return petService.savePet(pet);
+        return service.save(pet);
     }
 
     @GetMapping
     public List<Pet> getAll() {
-        return petService.getPets();
+        return service.getAll();
     }
 
     @PutMapping
     public Pet update(@Valid @RequestBody Pet pet) {
-        return petService.updatePet(pet);
+        return service.update(pet);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public String deleteById(@PathVariable("id") Long id) {
-        petService.deletePet(id);
+        service.delete(id);
         return "Deleted successfully";
+    }
+    @GetMapping("{reminderId}")
+    public Set<Pet> getPetsByReminderId(@PathVariable("reminderId") Long reminderId){
+       return service.getPetsByReminderId(reminderId);
     }
 }
