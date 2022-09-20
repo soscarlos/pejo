@@ -1,53 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from './pages/Layout';
+import Home from './pages/Home';
+import ToDos from './pages/ToDos';
+import Locations from './pages/Locations';
+import Documents from './pages/Documents';
+import Tips from './pages/Tips';
+import PageNotFound from './pages/PageNotFound';
 
 const App = () => {
-
-  const [pets, setPets] = useState([]);
-
-  useEffect(() => {
-    fetch('/pets')
-      .then(response => response.json())
-      .then(data => {
-        setPets(data);
-      })
-  }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-      <h1>PeJo</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className="App-intro">
-        <table cellspacing="15">
-       <thead>
-         <tr>
-              <td>Id</td>
-              <td>Name</td>
-              <td>Birthdate</td>
-              <td>Type</td>
-              <td>Gender</td>
-              
-         </tr>     
-       </thead>
-       <tbody>
-        {pets.map(pet => (
-        
-        <tr key={pet.id}>
-              <td>{pet.id}</td>
-              <td>{pet.name}</td>
-              <td>{pet.birthDate}</td>
-              <td>{pet.petType}</td>
-              <td>{pet.sexType}</td>
-        </tr>
-        
-        ))}
-        </tbody>
-        
-        </table>
-        </div>
-      </header>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="todos" element={<ToDos />} />
+          <Route path="locations" element={<Locations />} />
+          <Route path="documents" element={<Documents />} />
+          <Route path="tips" element={<Tips />} />
+          {/* <Route path="reminders" element={<Reminder />} /> */}
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  </BrowserRouter>
     </div>
   );
 }
