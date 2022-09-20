@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -26,9 +27,18 @@ public class ReminderEndPoint {
     public List<Reminder> getAll(){
         return service.getAll();
     }
+
+    @GetMapping("{id}")
+    public Optional<Reminder> get(@PathVariable Long id){
+        return service.get(id);
+    }
     @PutMapping
     public Reminder update(@Valid @RequestBody Reminder reminder){
         return service.update(reminder);
+    }
+    @PutMapping("{id}")
+    public void addPet(@PathVariable Long id, @RequestBody Pet pet){
+        service.addPet(id, pet);
     }
 
     @DeleteMapping("{id}")
@@ -36,7 +46,7 @@ public class ReminderEndPoint {
         service.delete(id);
         return "Deleted successfully";
     }
-    @GetMapping("{petId}")
+    @GetMapping("pet/{petId}")
     public Set<Reminder> getRemindersByPetId(@PathVariable("petId") Long petId){
         return service.getRemindersByPetId(petId);
     }
