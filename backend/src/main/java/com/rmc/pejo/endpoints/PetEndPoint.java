@@ -12,10 +12,10 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("pets")
-public class PetController {
+public class PetEndPoint {
     private final PetService service;
 
-    public PetController(PetService petService) {
+    public PetEndPoint(PetService petService) {
         this.service = petService;
     }
 
