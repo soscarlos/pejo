@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import dashboard_logo from '../img/dashboard_logo.png';
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -19,6 +20,7 @@ const Layout = () => {
         </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Outlet />
     </>
   )
 };
