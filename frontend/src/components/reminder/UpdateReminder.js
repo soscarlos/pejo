@@ -5,3 +5,4 @@ const UpdateReminder = () => {
 
     
 }
+export default UpdateReminder

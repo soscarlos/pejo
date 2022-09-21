@@ -5,3 +5,5 @@ const DeleteReminder = () => {
 
     
 }
+
+export default DeleteReminder
