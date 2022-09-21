@@ -1,4 +1,4 @@
-const AddReminderModal = ()=> {
+const AddReminderModal = ({setOpenModal})=> {
     return (
         <div className="modalBackground">
           <div className="modalContainer">

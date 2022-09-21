@@ -11,7 +11,7 @@ const ShowReminders = () => {
 
     const openAddReminderModal = ()=> {
       return (
-        <AddReminderModal />
+        <AddReminderModal  />
       )
 
 
@@ -37,8 +37,9 @@ const ShowReminders = () => {
             setLoading(false);
           }
         }
-      }, ["http://localhost:8080/pets"]);
         getData();
+      }, ["http://localhost:8080/pets"]);
+        
     return (
       <div>
         <span display={"inline-block"}><h1>Reminders</h1><button float={"right"} onclick={openAddReminderModal}>Add Reminder</button></span>
