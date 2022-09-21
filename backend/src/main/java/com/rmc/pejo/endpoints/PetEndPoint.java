@@ -23,7 +23,7 @@ public class PetEndPoint {
     public Pet save(@Valid @RequestBody Pet pet) {
         return service.save(pet);
     }
-
+    
     @GetMapping
     public List<Pet> getAll() {
         return service.getAll();

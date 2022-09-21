@@ -7,7 +7,6 @@ import DeleteReminder from '../components/reminder/DeleteReminder';
 const Reminder = () => {
   return (
     <div>
-        Reminder
         <ShowReminders />
         <AddReminder />
         <UpdateReminder />

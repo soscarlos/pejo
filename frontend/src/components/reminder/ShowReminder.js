@@ -10,10 +10,10 @@ const ShowReminder = (({showReminder}) => {
             <p>{showReminder.description}</p>
             <h3>{"Active: " + showReminder.active === true? "yes" : "no"}</h3>
             <h3>Pets:</h3>
-            { showReminder.pets.map(pet => (
+            {/* showReminder.pets.map(pet => (
                 <p key={pet.id}>{pet.id}</p>
             ))
-            }
+            */}
              
         </div>
     )

@@ -1,3 +1,6 @@
+import "./AddReminderModal.css";
+
+
 const AddReminderModal = ({setOpenModal})=> {
     return (
         <div className="modalBackground">
