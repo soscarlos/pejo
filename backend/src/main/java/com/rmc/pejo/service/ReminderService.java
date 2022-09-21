@@ -42,6 +42,6 @@ public class ReminderService implements ReminderServiceInterface {
     }
 
     public Set<Reminder> getRemindersByPetId(Long petId){
-        return reminderRepository.findRemindersByPetsId(petId);
+        return reminderRepository.findRemindersByReminderPetsId(petId);
     }
 }

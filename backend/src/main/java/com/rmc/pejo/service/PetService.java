@@ -7,7 +7,6 @@ import com.rmc.pejo.repository.PetRepository;
 import com.rmc.pejo.repository.ReminderRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -49,14 +48,14 @@ public class PetService implements PetServiceInterface {
         petRepository.deleteById(id);
     }
     public Set<Pet> getPetsByReminderId(Long reminderId) {
-        return petRepository.findPetsByRemindersId(reminderId);
+        return petRepository.findPetsByPetRemindersId(reminderId);
     }
 
     public void addReminder(Long id, Reminder reminder){
         Optional<Pet> petOptional = petRepository.findById(id);
         if(petOptional.isPresent()){
             Pet presentPet = petOptional.get();
-            List<Reminder> petReminders = presentPet.getReminders();
+            List<Reminder> petReminders = presentPet.getPetReminders();
             petReminders.add(reminder);
 
             petRepository.save(presentPet);
