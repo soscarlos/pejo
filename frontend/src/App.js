@@ -6,6 +6,7 @@ import Locations from './pages/Locations';
 import Documents from './pages/Documents';
 import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
+import Reminder from './pages/Reminder';
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
           <Route path="locations" element={<Locations />} />
           <Route path="documents" element={<Documents />} />
           <Route path="tips" element={<Tips />} />
-          {/* <Route path="reminders" element={<Reminder />} /> */}
+          <Route path="reminders" element={<Reminder />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
