@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <>
       <Navbar bg="light" variant="light">
-        <Container>
+        <Container fluid>
           <Navbar.Brand href="/">
             <img src={dashboard_logo} alt="PeJo" height={50}/>
           </Navbar.Brand>

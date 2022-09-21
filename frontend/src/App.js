@@ -7,6 +7,7 @@ import Documents from './pages/Documents';
 import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
 import Reminder from './pages/Reminder';
+import './App.css';
 
 const App = () => {
   return (
@@ -22,8 +23,8 @@ const App = () => {
           <Route path="reminders" element={<Reminder />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
-    </Routes>
-  </BrowserRouter>
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 }
