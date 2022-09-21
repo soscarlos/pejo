@@ -36,10 +36,6 @@ public class ReminderEndPoint {
     public Reminder update(@Valid @RequestBody Reminder reminder){
         return service.update(reminder);
     }
-    @PutMapping("{id}")
-    public void addPet(@PathVariable Long id, @RequestBody Pet pet){
-        service.addPet(id, pet);
-    }
 
     @DeleteMapping("{id}")
     public String deleteById(@PathVariable("id") Long id){

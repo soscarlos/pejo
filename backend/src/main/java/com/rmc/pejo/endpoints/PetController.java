@@ -1,11 +1,13 @@
 package com.rmc.pejo.endpoints;
 
 import com.rmc.pejo.entity.Pet;
+import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.service.PetService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -27,9 +29,20 @@ public class PetController {
         return service.getAll();
     }
 
+    @GetMapping("{id}")
+    public Optional<Pet> get(@PathVariable Long id){
+        return service.get(id);
+    }
+
+
     @PutMapping
     public Pet update(@Valid @RequestBody Pet pet) {
         return service.update(pet);
+    }
+
+    @PutMapping("{id}")
+    public void addPet(@PathVariable Long id, @RequestBody Reminder reminder){
+        service.addReminder(id, reminder);
     }
 
     @DeleteMapping("{id}")
@@ -37,8 +50,9 @@ public class PetController {
         service.delete(id);
         return "Deleted successfully";
     }
-    @GetMapping("{reminderId}")
+    @GetMapping("reminder/{reminderId}")
     public Set<Pet> getPetsByReminderId(@PathVariable("reminderId") Long reminderId){
        return service.getPetsByReminderId(reminderId);
     }
+
 }

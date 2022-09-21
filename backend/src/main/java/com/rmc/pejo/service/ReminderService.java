@@ -2,6 +2,8 @@ package com.rmc.pejo.service;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
+import com.rmc.pejo.exceptions.ResourceNotFoundException;
+import com.rmc.pejo.repository.PetRepository;
 import com.rmc.pejo.repository.ReminderRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,44 +13,32 @@ import java.util.Set;
 
 @Service
 public class ReminderService implements ReminderServiceInterface {
-    private final ReminderRepository repository;
+    private final ReminderRepository reminderRepository;
 
     public ReminderService(ReminderRepository repository) {
-        this.repository = repository;
+        this.reminderRepository = repository;
     }
     public Reminder save(Reminder reminder){
-        return repository.save(reminder);
+        return reminderRepository.save(reminder);
     }
 
     public List<Reminder> getAll(){
-        return repository.findAll();
+        return reminderRepository.findAll();
     }
 
     public Optional<Reminder> get(Long reminderId){
-        return repository.findById(reminderId);
+        return reminderRepository.findById(reminderId);
     }
 
     public Reminder update(Reminder reminder){
-        return repository.save(reminder);
+        return reminderRepository.save(reminder);
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        reminderRepository.deleteById(id);
     }
 
     public Set<Reminder> getRemindersByPetId(Long petId){
-        return repository.findRemindersByPetsId(petId);
-    }
-    public void addPet(Long id, Pet pet){
-        final Optional<Reminder> optionalReminder = repository.findById(id);
-        if(optionalReminder.isPresent()){
-            System.out.println("adding pet!");
-            Reminder reminder = optionalReminder.get();
-            System.out.println(reminder);
-            Set<Pet> pets = reminder.getPets();
-            pets.add(pet);
-
-            System.out.println(pets);
-        }
+        return reminderRepository.findRemindersByPetsId(petId);
     }
 }
