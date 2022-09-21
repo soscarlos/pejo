@@ -7,8 +7,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Data
@@ -17,26 +19,22 @@ import java.util.Set;
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-@Table
-public class Pet {
+public class Reminder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NonNull
-    private String name;
+    private LocalDate date;
     @NonNull
-    private LocalDate birthDate;
+    private LocalTime time;
     @NonNull
-    @Enumerated(EnumType.STRING)
-    private PetType petType;
+    private String title;
     @NonNull
-    @Enumerated(EnumType.STRING)
-    private SexType sexType;
+    private String description;
+    @NonNull
+    private boolean active;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "reminders")
+    private List<Pet> pets;
 
-    @ManyToMany
-    @JoinTable(
-            name = "pet_reminders",
-            joinColumns = @JoinColumn(name = "pet_id"),
-            inverseJoinColumns = @JoinColumn(name = "reminder_id"))
-    private List<Reminder> reminders;
 }
