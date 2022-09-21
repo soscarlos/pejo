@@ -32,11 +32,15 @@ public class ReminderEndPoint {
     public Optional<Reminder> get(@PathVariable Long id){
         return service.get(id);
     }
+
+    @GetMapping("/first3ByDate")
+    public Set<Reminder> getFirst3AfterToday(){
+        return service.getFirst3AfterDate();
+    }
     @PutMapping
     public Reminder update(@Valid @RequestBody Reminder reminder){
         return service.update(reminder);
     }
-
     @DeleteMapping("{id}")
     public String deleteById(@PathVariable("id") Long id){
         service.delete(id);
