@@ -41,7 +41,7 @@ public class PetController {
     }
 
     @PutMapping("{id}")
-    public void addPet(@PathVariable Long id, @RequestBody Reminder reminder){
+    public void addReminder(@PathVariable Long id, @RequestBody Reminder reminder){
         service.addReminder(id, reminder);
     }
 
