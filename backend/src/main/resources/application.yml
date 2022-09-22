@@ -29,22 +29,22 @@ dataset:
       sexType: FEMALE
   reminders:
     - date: 2022-10-28
-      time: "10:10:00"
-      title: Reminder 1
-      description: Test description 1
+      time: "09:15:00"
+      title: Take mogli to the Vet
+      description: Remember to bring its blood test
       active: true
     - date: 2022-10-29
-      time: "10:10:00"
-      title: Reminder 2
-      description: Test description 2
+      time: "10:20:00"
+      title: Vaccinate mogli and bob
+      description: Remember bring vaccination card
       active: true
     - date: 2022-10-30
-      time: "10:10:00"
-      title: Reminder 3
+      time: "13:30:00"
+      title: Take bob to meet the setter
       description: Test description 3
       active: true
     - date: 2022-11-04
-      time: "10:10:00"
-      title: Reminder 4
-      description: Test description 4
+      time: "08:30:00"
+      title: Take bob to the vet
+      description: Need to ask for dewormer
       active: true

@@ -27,3 +27,12 @@
   align-items: center;
   margin-bottom: 20px;
 }
+
+.link {
+  text-decoration: none;
+  color: #2596be;
+}
+
+.link:hover{
+  color: #ff9700;
+}
