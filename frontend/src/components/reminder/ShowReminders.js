@@ -38,6 +38,7 @@ const ShowReminders = () => {
     return (
       <div>
         {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
+
       <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
