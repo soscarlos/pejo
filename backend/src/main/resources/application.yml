@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+# H2 Database
+spring:
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:dcbapp
+    username: sa
+    password: password
+
+# Dataset
+dataset:
+  pets:
+    - name: Mogli
+      birthDate: 2021-01-01
+      petType: CAT
+      sexType: MALE
+    - name: Bob
+      birthDate: 2020-02-10
+      petType: DOG
+      sexType: MALE
+    - name: Lala
+      birthDate: 2019-02-10
+      petType: DOG
+      sexType: FEMALE
+  reminders:
+    - date: 2022-10-28
+      time: "10:10:00"
+      title: Reminder 1
+      description: Test description 1
+      active: true
+    - date: 2022-10-29
+      time: "10:10:00"
+      title: Reminder 2
+      description: Test description 2
+      active: true
+    - date: 2022-10-30
+      time: "10:10:00"
+      title: Reminder 3
+      description: Test description 3
+      active: true
+    - date: 2022-11-04
+      time: "10:10:00"
+      title: Reminder 4
+      description: Test description 4
+      active: true

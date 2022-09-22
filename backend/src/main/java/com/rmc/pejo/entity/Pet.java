@@ -1,14 +1,13 @@
 package com.rmc.pejo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -25,6 +24,7 @@ public class Pet {
     @NonNull
     private String name;
     @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     @NonNull
     @Enumerated(EnumType.STRING)
@@ -38,5 +38,5 @@ public class Pet {
             name = "pet_reminders",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "reminder_id"))
-    private List<Reminder> reminders;
+    private List<Reminder> petReminders;
 }
