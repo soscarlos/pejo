@@ -18,8 +18,8 @@
   border: 1px solid steelblue;
   padding: 1px;
   border-radius: 5px;
-  background-color: #313133a4;
   margin-bottom: 5%;
+  background-color: white;
 }
 
 .reminderHeader {
@@ -27,4 +27,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: #2596be;
+}
+
+.link:hover{
+  color: #ff9700;
 }

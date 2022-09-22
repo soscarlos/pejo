@@ -36,18 +36,22 @@ const ShowReminders = () => {
       console.log(data);
         
     return (
+      <div>
+        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
+
       <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
           <button onClick={() => {
           setModalOpen(true);
-        }}>Add Reminder</button>
-        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
+        }}>Add Reminder</button>   
         </div>
         {data != null? data.map(showReminder => (
           <ShowReminder key={showReminder.id} showReminder={showReminder} />
-        )) : "No Reminders"}
+        )) : "No Reminders"}       
       </div>
+      </div>
+      
     )
     
     
