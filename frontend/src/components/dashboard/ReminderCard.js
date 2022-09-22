@@ -32,7 +32,7 @@ const ReminderCard = () => {
     }, [remindersEndPoint]);
 
     return (
-        <Card style={{backgroundColor: "#fa9801"}}>
+        <Card style={{backgroundColor: "#fa9801"}} border="light">
             <Card.Body>
             <Card.Title style={{color: "white"}}> <a href='/reminders'> Reminders </a> </Card.Title>
             <Card.Text>
