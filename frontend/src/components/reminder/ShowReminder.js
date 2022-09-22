@@ -2,9 +2,9 @@
 const ShowReminder = (({showReminder}) => {
     return (
         <div className="showReminder">
-            <h3>{"TITLE: " + showReminder.title}</h3>
-            <h3>{"DATE: " + showReminder.date}</h3>
-            <h3>{"TIME: " + showReminder.time}</h3>       
+            <h3>{showReminder.title}</h3>
+            <h3>{showReminder.date}</h3>
+            <h3>{showReminder.time}</h3>      
             <h3>DESCRIPTION:</h3>
             <p>{showReminder.description}</p>
             

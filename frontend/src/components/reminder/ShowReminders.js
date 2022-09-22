@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
+//import AddReminder from "./AddReminder";
 import ShowReminder from "./ShowReminder";
-import "../../App.css"
+import "../../App.css";
 
 const ShowReminders = () => {
 
@@ -10,8 +11,23 @@ const ShowReminders = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const addForm = document.getElementsByClassName('add-form')[0];
 
-    
+
+      const addReminder = async (reminder) => {
+        console.log("addReminder here")
+       const res = await fetch('http://localhost:8080/reminders', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(reminder),
+        })
+        const newData = await res.json();
+        setData([...data, newData]);
+        console.log(reminder);
+      }
+
 
     useEffect(()=> {
 
@@ -33,11 +49,12 @@ const ShowReminders = () => {
         }
         getData();
       }, ["http://localhost:8080/reminders"]);
-      console.log(data);
+
+      
         
     return (
       <div>
-        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
+        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} onAdd={addReminder} openModal={modalOpen}/>}              
       <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
@@ -47,7 +64,7 @@ const ShowReminders = () => {
         </div>
         {data != null? data.map(showReminder => (
           <ShowReminder key={showReminder.id} showReminder={showReminder} />
-        )) : "No Reminders"}       
+        )) : "No Reminders"}             
       </div>
       </div>
       
