@@ -20,11 +20,6 @@ const Layout = () => {
         </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Navbar bg="light" variant="light" className="fixed-bottom">
-        <Container className="justify-content-center">
-            <Navbar.Text>© 2022 Copyright: PeJo</Navbar.Text>
-        </Container>
-      </Navbar>
       <Outlet />
     </>
   )
