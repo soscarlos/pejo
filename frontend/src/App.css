@@ -10,7 +10,7 @@
   cursor: pointer;
 }
 
-.container {
+.container2 {
   max-width: 66vh;
   margin: 1px auto;
   overflow: auto;
@@ -18,7 +18,7 @@
   border: 1px solid steelblue;
   padding: 1px;
   border-radius: 5px;
-  background-color: #313133a4;
+  background-color: white;
 }
 
 .reminderHeader {

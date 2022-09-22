@@ -17,7 +17,7 @@ const ShowReminders = () => {
 
         const getData = async() => {
           try{
-            const response = await fetch("http://localhost:8080/pets");
+            const response = await fetch("http://localhost:8080/reminders");
             if (!response.ok){
               throw new Error(`HTTP error: Status ${response.status}`);
             }
@@ -32,11 +32,11 @@ const ShowReminders = () => {
           }
         }
         getData();
-      }, ["http://localhost:8080/pets"]);
+      }, ["http://localhost:8080/reminders"]);
       console.log(data);
         
     return (
-      <div className="container">
+      <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
           <button onClick={() => {
