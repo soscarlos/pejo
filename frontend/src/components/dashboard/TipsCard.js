@@ -4,7 +4,7 @@ const TipsCard = () => {
     return (
         <Card>
             <Card.Body>
-            <Card.Title>Tips</Card.Title>
+            <Card.Title><a href='/tips'> Tips </a></Card.Title>
             <Card.Text>
                 <h6>Dog proof your home!</h6>
                 <p>Check whether your home is safe for your pet, ideally before you bring them home...</p>

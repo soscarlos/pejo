@@ -4,7 +4,7 @@ const DocumentCard = () => {
     return (
         <Card>
             <Card.Body>
-            <Card.Title>Documents</Card.Title>
+            <Card.Title><a href='/documents'> Documents </a></Card.Title>
             <Card.Text>
                 <ul>
                     <li>Pajti blood test 08/08/2015</li>

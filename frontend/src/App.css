@@ -29,11 +29,7 @@
   margin-bottom: 20px;
 }
 
-.link {
-  text-decoration: none;
-  color: #2596be;
-}
-
-.link:hover{
-  color: #ff9700;
+a {
+  text-decoration: none !important;
+  color: inherit !important;
 }

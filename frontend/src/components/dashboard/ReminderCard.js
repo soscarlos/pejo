@@ -34,7 +34,7 @@ const ReminderCard = () => {
     return (
         <Card>
             <Card.Body>
-            <Card.Title> <a className='link' href='/reminders'> Reminders </a> </Card.Title>
+            <Card.Title> <a href='/reminders'> Reminders </a> </Card.Title>
             <Card.Text>
                 {loading && <span> Loading, please wait... </span>}
                 {error && (<span> {`there is a problem fetching the data ${error}`} </span> )}

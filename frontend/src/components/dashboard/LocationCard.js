@@ -4,7 +4,7 @@ const LocationCard = () => {
     return (
         <Card>
             <Card.Body>
-            <Card.Title style={{color: "#fa9801"}}>Locations</Card.Title>
+            <Card.Title style={{color: "#fa9801"}}><a href='/locations'> Locations </a></Card.Title>
             <Card.Text style={{color: "#0292ce"}}>
                 <ul>
                     <li>Veterinarian</li>
