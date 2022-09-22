@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
+import "../../App.css"
 
 const ShowReminders = () => {
 
@@ -35,21 +36,17 @@ const ShowReminders = () => {
       console.log(data);
         
     return (
-      <div>
-        <span style={{display: "inline-block"}}>
-          <h1>Reminders</h1>
-          </span>
-          <span style={{display: "inline-block",float: "right"}}>
+      <div className="container">
+        <div className="reminderHeader">
+        <h1>Reminders</h1>
           <button onClick={() => {
           setModalOpen(true);
         }}>Add Reminder</button>
-          </span>
-          <span style={{display: "block"}}>
+        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
+        </div>
         {data != null? data.map(showReminder => (
           <ShowReminder key={showReminder.id} showReminder={showReminder} />
         )) : "No Reminders"}
-        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} />}
-        </span>
       </div>
     )
     
