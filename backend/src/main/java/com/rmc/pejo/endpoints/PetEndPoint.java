@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequestMapping("pets")
 public class PetEndPoint {
@@ -23,7 +24,7 @@ public class PetEndPoint {
     public Pet save(@Valid @RequestBody Pet pet) {
         return service.save(pet);
     }
-
+    
     @GetMapping
     public List<Pet> getAll() {
         return service.getAll();

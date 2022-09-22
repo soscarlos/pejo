@@ -10,7 +10,7 @@ import java.util.Set;
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder, Long> {
 
-    Set<Reminder> findRemindersByPetsId(Long petId);
+    Set<Reminder> findRemindersByReminderPetsId(Long petId);
 
     Set<Reminder> findFirst3ByDateAfterOrderByDateAsc(@Param("startDate")LocalDate startDate);
 }
