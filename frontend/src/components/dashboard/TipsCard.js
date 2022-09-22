@@ -1,15 +1,13 @@
 import Card from 'react-bootstrap/Card';
+import TipItem from './cardComponents/TipItem';
 
 const TipsCard = () => {
     return (
-        <Card>
+        <Card style={{backgroundColor: "#dcdcdc"}} border="light">
             <Card.Body>
-            <Card.Title><a href='/tips'> Tips </a></Card.Title>
+            <Card.Title style={{color: "#0292ce"}}><a href='/tips'>Tips</a></Card.Title>
             <Card.Text>
-                <h6>Dog proof your home!</h6>
-                <p>Check whether your home is safe for your pet, ideally before you bring them home...</p>
-                <h6>Groom your cat regularly!</h6>
-                <p>Your cat will benefit greatly from regular brushing or combing...</p>
+                <TipItem/>
             </Card.Text>
             </Card.Body>
         </Card>    

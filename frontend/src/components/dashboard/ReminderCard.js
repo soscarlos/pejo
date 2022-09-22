@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import ReminderItem from './reminderCardComponents/ReminderItem';
+import ReminderItem from './cardComponents/ReminderItem';
 
 const ReminderCard = () => {
     const remindersEndPoint = 'http://localhost:8080/reminders/first3ByDate';
@@ -32,9 +32,9 @@ const ReminderCard = () => {
     }, [remindersEndPoint]);
 
     return (
-        <Card>
+        <Card style={{backgroundColor: "#fa9801"}}>
             <Card.Body>
-            <Card.Title> <a href='/reminders'> Reminders </a> </Card.Title>
+            <Card.Title style={{color: "white"}}> <a href='/reminders'> Reminders </a> </Card.Title>
             <Card.Text>
                 {loading && <span> Loading, please wait... </span>}
                 {error && (<span> {`there is a problem fetching the data ${error}`} </span> )}
