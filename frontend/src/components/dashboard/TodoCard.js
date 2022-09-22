@@ -2,8 +2,8 @@ import Card from 'react-bootstrap/Card';
 
 const TodoCard = () => {
     return (
-        <Card>
-            <Card.Body>
+        <Card text="white" style={{backgroundColor: "#0292ce"}}>
+            <Card.Body >
             <Card.Title>To-Dos</Card.Title>
             <Card.Text>
                 <ul>
