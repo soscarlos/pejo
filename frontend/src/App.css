@@ -37,3 +37,12 @@ a {
 #locationCard {
   border: 7px solid #dcdcdc;
 }
+
+.App {
+  height: 100vh;
+}
+
+#logo {
+    display: block;
+    margin: 0 auto;
+}
