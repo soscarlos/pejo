@@ -11,8 +11,6 @@ const ShowReminders = () => {
     const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
-    
-
     useEffect(()=> {
 
         const getData = async() => {
