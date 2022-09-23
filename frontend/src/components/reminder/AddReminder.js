@@ -4,24 +4,23 @@ import AddReminderModal from './AddReminderModal';
 
 
 
+
 const AddReminder = ({ onAdd, openModal }) => {
     const [date, setDate] = useState('');
-    //const [time, setTime] = useState('');
+    const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    let count = 0;
+    
 
     const onSubmit = (e) => {
         e.preventDefault(); 
-        onAdd({ title, date, description });
+        onAdd({ title, date, time, description });
         setTitle('');
         setDate('');
         setDescription('');
       }
   
     useEffect(() => {
-      count =+ 1;
-      console.log(count)
       const addForm = document.getElementsByClassName('add-form')[0];
       //console.log(addForm)
       openModal? addForm.setAttribute("style", "display: inline-block") : addForm.setAttribute("style", "display: none");
@@ -46,6 +45,15 @@ const AddReminder = ({ onAdd, openModal }) => {
             placeholder='Add Date'
             value={date}
             onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+        <div className='form-control'>
+          <label>Time</label>
+          <input
+            type='text'
+            placeholder='Add Time'
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
           />
         </div>
         <div className='form-control'>
