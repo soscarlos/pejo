@@ -29,7 +29,6 @@ const ShowReminders = () => {
         console.log(reminder);
       }
 
-
     useEffect(()=> {
 
         const getData = async() => {
