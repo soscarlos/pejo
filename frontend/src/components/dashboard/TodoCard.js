@@ -2,9 +2,9 @@ import Card from 'react-bootstrap/Card';
 
 const TodoCard = () => {
     return (
-        <Card text="white" style={{backgroundColor: "#0292ce"}}>
+        <Card text="white" style={{backgroundColor: "#0292ce"}} border="light">
             <Card.Body >
-            <Card.Title>To-Dos</Card.Title>
+            <Card.Title><a href='/todos'> To-Dos </a></Card.Title>
             <Card.Text>
                 <ul>
                     <li>Take Mogli to the vet</li>

@@ -1,6 +1,6 @@
 const ToDos = () => {
     return (
-        <h1>ToDos</h1>
+        <h1 className='text-center'>ToDos</h1>
     )
 }
 

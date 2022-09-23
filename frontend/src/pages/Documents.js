@@ -1,6 +1,6 @@
 const Documents = () => {
     return (
-        <h1>Documents</h1>
+        <h1 className='text-center'>Documents</h1>
     )
 }
 

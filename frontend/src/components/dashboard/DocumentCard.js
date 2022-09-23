@@ -1,15 +1,13 @@
 import Card from 'react-bootstrap/Card';
+import DocumentItem from './cardComponents/DocumentItem';
 
 const DocumentCard = () => {
     return (
-        <Card>
+        <Card style={{backgroundColor: "#dcdcdc"}} border="light">
             <Card.Body>
-            <Card.Title>Documents</Card.Title>
+            <Card.Title style={{color: "#0292ce"}}><a href='/documents'> Documents </a></Card.Title>
             <Card.Text>
-                <ul>
-                    <li>Pajti blood test 08/08/2015</li>
-                    <li>Mogli vaccination 05/06/2020</li>
-                </ul>
+                <DocumentItem />
             </Card.Text>
             </Card.Body>
         </Card>       
