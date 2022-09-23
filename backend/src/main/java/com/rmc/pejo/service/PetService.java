@@ -17,11 +17,9 @@ public class PetService implements PetServiceInterface {
 
     private final PetRepository petRepository;
 
-    private final ReminderRepository reminderRepository;
 
-    public PetService(PetRepository petRepository, ReminderRepository reminderRepository) {
+    public PetService(PetRepository petRepository) {
         this.petRepository = petRepository;
-        this.reminderRepository = reminderRepository;
     }
 
     @Override
