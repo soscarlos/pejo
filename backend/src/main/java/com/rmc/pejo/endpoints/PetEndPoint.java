@@ -24,14 +24,14 @@ public class PetEndPoint {
     public Pet save(@Valid @RequestBody Pet pet) {
         return service.save(pet);
     }
-    
+
     @GetMapping
     public List<Pet> getAll() {
         return service.getAll();
     }
 
     @GetMapping("{id}")
-    public Optional<Pet> get(@PathVariable Long id){
+    public Optional<Pet> get(@PathVariable Long id) {
         return service.get(id);
     }
 
@@ -42,7 +42,7 @@ public class PetEndPoint {
     }
 
     @PutMapping("{id}")
-    public void addReminder(@PathVariable Long id, @RequestBody Reminder reminder){
+    public void addReminder(@PathVariable Long id, @RequestBody Reminder reminder) {
         service.addReminder(id, reminder);
     }
 
@@ -51,9 +51,9 @@ public class PetEndPoint {
         service.delete(id);
         return "Deleted successfully";
     }
-    @GetMapping("reminder/{reminderId}")
-    public Set<Pet> getPetsByReminderId(@PathVariable("reminderId") Long reminderId){
-       return service.getPetsByReminderId(reminderId);
-    }
 
+    @GetMapping("reminder/{reminderId}")
+    public Set<Pet> getPetsByReminderId(@PathVariable("reminderId") Long reminderId) {
+        return service.getPetsByReminderId(reminderId);
+    }
 }
