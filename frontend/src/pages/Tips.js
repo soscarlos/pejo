@@ -1,6 +1,6 @@
 const Tips = () => {
     return (
-        <h1>Tips</h1>
+        <h1 className='text-center'>Tips</h1>
     )
 }
 
