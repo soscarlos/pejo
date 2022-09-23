@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -38,5 +37,4 @@ public class Reminder {
     @JsonIgnore
     @ManyToMany(mappedBy = "petReminders")
     private List<Pet> reminderPets;
-
 }

@@ -2,7 +2,7 @@ import AddReminder from "./AddReminder";
 import "./AddReminderModal.css";
 import "../../App.css";
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 
 const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
 

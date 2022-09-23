@@ -4,7 +4,6 @@ import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.exceptions.ResourceNotFoundException;
 import com.rmc.pejo.repository.PetRepository;
-import com.rmc.pejo.repository.ReminderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-
 public class PetService implements PetServiceInterface {
 
     private final PetRepository petRepository;
-
 
     public PetService(PetRepository petRepository) {
         this.petRepository = petRepository;
@@ -32,7 +29,7 @@ public class PetService implements PetServiceInterface {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> get(Long petId){
+    public Optional<Pet> get(Long petId) {
         return petRepository.findById(petId);
     }
 
@@ -45,13 +42,15 @@ public class PetService implements PetServiceInterface {
     public void delete(Long id) {
         petRepository.deleteById(id);
     }
+
     public Set<Pet> getPetsByReminderId(Long reminderId) {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
 
-    public void addReminder(Long id, Reminder reminder){
+    //    TODO pass the exception to the rest endpoints and add test
+    public void addReminder(Long id, Reminder reminder) {
         Optional<Pet> petOptional = petRepository.findById(id);
-        if(petOptional.isPresent()){
+        if (petOptional.isPresent()) {
             Pet presentPet = petOptional.get();
             List<Reminder> petReminders = presentPet.getPetReminders();
             petReminders.add(reminder);

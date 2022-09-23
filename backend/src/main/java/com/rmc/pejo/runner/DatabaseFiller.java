@@ -20,7 +20,7 @@ public class DatabaseFiller {
     private List<Reminder> reminders;
 
     @Bean
-    ApplicationRunner filler(PetRepository petRepository, ReminderRepository reminderRepository){
+    ApplicationRunner filler(PetRepository petRepository, ReminderRepository reminderRepository) {
         return args -> {
             petRepository.saveAll(pets);
             reminderRepository.saveAll(reminders);
