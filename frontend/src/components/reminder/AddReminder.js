@@ -9,7 +9,7 @@ const AddReminder = ({ onAdd, openModal }) => {
     //const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    //const time = new Date().getTime();
+    let count = 0;
 
     const onSubmit = (e) => {
         e.preventDefault(); 
@@ -20,9 +20,11 @@ const AddReminder = ({ onAdd, openModal }) => {
       }
   
     useEffect(() => {
+      count =+ 1;
+      console.log(count)
       const addForm = document.getElementsByClassName('add-form')[0];
       //console.log(addForm)
-      openModal? addForm.setAttribute("style", "display: block") : addForm.setAttribute("style", "display: none");
+      openModal? addForm.setAttribute("style", "display: inline-block") : addForm.setAttribute("style", "display: none");
      
     })
 

@@ -13,11 +13,6 @@ const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
   const addForm = document.getElementsByClassName('add-form')[0];
   
 
-  useEffect(() => {
-    //console.log(addForm)
-    //addForm.setAttribute("style", "display: block");  
-    })
-
   return (
         <div className="modalBackground">
           <div className="modalContainer">
@@ -49,7 +44,7 @@ const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
                 Cancel
               </button>
               <button>Continue</button>
-            </div>
+              </div>
           </div>
         </div>
       );
