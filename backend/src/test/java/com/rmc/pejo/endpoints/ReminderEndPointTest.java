@@ -22,13 +22,13 @@ class ReminderEndPointTest {
     @MockBean
     ReminderService testService;
 
-    private String uri = "/reminders";
+    private final String uri = "/reminders";
 
-    private long testId = 1;
+    private final long testId = 1;
 
-    private LocalDate testDate = LocalDate.now().plusMonths(1);
+    private final LocalDate testDate = LocalDate.now().plusMonths(1);
 
-    private LocalTime testTime = LocalTime.now();
+    private final LocalTime testTime = LocalTime.now();
 
     @Test
     void saveSuccesfull() {
@@ -113,12 +113,12 @@ class ReminderEndPointTest {
     void getOneSuccesfull() {
 
     }
-//
-//    @Test
-//    void getFirst3AfterToday() {
-//    }
-//
-//    @Test
-//    void testGetRemindersByPetId() {
-//    }
+
+    @Test
+    void getFirst3AfterToday() {
+    }
+
+    @Test
+    void testGetRemindersByPetId() {
+    }
 }

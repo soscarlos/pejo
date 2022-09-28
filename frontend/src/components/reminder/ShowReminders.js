@@ -7,10 +7,7 @@ import "../../App.css";
 const ShowReminders = () => {
 
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const addForm = document.getElementsByClassName('add-form')[0];
 
 
       const addReminder = async (reminder) => {
@@ -36,12 +33,8 @@ const ShowReminders = () => {
             }
             let actualData = await response.json();
             setData(actualData);
-            setError(null);
           } catch(e) {
-            setError(e);
             setData(null);
-          } finally {
-            setLoading(false);
           }
         }
         getData();
@@ -67,7 +60,6 @@ const ShowReminders = () => {
       </div>
       
     )
-    
     
 }
 
