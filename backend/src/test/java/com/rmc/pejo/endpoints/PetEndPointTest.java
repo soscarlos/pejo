@@ -17,8 +17,7 @@ import java.util.Optional;
 
 import static com.rmc.pejo.entity.PetType.CAT;
 import static com.rmc.pejo.entity.SexType.FEMALE;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -182,6 +181,8 @@ class PetEndPointTest {
                 .exchange()
                 .expectStatus()
                 .isNotFound();
+
+        verify(petService, never()).delete(testId2);
     }
 
     @Test
@@ -208,5 +209,7 @@ class PetEndPointTest {
                 .exchange()
                 .expectStatus()
                 .isNotFound();
+
+        verify(petService, never()).getPetsByReminderId(testId2);
     }
 }
