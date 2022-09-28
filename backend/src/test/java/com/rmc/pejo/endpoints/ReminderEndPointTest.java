@@ -45,7 +45,6 @@ class ReminderEndPointTest {
 
     @Test
     void saveSuccesfull() {
-
         webTestClient.post()
                 .uri(uri)
                 .bodyValue(testReminder)
