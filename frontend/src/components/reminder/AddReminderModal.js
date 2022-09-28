@@ -6,10 +6,6 @@ import { useEffect, useState, useRef } from 'react';
 
 const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
 
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDiscription] = useState('');
   const addForm = document.getElementsByClassName('add-form')[0];
   
 

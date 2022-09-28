@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
-//import AddReminder from "./AddReminder";
 import ShowReminder from "./ShowReminder";
-import ReminderItem from '../dashboard/reminderCardComponents/ReminderItem';
 import "../../App.css";
 
 const ShowReminders = () => {
@@ -26,7 +24,6 @@ const ShowReminders = () => {
         })
         const newData = await res.json();
         setData([...data, newData]);
-        console.log(reminder);
       }
 
     useEffect(()=> {
