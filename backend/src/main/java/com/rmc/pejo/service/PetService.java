@@ -2,8 +2,9 @@ package com.rmc.pejo.service;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
-import com.rmc.pejo.exceptions.ResourceNotFoundException;
 import com.rmc.pejo.repository.PetRepository;
+import com.rmc.pejo.repository.ReminderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +12,11 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class PetService implements PetServiceInterface {
 
     private final PetRepository petRepository;
-
-    public PetService(PetRepository petRepository) {
-        this.petRepository = petRepository;
-    }
+    private final ReminderRepository reminderRepository;
 
     @Override
     public Pet save(Pet pet) {
@@ -47,17 +46,23 @@ public class PetService implements PetServiceInterface {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
 
-    //    TODO pass the exception to the rest endpoints and add test
-    public void addReminder(Long id, Reminder reminder) {
+    public Optional<Pet> addReminder(Long id, Reminder reminder) {
         Optional<Pet> petOptional = petRepository.findById(id);
         if (petOptional.isPresent()) {
             Pet presentPet = petOptional.get();
             List<Reminder> petReminders = presentPet.getPetReminders();
-            petReminders.add(reminder);
-
-            petRepository.save(presentPet);
+            Reminder savedReminder = getReminder(reminder);
+            petReminders.add(savedReminder);
+            Pet savedPet = petRepository.save(presentPet);
+            return Optional.of(savedPet);
         } else {
-            throw new ResourceNotFoundException("Pet not fund with id: " + id);
+            return Optional.empty();
         }
+    }
+
+    private Reminder getReminder(Reminder reminder) {
+        long reminderId = reminder.getId();
+        Optional<Reminder> optionalReminder = reminderRepository.findById(reminderId);
+        return optionalReminder.isEmpty() ? reminderRepository.save(reminder) : optionalReminder.get();
     }
 }

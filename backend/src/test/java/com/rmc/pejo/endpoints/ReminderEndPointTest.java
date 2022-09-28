@@ -1,6 +1,7 @@
 package com.rmc.pejo.endpoints;
 
 import com.rmc.pejo.entity.Reminder;
+import com.rmc.pejo.exceptions.ResourceNotFoundException;
 import com.rmc.pejo.service.ReminderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -86,6 +88,16 @@ class ReminderEndPointTest {
     @Test
     void deleteByIdSuccesfull() {
         String deleteUri = uri + "/" + testId;
+        Reminder reminder = Reminder.builder()
+                .id(testId)
+                .title("reminder 1")
+                .description("description 1")
+                .date(testDate)
+                .time(testTime)
+                .active(true)
+                .build();
+
+        when(testService.get(testId)).thenReturn(Optional.of(reminder));
 
         webTestClient.delete()
                 .uri(deleteUri)
@@ -97,7 +109,34 @@ class ReminderEndPointTest {
     }
 
     @Test
+    void deleteByIdNotFund(){
+        long id = 2;
+        String deleteUri = uri + "/" + id;
+
+        when(testService.get(id).isEmpty()).thenThrow(ResourceNotFoundException.class);
+
+        webTestClient.delete()
+                .uri(deleteUri)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
+    }
+
+    @Test
     void getRemindersByPetIdSuccesfull() {
+        String filterUri = uri + "/pet/" + testId;
+
+        webTestClient.get()
+                .uri(filterUri)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful();
+
+        verify(testService).getRemindersByPetId(testId);
+    }
+
+    @Test
+    void getRemindersByPetIdNotFound() {
         String filterUri = uri + "/pet/" + testId;
 
         webTestClient.get()
