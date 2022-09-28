@@ -19,16 +19,11 @@ import static com.rmc.pejo.entity.PetType.DOG;
 import static com.rmc.pejo.entity.SexType.FEMALE;
 import static com.rmc.pejo.entity.SexType.MALE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class PetServiceTest {
-
-    @Mock
-    private PetRepository petRepository;
-    @Mock
-    private ReminderRepository reminderRepository;
-    @InjectMocks
-    private PetService petService;
 
     private final long testId1 = 1;
     private final long testId2 = 2;
@@ -41,7 +36,6 @@ class PetServiceTest {
             .petType(CAT)
             .sexType(FEMALE)
             .build();
-
     private final Pet testPet2 = Pet.builder()
             .id(testId2)
             .name("Testy 2")
@@ -49,7 +43,6 @@ class PetServiceTest {
             .petType(DOG)
             .sexType(MALE)
             .build();
-
     private final Reminder testReminder1 = Reminder.builder()
             .id(testId1)
             .title("reminder 1")
@@ -58,7 +51,12 @@ class PetServiceTest {
             .time(testTime)
             .active(true)
             .build();
-
+    @Mock
+    private PetRepository petRepository;
+    @Mock
+    private ReminderRepository reminderRepository;
+    @InjectMocks
+    private PetService petService;
 
     @Test
     void testSaveSuccessful() {
@@ -68,7 +66,7 @@ class PetServiceTest {
     }
 
     @Test
-    void testSaveIsNotNull() {
+    void testSaveReturnPet() {
         when(petRepository.save(testPet1)).thenReturn(testPet1);
 
         Pet saved = petService.save(testPet1);
@@ -84,15 +82,16 @@ class PetServiceTest {
     }
 
     @Test
-    void testGetAllReturnPetList(){
+    void testGetAllReturnPetList() {
         when(petRepository.findAll()).thenReturn(List.of(testPet1, testPet2));
 
         List<Pet> allPets = petService.getAll();
 
         assertThat(allPets).isNotNull();
     }
+
     @Test
-    void testGetAllReturnEmptyList(){
+    void testGetAllReturnEmptyList() {
         when(petRepository.findAll()).thenReturn(Collections.emptyList());
 
         List<Pet> allPets = petService.getAll();
@@ -108,7 +107,7 @@ class PetServiceTest {
     }
 
     @Test
-    void getReturnPetIsPresent(){
+    void getReturnPetIsPresent() {
         when(petRepository.findById(testId1)).thenReturn(Optional.of(testPet1));
 
         Optional<Pet> pet = petService.get(testId1);
@@ -117,7 +116,7 @@ class PetServiceTest {
     }
 
     @Test
-    void getReturnOptionalEmpty(){
+    void getReturnOptionalEmpty() {
         when(petRepository.findById(testId2)).thenReturn(Optional.empty());
 
         Optional<Pet> pet = petService.get(testId2);
@@ -131,6 +130,7 @@ class PetServiceTest {
 
         verify(petRepository).save(testPet1);
     }
+
     @Test
     void testUpdateReturnUpdatedPet() {
         when(petRepository.save(testPet1)).thenReturn(testPet1);
@@ -142,7 +142,6 @@ class PetServiceTest {
         assertThat(updatedPet.getName()).isEqualTo("Mogli");
         assertThat(updatedPet.getBirthDate()).isEqualTo("2020-01-01");
     }
-
 
 
     @Test
@@ -211,6 +210,7 @@ class PetServiceTest {
 
         assertThat(petReminders).contains(testReminder1);
     }
+
     @Test
     void testAddReminderSaveNewReminder() {
         long reminder1Id = testReminder1.getId();
