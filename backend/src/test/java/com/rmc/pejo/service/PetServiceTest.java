@@ -59,7 +59,7 @@ class PetServiceTest {
     private PetService petService;
 
     @Test
-    void testSaveSuccessful() {
+    void testSaveCallRepositoryMethod() {
         petService.save(testPet1);
 
         verify(petRepository).save(testPet1);
@@ -75,7 +75,7 @@ class PetServiceTest {
     }
 
     @Test
-    void testGetAllSuccessful() {
+    void testGetAllCallRepositoryMethod() {
         petService.getAll();
 
         verify(petRepository).findAll();
@@ -100,14 +100,14 @@ class PetServiceTest {
     }
 
     @Test
-    void getSuccessful() {
+    void testGetCallRepositoryMethod() {
         petService.get(testId1);
 
         verify(petRepository).findById(testId1);
     }
 
     @Test
-    void getReturnPetIsPresent() {
+    void testGetReturnPetIsPresent() {
         when(petRepository.findById(testId1)).thenReturn(Optional.of(testPet1));
 
         Optional<Pet> pet = petService.get(testId1);
@@ -116,7 +116,7 @@ class PetServiceTest {
     }
 
     @Test
-    void getReturnOptionalEmpty() {
+    void testGetReturnOptionalEmpty() {
         when(petRepository.findById(testId2)).thenReturn(Optional.empty());
 
         Optional<Pet> pet = petService.get(testId2);
@@ -125,7 +125,7 @@ class PetServiceTest {
     }
 
     @Test
-    void testUpdateSuccessful() {
+    void testUpdateCallRepositoryMethod() {
         petService.update(testPet1);
 
         verify(petRepository).save(testPet1);
@@ -145,14 +145,14 @@ class PetServiceTest {
 
 
     @Test
-    void testDeleteSuccessful() {
+    void testDeleteCallRepositoryMethod() {
         petService.delete(testId1);
 
         verify(petRepository).deleteById(testId1);
     }
 
     @Test
-    void testGetPetsByReminderIdSuccesful() {
+    void testGetPetsByReminderIdCallRepositoryMethod() {
         petService.getPetsByReminderId(testId1);
 
         verify(petRepository).findPetsByPetRemindersId(testId1);

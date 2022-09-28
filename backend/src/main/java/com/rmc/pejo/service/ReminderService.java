@@ -39,6 +39,7 @@ public class ReminderService implements ReminderServiceInterface {
     }
 
     public void delete(Long id) {
+//        TODO: if reminder is in pet we have to remove first that reminder for all the pets.
         reminderRepository.deleteById(id);
     }
 
