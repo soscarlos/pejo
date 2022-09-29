@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin
@@ -47,14 +46,13 @@ public class ReminderEndPoint {
     }
 
     @DeleteMapping("{id}")
-    public String deleteById(@PathVariable("id") Long id) {
-        if (service.get(id).isEmpty()) throw new ResourceNotFoundException();
+    public void deleteById(@PathVariable("id") Long id) {
         service.delete(id);
-        return "Deleted successfully";
     }
 
     @GetMapping("pet/{petId}")
     public Set<Reminder> getRemindersByPetId(@PathVariable("petId") Long petId) {
+//        TODO: Reminder delegate validation logic to a validation layer
         if (petService.get(petId).isEmpty()) throw new ResourceNotFoundException();
         return service.getRemindersByPetId(petId);
     }

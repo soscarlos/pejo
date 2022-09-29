@@ -22,20 +22,20 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class PetEndPointTest {
-    private final String uri = "/pets";
+    String uri = "/pets";
 
-    private final long testId1 = 1;
-    private final long testId2 = 2;
-    private final LocalDate testDate = LocalDate.now().minusYears(3);
+    long testId1 = 1;
+    long testId2 = 2;
+    LocalDate testDate = LocalDate.now().minusYears(3);
 
-    private final Pet testPet = Pet.builder()
+    Pet testPet = Pet.builder()
             .id(testId1)
             .name("Testy")
             .birthDate(testDate)
             .petType(CAT)
             .sexType(FEMALE)
             .build();
-    private final Reminder testReminder1 = Reminder.builder()
+    Reminder testReminder1 = Reminder.builder()
             .id(testId1)
             .title("Test reminder")
             .description(" Test description")
@@ -44,7 +44,7 @@ class PetEndPointTest {
             .active(true)
             .build();
 
-    private final Reminder testReminder2 = Reminder.builder()
+    Reminder testReminder2 = Reminder.builder()
             .id(testId2)
             .title("Test reminder 2")
             .description(" Test description 2")
@@ -59,7 +59,7 @@ class PetEndPointTest {
     @MockBean
     ReminderService reminderService;
     @Test
-    void saveSuccessful() {
+    void save() {
         webTestClient.post()
                 .uri(uri)
                 .bodyValue(testPet)
@@ -71,7 +71,7 @@ class PetEndPointTest {
     }
 
     @Test
-    void getAllSuccessful() {
+    void getAll() {
         webTestClient.get()
                 .uri(uri)
                 .exchange()
@@ -82,12 +82,12 @@ class PetEndPointTest {
     }
 
     @Test
-    void getSuccessful() {
-        String filterUri = uri + "/" + testId1;
+    void getOneFound() {
+        String getOneUri = uri + "/" + testId1;
         when(petService.get(testId1)).thenReturn(Optional.of(testPet));
 
         webTestClient.get()
-                .uri(filterUri)
+                .uri(getOneUri)
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -96,11 +96,11 @@ class PetEndPointTest {
     }
 
     @Test
-    void getNotFound() {
-        String filterUri = uri + "/" + testId2;
+    void getOneNotFound() {
+        String getOneUri = uri + "/" + testId2;
 
         webTestClient.get()
-                .uri(filterUri)
+                .uri(getOneUri)
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -109,7 +109,7 @@ class PetEndPointTest {
     }
 
     @Test
-    void updateSuccessful() {
+    void update() {
         Pet updatePet = Pet.builder()
                 .id(testId1)
                 .name("Testy updated")
@@ -130,11 +130,11 @@ class PetEndPointTest {
 
     @Test
     void addReminderSuccessful() {
-        String filterUri = uri + "/" + testId1;
+        String reminderUri = uri + "/" + testId1;
         when(petService.addReminder(testId1, testReminder1)).thenReturn(Optional.of(testPet));
 
         webTestClient.put()
-                .uri(filterUri)
+                .uri(reminderUri)
                 .bodyValue(testReminder1)
                 .exchange()
                 .expectStatus()
@@ -144,11 +144,11 @@ class PetEndPointTest {
     }
 
     @Test
-    void addReminderNotFound() {
-        String filterUri = uri + "/" + testId2;
+    void addReminderPetNotFound() {
+        String reminderUri = uri + "/" + testId2;
 
         webTestClient.put()
-                .uri(filterUri)
+                .uri(reminderUri)
                 .bodyValue(testReminder2)
                 .exchange()
                 .expectStatus()
@@ -158,7 +158,7 @@ class PetEndPointTest {
     }
 
     @Test
-    void deleteByIdSuccessful() {
+    void deleteById() {
         String deleteUri = uri + "/" + testId1;
         when(petService.get(testId1)).thenReturn(Optional.of(testPet));
 
@@ -169,20 +169,6 @@ class PetEndPointTest {
                 .is2xxSuccessful();
 
         verify(petService).delete(testId1);
-    }
-
-    @Test
-    void deleteByIdNotFound() {
-        String deleteUri = uri + "/" + testId2;
-        when(petService.get(testId2).isEmpty()).thenThrow(ResourceNotFoundException.class);
-
-        webTestClient.delete()
-                .uri(deleteUri)
-                .exchange()
-                .expectStatus()
-                .isNotFound();
-
-        verify(petService, never()).delete(testId2);
     }
 
     @Test
