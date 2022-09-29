@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import DocumentItem from './cardComponents/DocumentItem';
+import DocumentItem from './DocumentItem';
 
 const DocumentCard = () => {
     return (
