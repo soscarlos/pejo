@@ -10,7 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,6 +69,7 @@ class ReminderServiceTest {
 
         verify(reminderRepository).findAll();
     }
+
     @Test
     void testGetAllReturnRemindersList() {
         when(reminderRepository.findAll()).thenReturn(List.of(testReminder1, testReminder2));
@@ -74,6 +78,7 @@ class ReminderServiceTest {
 
         assertThat(allReminders).isNotEmpty();
     }
+
     @Test
     void testGetAllReturnEmptyList() {
         when(reminderRepository.findAll()).thenReturn(Collections.emptyList());
@@ -89,6 +94,7 @@ class ReminderServiceTest {
 
         verify(reminderRepository).findById(testId1);
     }
+
     @Test
     void testGetReturnPresentReminder() {
         when(reminderRepository.findById(testId1)).thenReturn(Optional.of(testReminder1));
@@ -97,6 +103,7 @@ class ReminderServiceTest {
 
         assertThat(reminder).isPresent();
     }
+
     @Test
     void testGetReturnOptionalEmpty() {
         when(reminderRepository.findById(testId2)).thenReturn(Optional.empty());
@@ -113,6 +120,7 @@ class ReminderServiceTest {
 
         verify(reminderRepository).findFirst3ByDateAfterOrderByDateAsc(today);
     }
+
     @Test
     void testGetFirst3AfterDateReturn3Elements() {
         LocalDate today = LocalDate.now();
@@ -125,6 +133,7 @@ class ReminderServiceTest {
 
         assertThat(first3AfterDate.size()).isEqualTo(3);
     }
+
     @Test
     void testGetFirst3AfterDateReturnLessThan3Elements() {
         LocalDate today = LocalDate.now();
@@ -138,12 +147,25 @@ class ReminderServiceTest {
         assertThat(first3AfterDate.size()).isLessThan(3);
     }
 
-//    TODO: do additional tests for update, delete and find by pet id
     @Test
     void testUpdateCallRepositoryMethod() {
         service.update(testReminder1);
 
         verify(reminderRepository).save(testReminder1);
+    }
+
+    @Test
+    void testUpdateReturnUpdatedPet() {
+        String newTitle = "New Cool Title 1";
+        String newDescription = "New Cool Description 1";
+        when(reminderRepository.save(testReminder1)).thenReturn(testReminder1);
+        testReminder1.setTitle(newTitle);
+        testReminder1.setDescription(newDescription);
+
+        Reminder updatedReminder = service.update(testReminder1);
+
+        assertThat(updatedReminder.getTitle()).isEqualTo(newTitle);
+        assertThat(updatedReminder.getDescription()).isEqualTo(newDescription);
     }
 
     @Test
@@ -160,7 +182,25 @@ class ReminderServiceTest {
         verify(reminderRepository).findRemindersByReminderPetsId(testId1);
     }
 
-    private Set<Reminder> getReminders(){
+    @Test
+    void testGetRemindersByPetIdReturnReminderSet() {
+        when(reminderRepository.findRemindersByReminderPetsId(testId1)).thenReturn(getReminders());
+
+        Set<Reminder> remindersByPetId = service.getRemindersByPetId(testId1);
+
+        assertThat(remindersByPetId).isNotEmpty();
+    }
+
+    @Test
+    void testGetRemindersByPetIdReturnEmptySet() {
+        when(reminderRepository.findRemindersByReminderPetsId(testId2)).thenReturn(Collections.emptySet());
+
+        Set<Reminder> remindersByPetId = service.getRemindersByPetId(testId2);
+
+        assertThat(remindersByPetId).isEmpty();
+    }
+
+    private Set<Reminder> getReminders() {
         Reminder testReminder3 = Reminder.builder()
                 .id(3L)
                 .title("reminder 3")
