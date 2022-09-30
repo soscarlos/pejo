@@ -28,7 +28,7 @@ public class PetService implements PetServiceInterface {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> get(Long petId) {
+    public Optional<Pet> get(long petId) {
         return petRepository.findById(petId);
     }
 
@@ -38,16 +38,16 @@ public class PetService implements PetServiceInterface {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(long id) {
         //        TODO: if pet is in reminder we have to remove first that pet for all the reminders.
         petRepository.deleteById(id);
     }
 
-    public Set<Pet> getPetsByReminderId(Long reminderId) {
+    public Set<Pet> getPetsByReminderId(long reminderId) {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
 
-    public Optional<Pet> addReminder(Long id, Reminder reminder) {
+    public Optional<Pet> addReminder(long id, Reminder reminder) {
         Optional<Pet> petOptional = petRepository.findById(id);
         if (petOptional.isPresent()) {
             Pet presentPet = petOptional.get();

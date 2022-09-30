@@ -25,8 +25,8 @@ public class ReminderService implements ReminderServiceInterface {
         return reminderRepository.findAll();
     }
 
-    public Optional<Reminder> get(Long reminderId) {
-        return reminderRepository.findById(reminderId);
+    public Optional<Reminder> get(long id) {
+        return reminderRepository.findById(id);
     }
 
     public Set<Reminder> getFirst3AfterDate() {
@@ -38,12 +38,12 @@ public class ReminderService implements ReminderServiceInterface {
         return reminderRepository.save(reminder);
     }
 
-    public void delete(Long id) {
+    public void delete(long id) {
 //        TODO: if reminder is in pet we have to remove first that reminder for all the pets.
         reminderRepository.deleteById(id);
     }
 
-    public Set<Reminder> getRemindersByPetId(Long petId) {
+    public Set<Reminder> getRemindersByPetId(long petId) {
         return reminderRepository.findRemindersByReminderPetsId(petId);
     }
 }

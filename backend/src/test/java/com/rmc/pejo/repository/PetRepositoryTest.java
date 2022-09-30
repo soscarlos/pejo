@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 @DataJpaTest
 class PetRepositoryTest {
 
-    private final LocalDate testDate = LocalDate.now();
-    private final LocalTime testTime = LocalTime.now();
+    LocalDate testDate = LocalDate.now();
+    LocalTime testTime = LocalTime.now();
 
     @Autowired
-    private PetRepository petRepository;
+    PetRepository petRepository;
     @Autowired
-    private ReminderRepository reminderRepository;
+    ReminderRepository reminderRepository;
 
     @AfterEach
     void deleteAll() {
@@ -61,12 +61,20 @@ class PetRepositoryTest {
     }
     @Test
     void findPetsByNonExistingRemindersIdReturnEmptySet() {
+        List<Reminder> remindersSelection1 = getRemindersList()
+                .stream()
+                .filter(reminder -> reminder.getId() < 3L)
+                .toList();
+        List<Reminder> remindersSelection2 = getRemindersList()
+                .stream()
+                .filter(reminder -> reminder.getId() > 2L)
+                .toList();
         reminderRepository.saveAll(getRemindersList());
         List<Pet> pets = getPets();
         Pet pet1 = pets.get(0);
         Pet pet2 = pets.get(1);
-        pet1.setPetReminders(getRemindersList());
-        pet2.setPetReminders(getRemindersList());
+        pet1.setPetReminders(remindersSelection1);
+        pet2.setPetReminders(remindersSelection2);
         petRepository.saveAll(List.of(pet1, pet2));
 
         Set<Pet> result = petRepository.findPetsByPetRemindersId(5L);

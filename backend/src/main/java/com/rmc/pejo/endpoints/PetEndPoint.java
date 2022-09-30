@@ -31,7 +31,7 @@ public class PetEndPoint {
     }
 
     @GetMapping("{id}")
-    public Pet get(@PathVariable Long id) {
+    public Pet get(@PathVariable long id) {
         return service.get(id).orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -41,19 +41,17 @@ public class PetEndPoint {
     }
 
     @PutMapping("{id}")
-    public Pet addReminder(@PathVariable Long id, @RequestBody Reminder reminder) {
+    public Pet addReminder(@PathVariable long id, @RequestBody Reminder reminder) {
         return service.addReminder(id, reminder).orElseThrow(ResourceNotFoundException::new);
     }
 
     @DeleteMapping("{id}")
-    public String deleteById(@PathVariable("id") Long id) {
-        if (service.get(id).isEmpty()) throw new ResourceNotFoundException();
+    public void deleteById(@PathVariable long id) {
         service.delete(id);
-        return "Deleted successfully";
     }
 
     @GetMapping("reminder/{reminderId}")
-    public Set<Pet> getPetsByReminderId(@PathVariable("reminderId") Long reminderId) {
+    public Set<Pet> getPetsByReminderId(@PathVariable long reminderId) {
         if (reminderService.get(reminderId).isEmpty()) throw new ResourceNotFoundException();
         return service.getPetsByReminderId(reminderId);
     }

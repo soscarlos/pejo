@@ -12,38 +12,30 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com.rmc.pejo.entity.PetType.CAT;
-import static com.rmc.pejo.entity.PetType.DOG;
 import static com.rmc.pejo.entity.SexType.FEMALE;
-import static com.rmc.pejo.entity.SexType.MALE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PetServiceTest {
 
-    private final long testId1 = 1;
-    private final long testId2 = 2;
-    private final LocalDate testDate = LocalDate.now().minusYears(1);
-    private final LocalTime testTime = LocalTime.now();
-    private final Pet testPet1 = Pet.builder()
+    long testId1 = 1;
+    LocalDate testDate = LocalDate.now().minusYears(1);
+    LocalTime testTime = LocalTime.now();
+    Pet testPet1 = Pet.builder()
             .id(testId1)
             .name("Testy")
             .birthDate(testDate)
             .petType(CAT)
             .sexType(FEMALE)
+            .petReminders(new ArrayList<>())
             .build();
-    private final Pet testPet2 = Pet.builder()
-            .id(testId2)
-            .name("Testy 2")
-            .birthDate(testDate)
-            .petType(DOG)
-            .sexType(MALE)
-            .build();
-    private final Reminder testReminder1 = Reminder.builder()
+    Reminder testReminder1 = Reminder.builder()
             .id(testId1)
             .title("reminder 1")
             .description("description 1")
@@ -52,26 +44,17 @@ class PetServiceTest {
             .active(true)
             .build();
     @Mock
-    private PetRepository petRepository;
+    PetRepository petRepository;
     @Mock
-    private ReminderRepository reminderRepository;
+    ReminderRepository reminderRepository;
     @InjectMocks
-    private PetService petService;
+    PetService petService;
 
     @Test
-    void testSaveCallRepositoryMethod() {
+    void testSave() {
         petService.save(testPet1);
 
         verify(petRepository).save(testPet1);
-    }
-
-    @Test
-    void testSaveReturnPet() {
-        when(petRepository.save(testPet1)).thenReturn(testPet1);
-
-        Pet saved = petService.save(testPet1);
-
-        assertThat(saved).isNotNull();
     }
 
     @Test
@@ -82,46 +65,10 @@ class PetServiceTest {
     }
 
     @Test
-    void testGetAllReturnPetList() {
-        when(petRepository.findAll()).thenReturn(List.of(testPet1, testPet2));
-
-        List<Pet> allPets = petService.getAll();
-
-        assertThat(allPets).isNotNull();
-    }
-
-    @Test
-    void testGetAllReturnEmptyList() {
-        when(petRepository.findAll()).thenReturn(Collections.emptyList());
-
-        List<Pet> allPets = petService.getAll();
-
-        assertThat(allPets).isEmpty();
-    }
-
-    @Test
     void testGetCallRepositoryMethod() {
         petService.get(testId1);
 
         verify(petRepository).findById(testId1);
-    }
-
-    @Test
-    void testGetReturnPetIsPresent() {
-        when(petRepository.findById(testId1)).thenReturn(Optional.of(testPet1));
-
-        Optional<Pet> pet = petService.get(testId1);
-
-        assertThat(pet).isPresent();
-    }
-
-    @Test
-    void testGetReturnOptionalEmpty() {
-        when(petRepository.findById(testId2)).thenReturn(Optional.empty());
-
-        Optional<Pet> pet = petService.get(testId2);
-
-        assertThat(pet).isEmpty();
     }
 
     @Test
@@ -130,19 +77,6 @@ class PetServiceTest {
 
         verify(petRepository).save(testPet1);
     }
-
-    @Test
-    void testUpdateReturnUpdatedPet() {
-        when(petRepository.save(testPet1)).thenReturn(testPet1);
-        testPet1.setName("Mogli");
-        testPet1.setBirthDate(LocalDate.of(2020, 1, 1));
-
-        Pet updatedPet = petService.update(testPet1);
-
-        assertThat(updatedPet.getName()).isEqualTo("Mogli");
-        assertThat(updatedPet.getBirthDate()).isEqualTo("2020-01-01");
-    }
-
 
     @Test
     void testDeleteCallRepositoryMethod() {
@@ -159,27 +93,8 @@ class PetServiceTest {
     }
 
     @Test
-    void testGetPetsByReminderReturnPetSet() {
-        when(petRepository.findPetsByPetRemindersId(testId1)).thenReturn(Set.of(testPet2, testPet1));
-
-        Set<Pet> petsByReminderId = petService.getPetsByReminderId(testId1);
-
-        assertThat(petsByReminderId).isNotNull();
-    }
-
-    @Test
-    void testGetPetsByReminderReturnEmptySet() {
-        when(petRepository.findPetsByPetRemindersId(testId1)).thenReturn(Collections.emptySet());
-
-        Set<Pet> petsByReminderId = petService.getPetsByReminderId(testId1);
-
-        assertThat(petsByReminderId).isEmpty();
-    }
-
-    @Test
     void testAddReminderReturnPetIsPresent() {
         when(petRepository.findById(testId1)).thenReturn(Optional.of(testPet1));
-        testPet1.setPetReminders(new ArrayList<>());
         when(petRepository.save(testPet1)).thenReturn(testPet1);
 
         Optional<Pet> pet = petService.addReminder(testId1, testReminder1);
@@ -193,21 +108,21 @@ class PetServiceTest {
 
         Optional<Pet> pet = petService.addReminder(testId1, testReminder1);
 
+        verify(petRepository, never()).save(any(Pet.class));
         assertThat(pet).isEmpty();
     }
 
     @Test
     void testAddReminderInsertReminderInPetsRemindersList() {
         long reminder1Id = testReminder1.getId();
-        testPet1.setPetReminders(new ArrayList<>());
         when(petRepository.findById(testId1)).thenReturn(Optional.of(testPet1));
         when(petRepository.save(testPet1)).thenReturn(testPet1);
         when(reminderRepository.findById(reminder1Id)).thenReturn(Optional.of(testReminder1));
 
         Optional<Pet> pet = petService.addReminder(testId1, testReminder1);
 
+        assertThat(pet).isPresent();
         List<Reminder> petReminders = pet.get().getPetReminders();
-
         assertThat(petReminders).contains(testReminder1);
     }
 
