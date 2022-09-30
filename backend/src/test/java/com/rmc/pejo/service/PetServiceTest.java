@@ -8,28 +8,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com.rmc.pejo.entity.PetType.CAT;
-import static com.rmc.pejo.entity.PetType.DOG;
 import static com.rmc.pejo.entity.SexType.FEMALE;
-import static com.rmc.pejo.entity.SexType.MALE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PetServiceTest {
 
-    private final long testId1 = 1;
-    private final long testId2 = 2;
-    private final LocalDate testDate = LocalDate.now().minusYears(1);
-    private final LocalTime testTime = LocalTime.now();
-    private final Pet testPet1 = Pet.builder()
+    long testId1 = 1;
+    LocalDate testDate = LocalDate.now().minusYears(1);
+    LocalTime testTime = LocalTime.now();
+    Pet testPet1 = Pet.builder()
             .id(testId1)
             .name("Testy")
             .birthDate(testDate)
@@ -37,7 +35,7 @@ class PetServiceTest {
             .sexType(FEMALE)
             .petReminders(new ArrayList<>())
             .build();
-    private final Reminder testReminder1 = Reminder.builder()
+    Reminder testReminder1 = Reminder.builder()
             .id(testId1)
             .title("reminder 1")
             .description("description 1")
@@ -46,11 +44,11 @@ class PetServiceTest {
             .active(true)
             .build();
     @Mock
-    private PetRepository petRepository;
+    PetRepository petRepository;
     @Mock
-    private ReminderRepository reminderRepository;
+    ReminderRepository reminderRepository;
     @InjectMocks
-    private PetService petService;
+    PetService petService;
 
     @Test
     void testSave() {

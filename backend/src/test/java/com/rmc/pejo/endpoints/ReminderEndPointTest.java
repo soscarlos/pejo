@@ -23,12 +23,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class ReminderEndPointTest {
-    private final String uri = "/reminders";
-    private final long testId1 = 1;
-    private final long testId2 = 2;
-    private final LocalDate testDate = LocalDate.now().plusMonths(1);
-    private final LocalTime testTime = LocalTime.now();
-    private final Reminder testReminder = Reminder.builder()
+    String uri = "/reminders";
+    long testId1 = 1;
+    long testId2 = 2;
+    LocalDate testDate = LocalDate.now().plusMonths(1);
+    LocalTime testTime = LocalTime.now();
+    Reminder testReminder = Reminder.builder()
             .id(testId1)
             .title("reminder 1")
             .description("description 1")
@@ -99,19 +99,6 @@ class ReminderEndPointTest {
                 .is2xxSuccessful();
 
         verify(reminderService).delete(testId1);
-    }
-
-    @Test
-    void deleteByIdNotFund() {
-        String deleteUri = uri + "/" + testId2;
-
-        when(reminderService.get(testId2).isEmpty()).thenThrow(ResourceNotFoundException.class);
-
-        webTestClient.delete()
-                .uri(deleteUri)
-                .exchange()
-                .expectStatus()
-                .isNotFound();
     }
 
     @Test

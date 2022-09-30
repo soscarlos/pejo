@@ -31,7 +31,7 @@ public class PetEndPoint {
     }
 
     @GetMapping("{id}")
-    public Pet get(@PathVariable Long id) {
+    public Pet get(@PathVariable long id) {
         return service.get(id).orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -51,7 +51,7 @@ public class PetEndPoint {
     }
 
     @GetMapping("reminder/{reminderId}")
-    public Set<Pet> getPetsByReminderId(@PathVariable Long reminderId) {
+    public Set<Pet> getPetsByReminderId(@PathVariable long reminderId) {
         if (reminderService.get(reminderId).isEmpty()) throw new ResourceNotFoundException();
         return service.getPetsByReminderId(reminderId);
     }

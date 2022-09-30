@@ -31,7 +31,7 @@ public class ReminderEndPoint {
     }
 
     @GetMapping("{id}")
-    public Reminder get(@PathVariable Long id) {
+    public Reminder get(@PathVariable long id) {
         return service.get(id).orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -46,12 +46,12 @@ public class ReminderEndPoint {
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") long id) {
         service.delete(id);
     }
 
     @GetMapping("pet/{petId}")
-    public Set<Reminder> getRemindersByPetId(@PathVariable("petId") Long petId) {
+    public Set<Reminder> getRemindersByPetId(@PathVariable("petId") long petId) {
 //        TODO: Reminder delegate validation logic to a validation layer
         if (petService.get(petId).isEmpty()) throw new ResourceNotFoundException();
         return service.getRemindersByPetId(petId);
