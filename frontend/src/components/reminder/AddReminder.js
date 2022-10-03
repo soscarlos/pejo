@@ -75,7 +75,7 @@ const AddReminder = ({ onAdd, openModal }) => {
           />
     </div>*/}
   
-        <input type='submit' value='Save Reminder' className='btn btn-block' />
+        <input style={{ background: 'grey' }} type='submit' value='Save Reminder' className='btn btn-block' />
       </form>
     ) 
 }
