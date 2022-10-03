@@ -1,15 +1,16 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import TodoCard from "../components/dashboard/TodoCard";
-import LocationCard from "../components/dashboard/LocationCard";
-import DocumentCard from '../components/dashboard/DocumentCard';
-import TipsCard from '../components/dashboard/TipsCard';
-import ReminderCard from '../components/dashboard/ReminderCard';
+import TodoCard from '../../components/dashboard/TodoCard';
+import LocationCard from '../../components/dashboard/LocationCard';
+import DocumentCard from '../../components/dashboard/DocumentCard';
+import TipsCard from '../../components/dashboard/TipsCard';
+import ReminderCard from '../../components/dashboard/ReminderCard';
+import './style.css';
 
 const Home = () => {
     return (
         <>
-        <Row style={{marginBottom: "2%"}}>
+        <Row id='firstRow'>
             <Col>
                 <TodoCard />
             </Col>
@@ -20,7 +21,7 @@ const Home = () => {
                 <DocumentCard/>
                 </Col>
         </Row>
-        <Row>
+        <Row id='secondRow'>
             <Col>
                 <TipsCard />
             </Col>

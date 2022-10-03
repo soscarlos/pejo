@@ -1,11 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import dashboard_logo from '../img/dashboard_logo.png';
-import profile from '../img/profile.png';
-import dog from '../img/dog.png'
-import cat from '../img/cat.png'
+import dashboard_logo from '../../img/dashboard_logo.png';
+import profile from '../../img/profile.png';
+import dog from '../../img/dog.png'
+import cat from '../../img/cat.png'
 import { Outlet } from "react-router-dom";
+import './style.css';
 
 const Layout = () => {
   return (
