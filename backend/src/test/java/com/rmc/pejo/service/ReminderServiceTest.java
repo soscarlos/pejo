@@ -1,6 +1,8 @@
 package com.rmc.pejo.service;
 
+import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
+import com.rmc.pejo.repository.PetRepository;
 import com.rmc.pejo.repository.ReminderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +12,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Set;
 
+import static com.rmc.pejo.entity.PetType.CAT;
+import static com.rmc.pejo.entity.SexType.FEMALE;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ReminderServiceTest {
@@ -27,6 +35,14 @@ class ReminderServiceTest {
             .time(testTime)
             .active(true)
             .build();
+    Pet testPet1 = Pet.builder()
+            .id(testId1)
+            .name("Testy")
+            .birthDate(testDate)
+            .petType(CAT)
+            .sexType(FEMALE)
+            .petReminders(new ArrayList<>())
+            .build();
     Reminder testReminder2 = Reminder.builder()
             .id(testId2)
             .title("reminder 2")
@@ -37,6 +53,8 @@ class ReminderServiceTest {
             .build();
     @Mock
     ReminderRepository reminderRepository;
+    @Mock
+    PetRepository petRepository;
     @InjectMocks
     ReminderService service;
 
@@ -77,9 +95,12 @@ class ReminderServiceTest {
     }
 
     @Test
-    void testDeleteCallRepositoryMethod() {
+    void testDeleteCallRepositoryMethods() {
+        when(petRepository.findPetsByPetRemindersId(testId1)).thenReturn(Set.of(testPet1));
+
         service.delete(testId1);
 
+        verify(petRepository).save(any(Pet.class));
         verify(reminderRepository).deleteById(testId1);
     }
 
