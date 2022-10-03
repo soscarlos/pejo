@@ -39,7 +39,7 @@ public class PetService implements PetServiceInterface {
 
     @Override
     public void delete(long id) {
-        //        TODO: if pet is in reminder we have to remove first that pet for all the reminders.
+        //        TODO: if pet is in reminder we have to remove first that pet for all the reminders. TODO: EXAMPLE
         petRepository.deleteById(id);
     }
 
