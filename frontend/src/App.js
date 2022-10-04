@@ -6,7 +6,7 @@ import Locations from './pages/Locations';
 import Documents from './pages/Documents';
 import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
-import Reminder from './pages/Reminder';
+import Reminder from './pages/Reminders';
 import './App.css';
 
 const App = () => {

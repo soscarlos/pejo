@@ -1,11 +1,12 @@
 import Card from 'react-bootstrap/Card';
 import DocumentItem from './DocumentItem';
+import './style.css';
 
 const DocumentCard = () => {
     return (
-        <Card style={{backgroundColor: "#dcdcdc"}} border="light">
+        <Card id='documentCard' border="light">
             <Card.Body>
-            <Card.Title style={{color: "#0292ce"}}><a href='/documents'> Documents </a></Card.Title>
+            <Card.Title id='documentTitle'><a href='/documents'> Documents </a></Card.Title>
             <Card.Text>
                 <DocumentItem />
             </Card.Text>

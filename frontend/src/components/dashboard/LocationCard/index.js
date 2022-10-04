@@ -1,11 +1,12 @@
 import Card from 'react-bootstrap/Card';
+import './style.css';
 
 const LocationCard = () => {
     return (
         <Card id='locationCard'>
             <Card.Body>
-            <Card.Title style={{color: "#fa9801"}}><a href='/locations'> Locations </a></Card.Title>
-            <Card.Text style={{color: "#0292ce"}}>
+            <Card.Title><a href='/locations'> Locations </a></Card.Title>
+            <Card.Text id='locationText'>
                 <ul>
                     <li>Veterinarian</li>
                     <li>Shops</li>
@@ -19,4 +20,3 @@ const LocationCard = () => {
   };
   
   export default LocationCard;
-  
