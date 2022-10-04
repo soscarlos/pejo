@@ -39,8 +39,27 @@ public class PetService implements PetServiceInterface {
 
     @Override
     public void delete(long id) {
-        //        TODO: if pet is in reminder we have to remove first that pet for all the reminders. TODO: EXAMPLE
+        Set<Reminder> remindersByPetsId = reminderRepository.findRemindersByReminderPetsId(id);
+        removePetFromReminder(remindersByPetsId, id);
         petRepository.deleteById(id);
+        removeReminder(remindersByPetsId);
+    }
+
+    private void removeReminder(Set<Reminder> remindersByPetsId) {
+        remindersByPetsId.forEach(reminder -> {
+            int amountOfPets = reminder.getReminderPets().size();
+            if (amountOfPets == 0) {
+                reminderRepository.delete(reminder);
+            }
+        });
+    }
+
+    private void removePetFromReminder(Set<Reminder> reminders, long id) {
+        reminders.forEach(reminder -> {
+            List<Pet> reminderPets = reminder.getReminderPets();
+            reminderPets.removeIf(pet -> pet.getId() == id);
+            reminderRepository.save(reminder);
+        });
     }
 
     public Set<Pet> getPetsByReminderId(long reminderId) {
