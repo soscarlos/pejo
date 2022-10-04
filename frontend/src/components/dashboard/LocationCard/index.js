@@ -5,7 +5,7 @@ const LocationCard = () => {
     return (
         <Card id='locationCard'>
             <Card.Body>
-            <Card.Title><a href='/locations'> Locations </a></Card.Title>
+            <Card.Title id='locationTitle'><a href='/locations'> Locations </a></Card.Title>
             <Card.Text id='locationText'>
                 <ul>
                     <li>Veterinarian</li>

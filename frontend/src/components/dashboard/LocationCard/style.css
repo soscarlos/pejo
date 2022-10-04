@@ -5,4 +5,9 @@
 
 #locationText {
   color: #0292ce;
+  font-size: large;
+}
+
+#locationTitle {
+  font-size: xx-large;
 }

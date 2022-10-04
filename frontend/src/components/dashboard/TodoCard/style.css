@@ -1,3 +1,8 @@
 #todoCard {
     background-color: #0292ce;
+    font-size: large;
+}
+
+#todoTitle {
+    font-size: xx-large;
 }

@@ -3,5 +3,10 @@
 }
 
 #documentTitle {
-    color: #0292ce
+    color: #0292ce;
+    font-size: xx-large;
+}
+
+#documentItemText {
+    font-size: large;
 }
