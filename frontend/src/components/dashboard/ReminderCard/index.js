@@ -7,7 +7,6 @@ import './style.css';
 const ReminderCard = () => {
 
     const { reminders, isLoading, error } = useFetchReminders();
-    console.log(reminders);
     return (
         <Card id='reminderCard' border="light">
             <Card.Body>
