@@ -1,11 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import "../../App.css";
-import AddReminderModal from './AddReminderModal';
 
-
-
-
-const AddReminder = ({ onAdd, openModal }) => {
+const AddReminder = ({ modalOpen, onAdd }) => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
@@ -18,13 +14,13 @@ const AddReminder = ({ onAdd, openModal }) => {
         setTitle('');
         setDate('');
         setDescription('');
+        setTime('');
       }
   
     useEffect(() => {
       const addForm = document.getElementsByClassName('add-form')[0];
-      //console.log(addForm)
-      openModal? addForm.setAttribute("style", "display: inline-block") : addForm.setAttribute("style", "display: none");
-     
+      modalOpen? addForm.setAttribute("style", "display: inline-block") : 
+      addForm.setAttribute("style", "display: none");     
     })
 
     return (
@@ -41,7 +37,7 @@ const AddReminder = ({ onAdd, openModal }) => {
         <div className='form-control'>
           <label>Date</label>
           <input
-            type='text'
+            type='date'
             placeholder='Add Date'
             value={date}
             onChange={(e) => setDate(e.target.value)}
@@ -50,7 +46,7 @@ const AddReminder = ({ onAdd, openModal }) => {
         <div className='form-control'>
           <label>Time</label>
           <input
-            type='text'
+            type='time'
             placeholder='Add Time'
             value={time}
             onChange={(e) => setTime(e.target.value)}
@@ -65,17 +61,8 @@ const AddReminder = ({ onAdd, openModal }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-       {/* <div className='form-control form-control-check'>
-          <label>Set Reminder</label>
-          <input
-            type='checkbox'
-            checked={reminder}
-            value={reminder}
-            onChange={(e) => setReminder(e.currentTarget.checked)}
-          />
-    </div>*/}
-  
-        <input type='submit' value='Save Reminder' className='btn btn-block' />
+        <input style={{ background: 'grey' }} type='submit' value='Save Reminder' 
+        className='btn btn-block' />
       </form>
     ) 
 }

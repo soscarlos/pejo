@@ -3,48 +3,60 @@ import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
 import "../../App.css";
+import useFetch from '../../hooks/useFetch';
+import usePost from "../../hooks/usePost";
+import usePut from "../../hooks/usePut";
 
 const ShowReminders = () => {
 
-    const [data, setData] = useState(null);
+    const reminders = useFetch('http://localhost:8080/reminders').data;
+    const setReminders = useFetch('http://localhost:8080/reminders').setData;
     const [modalOpen, setModalOpen] = useState(false);
+    const [updateModalOpen, setUpdateModalOpen] = useState(false);
+    const [showReminder, setShowReminder] = useState(null);
 
-
-      const addReminder = async (reminder) => {
-        console.log("addReminder here")
-       const res = await fetch('http://localhost:8080/reminders', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(reminder),
-        })
-        const newData = await res.json();
-        setData([...data, newData]);
+  
+    const usePostAddReminder = async(reminder) => {
+      const newData = await usePost(reminder, 'http://localhost:8080/reminders');
+      console.log(`tiltle=${newData.title}`)
+      let currentReminder = {
+        id: newData.id,
+        title: newData.title,
+        time: newData.time,
+        date: newData.date,
+        description: newData.description
       }
+      reminders.push(currentReminder);
+      setReminders([...reminders]);
+    }
+     
 
-    useEffect(()=> {
-
-        const getData = async() => {
-          try{
-            const response = await fetch("http://localhost:8080/reminders");
-            if (!response.ok){
-              throw new Error(`HTTP error: Status ${response.status}`);
-            }
-            let actualData = await response.json();
-            setData(actualData);
-          } catch(e) {
-            setData(null);
+    const usePutUpdateReminder = async (reminder) => {
+        console.log(`reminderId=${reminder.showReminderId}`)
+        const newData = await usePut(reminder, 'http://localhost:8080/reminders');
+        console.log(`newData=${newData.id}, ${newData.title}`)
+        let currentReminder = reminders[0];
+        for (let reminder of reminders) {
+          if (reminder.id === newData.id) {
+            currentReminder = reminder;
           }
         }
-        getData();
-      }, ["http://localhost:8080/reminders"]);
-
-      
-        
+        currentReminder.title = newData.title;
+        currentReminder.date = newData.date;
+        currentReminder.time = newData.time;
+        currentReminder.description = newData.description;
+        setReminders([...reminders]);
+      }
+   
     return (
       <div>
-        {modalOpen && <AddReminderModal setOpenModal={setModalOpen} onAdd={addReminder} openModal={modalOpen}/>}              
+        {modalOpen && <AddReminderModal showReminder={reminders[0]} 
+              updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen} 
+              modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePostAddReminder} />}
+        
+        {updateModalOpen && <AddReminderModal showReminder={showReminder} 
+             updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen}
+             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder} />}          
       <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
@@ -52,15 +64,16 @@ const ShowReminders = () => {
           setModalOpen(true);
         }}>Add Reminder</button>   
         </div>
-        {data != null? data.map(showReminder => (
-        
-          <ShowReminder key={showReminder.id} showReminder={showReminder} />
+        {reminders!= null? reminders.map(showReminder => (
+          <ShowReminder key={showReminder.id} 
+             showReminder={showReminder} setShowReminder={setShowReminder}
+             updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen}
+             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder}
+             modalOpen={modalOpen} />
         )) : "No Reminders"}             
       </div>
-      </div>
-      
-    )
-    
+      </div>     
+    )  
 }
 
 export default ShowReminders;
