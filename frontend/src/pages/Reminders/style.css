@@ -1,7 +1,4 @@
-.App {
-    margin-right: 5%;
-    margin-left: 5%;
-  }
+
   
   .showReminder {
     background: #f4f4f4;
@@ -28,20 +25,7 @@
     align-items: center;
     margin-bottom: 20px;
   }
-  
-  a {
-    text-decoration: none !important;
-    color: inherit !important;
-  }
-  
-  .App {
-    height: 100vh;
-  }
-  
-  #logo {
-      display: block;
-      margin: 0 auto;
-  }
+
   
   .add-form {
     margin-bottom: 40px;
