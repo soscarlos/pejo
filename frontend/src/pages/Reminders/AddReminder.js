@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import "../../App.css";
+import "./style.css";
 
 const AddReminder = ({ setModalOpen, onAdd }) => {
     const [date, setDate] = useState('');

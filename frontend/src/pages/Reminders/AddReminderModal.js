@@ -1,7 +1,6 @@
 import AddReminder from "./AddReminder";
 import UpdateReminder from "./UpdateReminder";
-import "./AddReminderModal.css";
-import "../../App.css";
+import "./style.css";
 import React from 'react';
 
 const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, modalOpen, 

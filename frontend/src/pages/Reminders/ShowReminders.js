@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
-import "../../App.css";
+import "./style.css";
 import useFetch from '../../hooks/useFetch';
 import usePost from "../../hooks/usePost";
 import usePut from "../../hooks/usePut";
