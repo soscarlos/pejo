@@ -1,14 +1,10 @@
 import AddReminder from "./AddReminder";
 import UpdateReminder from "./UpdateReminder";
-import "./AddReminderModal.css";
-import "../../App.css";
+import "./style.css";
 import React from 'react';
 
 const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, modalOpen, 
   setModalOpen, onAdd})=> {
-
-  //const addForm = document.getElementsByClassName('add-form')[0];
-  
 
   return (
         <div className="modalBackground">
@@ -18,7 +14,6 @@ const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, mo
                 onClick={() => {
                   setUpdateModalOpen(false);
                   setModalOpen(false);              
-                  //addForm.setAttribute("style", "display: none");
                 }}
               >
                 X
@@ -29,20 +24,19 @@ const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, mo
               {updateModalOpen && <h1>Update Reminder</h1>}
             </div>
             <div className="body">
-             {modalOpen && <AddReminder display="block" modalOpen={modalOpen}
+             {modalOpen && <AddReminder display="block" setModalOpen={setModalOpen}
               onAdd={onAdd} /> }
 
              {updateModalOpen && <UpdateReminder display="block" showReminderId={showReminder.id}
              showReminderTitle={showReminder.title} showReminderDate={showReminder.date}
              showReminderTime={showReminder.time} showReminderDescription={showReminder.description}
-             updateModalOpen={updateModalOpen} onAdd={onAdd} /> }
+             setUpdateModalOpen={setUpdateModalOpen} onAdd={onAdd} /> }
             </div>
             <div className="footer">
               <button
                 onClick={() => {
                   setUpdateModalOpen(false);
-                  setModalOpen(false);
-                  //addForm.setAttribute("style", "display: none");                 
+                  setModalOpen(false);                 
                 }}
                 id="cancelBtn"
               >
