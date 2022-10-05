@@ -31,7 +31,8 @@ const useFetch = (endpoint) => {
     return {
         data: data,
         isLoading: isLoading,
-        error: error
+        error: error,
+        setData: setData
     }
 }
 

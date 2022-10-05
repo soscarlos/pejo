@@ -3,12 +3,15 @@ import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
 import "../../App.css";
+import useFetch from '../../hooks/useFetch';
 import usePost from "../../hooks/usePost";
 import usePut from "../../hooks/usePut";
 
 const ShowReminders = () => {
 
-    const [reminders, setReminders] = useState(null);
+    //const [reminders, setReminders] = useState(null);
+    const reminders = useFetch('http://localhost:8080/reminders').data;
+    const setReminders = useFetch('http://localhost:8080/reminders').setData;
     const [modalOpen, setModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [showReminder, setShowReminder] = useState(null);
@@ -16,7 +19,17 @@ const ShowReminders = () => {
   
     const usePostAddReminder = async(reminder) => {
       const newData = await usePost(reminder, 'http://localhost:8080/reminders');
-      setReminders([...reminders, newData]);
+      console.log(`tiltle=${newData.title}`)
+      let currentReminder = {
+        id: newData.id,
+        title: newData.title,
+        time: newData.time,
+        date: newData.date,
+        description: newData.description
+      }
+      reminders.push(currentReminder);
+      setReminders([...reminders]);
+      //setReminders([...reminders, newData]);
     }
      
 
@@ -36,26 +49,7 @@ const ShowReminders = () => {
         currentReminder.description = newData.description;
         setReminders([...reminders]);
       }
-
-   useEffect(()=> {
-
-        const getData = async() => {
-          try{
-            const response = await fetch("http://localhost:8080/reminders");
-            if (!response.ok){
-              throw new Error(`HTTP error: Status ${response.status}`);
-            }
-            let actualData = await response.json();
-            setReminders(actualData);
-          } catch(e) {
-            setReminders(null);
-          }
-        }
-        getData();
-      }, ["http://localhost:8080/reminders"]);
-
-      
-        
+   
     return (
       <div>
         {modalOpen && <AddReminderModal showReminder={reminders[0]} 
