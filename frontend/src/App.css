@@ -45,7 +45,12 @@ a {
 
 .add-form {
   margin-bottom: 40px;
-  display: none;
+  display: inline-block;
+}
+
+.update-form {
+  margin-bottom: 40px;
+  display: inline-block;
 }
 
 .form-control {

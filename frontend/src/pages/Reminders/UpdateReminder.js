@@ -1,30 +1,28 @@
-import { useEffect, useState, useRef } from 'react';
-import "../../App.css";
+import React, { useState } from 'react';
 
-const AddReminder = ({ modalOpen, onAdd }) => {
-    const [date, setDate] = useState('');
-    const [time, setTime] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+const UpdateReminder = ({ showReminderId, showReminderTitle, 
+    showReminderDate, showReminderTime, showReminderDescription,
+    setUpdateModalOpen, onAdd }) => {
+    console.log(`id=${showReminderId}, ${showReminderTitle}`);
+    const id = showReminderId;
+    const [date, setDate] = useState(showReminderDate);
+    const [time, setTime] = useState(showReminderTime);
+    const [title, setTitle] = useState(showReminderTitle);
+    const [description, setDescription] = useState(showReminderDescription);
     
 
     const onSubmit = (e) => {
         e.preventDefault(); 
-        onAdd({ title, date, time, description });
+        onAdd({ id, title, date, time, description });
         setTitle('');
         setDate('');
         setDescription('');
         setTime('');
+        setUpdateModalOpen(false);
       }
-  
-    useEffect(() => {
-      const addForm = document.getElementsByClassName('add-form')[0];
-      modalOpen? addForm.setAttribute("style", "display: inline-block") : 
-      addForm.setAttribute("style", "display: none");     
-    })
 
     return (
-        <form className='add-form' onSubmit={onSubmit}>
+        <form className='update-form' onSubmit={onSubmit}>
         <div className='form-control'>
           <label>Title</label>
           <input
@@ -66,4 +64,4 @@ const AddReminder = ({ modalOpen, onAdd }) => {
       </form>
     ) 
 }
-export default AddReminder
+export default UpdateReminder

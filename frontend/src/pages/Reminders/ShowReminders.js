@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
 import "../../App.css";
