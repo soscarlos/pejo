@@ -84,7 +84,7 @@ class ReminderServiceTest {
         service.getFirst3AfterDate();
         LocalDate today = LocalDate.now();
 
-        verify(reminderRepository).findFirst3ByDateAfterOrderByDateAsc(today);
+        verify(reminderRepository).findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
     }
 
     @Test
