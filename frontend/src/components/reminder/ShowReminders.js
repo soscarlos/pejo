@@ -9,7 +9,6 @@ import usePut from "../../hooks/usePut";
 
 const ShowReminders = () => {
 
-    //const [reminders, setReminders] = useState(null);
     const reminders = useFetch('http://localhost:8080/reminders').data;
     const setReminders = useFetch('http://localhost:8080/reminders').setData;
     const [modalOpen, setModalOpen] = useState(false);
@@ -29,7 +28,6 @@ const ShowReminders = () => {
       }
       reminders.push(currentReminder);
       setReminders([...reminders]);
-      //setReminders([...reminders, newData]);
     }
      
 
