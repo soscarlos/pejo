@@ -1,12 +1,13 @@
 import AddReminder from "./AddReminder";
+import UpdateReminder from "./UpdateReminder";
 import "./AddReminderModal.css";
 import "../../App.css";
 import React from 'react';
-import { useState } from 'react';
 
-const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
+const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, modalOpen, 
+  setModalOpen, onAdd})=> {
 
-  const addForm = document.getElementsByClassName('add-form')[0];
+  //const addForm = document.getElementsByClassName('add-form')[0];
   
 
   return (
@@ -15,25 +16,33 @@ const AddReminderModal = ({setOpenModal, onAdd, openModal})=> {
             <div className="titleCloseBtn">
               <button
                 onClick={() => {
-                  setOpenModal(false);
-                  addForm.setAttribute("style", "display: none");
+                  setUpdateModalOpen(false);
+                  setModalOpen(false);              
+                  //addForm.setAttribute("style", "display: none");
                 }}
               >
                 X
               </button>
             </div>
             <div className="title">
-              <h1>Add Reminder</h1>
+              {modalOpen && <h1>Add Reminder</h1>}
+              {updateModalOpen && <h1>Update Reminder</h1>}
             </div>
             <div className="body">
-              <AddReminder onAdd={onAdd} display="block" openModal={openModal}/>
+             {modalOpen && <AddReminder display="block" modalOpen={modalOpen}
+              onAdd={onAdd} /> }
 
+             {updateModalOpen && <UpdateReminder display="block" showReminderId={showReminder.id}
+             showReminderTitle={showReminder.title} showReminderDate={showReminder.date}
+             showReminderTime={showReminder.time} showReminderDescription={showReminder.description}
+             updateModalOpen={updateModalOpen} onAdd={onAdd} /> }
             </div>
             <div className="footer">
               <button
                 onClick={() => {
-                  setOpenModal(false);
-                  addForm.setAttribute("style", "display: none");                 
+                  setUpdateModalOpen(false);
+                  setModalOpen(false);
+                  //addForm.setAttribute("style", "display: none");                 
                 }}
                 id="cancelBtn"
               >
