@@ -3,10 +3,10 @@ import Card from 'react-bootstrap/Card';
 
 const ReminderItem = ({showReminder}) => {
   return (
-    <Card>
+    <Card id='reminderItem'>
       <Card.Body>
-        <Card.Title>{showReminder.title}</Card.Title>
-        <Card.Text>
+        <Card.Title id='reminderItemTitle'>{showReminder.title}</Card.Title>
+        <Card.Text id='reminderItemText'>
         {showReminder.description}
         <p>{showReminder.date + " | " + showReminder.time}</p>
         </Card.Text>

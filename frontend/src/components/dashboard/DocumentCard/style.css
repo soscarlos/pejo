@@ -9,5 +9,9 @@
 }
 
 #documentItemText {
-    font-size: large;
+    font-size: x-large;
+}
+
+#documentItem {
+    margin-bottom: 1%;
 }

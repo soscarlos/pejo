@@ -7,3 +7,15 @@
     color: white;
     font-size: xx-large;
 }
+
+#reminderItemTitle {
+    font-size: x-large;
+}
+
+#reminderItemText {
+    font-size: larger;
+}
+
+#reminderItem {
+    margin-bottom: 1%;
+}
