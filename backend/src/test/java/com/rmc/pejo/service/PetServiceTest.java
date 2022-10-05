@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.rmc.pejo.entity.PetType.CAT;
 import static com.rmc.pejo.entity.SexType.FEMALE;
@@ -42,6 +43,7 @@ class PetServiceTest {
             .date(testDate)
             .time(testTime)
             .active(true)
+            .reminderPets(new ArrayList<>())
             .build();
     @Mock
     PetRepository petRepository;
@@ -79,10 +81,32 @@ class PetServiceTest {
     }
 
     @Test
-    void testDeleteCallRepositoryMethod() {
+    void testDeleteCallAtLeast2RepositoryMethods() {
         petService.delete(testId1);
 
+        verify(reminderRepository).findRemindersByReminderPetsId(testId1);
         verify(petRepository).deleteById(testId1);
+    }
+    @Test
+    void testDeleteCallSaveRepositoryMethodIfReminderFound() {
+        List<Pet> reminderPets = testReminder1.getReminderPets();
+        reminderPets.add(testPet1);
+        when(reminderRepository.findRemindersByReminderPetsId(testId1)).thenReturn(Set.of(testReminder1));
+
+        petService.delete(testId1);
+
+        verify(reminderRepository).findRemindersByReminderPetsId(testId1);
+        verify(petRepository).deleteById(testId1);
+        verify(reminderRepository).save(any(Reminder.class));
+    }
+    @Test
+    void testDeleteCallDeleteReminderIfNoPetInReminder() {
+        when(reminderRepository.findRemindersByReminderPetsId(testId1)).thenReturn(Set.of(testReminder1));
+        petService.delete(testId1);
+
+        verify(reminderRepository).findRemindersByReminderPetsId(testId1);
+        verify(petRepository).deleteById(testId1);
+        verify(reminderRepository).delete(any(Reminder.class));
     }
 
     @Test
