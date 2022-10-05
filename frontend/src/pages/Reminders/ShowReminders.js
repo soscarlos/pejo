@@ -5,10 +5,11 @@ import "./style.css";
 import useFetch from '../../hooks/useFetch';
 import usePost from "../../hooks/usePost";
 import usePut from "../../hooks/usePut";
+import useDelete from "../../hooks/useDelete";
 
 const ShowReminders = () => {
 
-    const reminders = useFetch('http://localhost:8080/reminders').data;
+    let reminders = useFetch('http://localhost:8080/reminders').data;
     const setReminders = useFetch('http://localhost:8080/reminders').setData;
     const [modalOpen, setModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
@@ -17,7 +18,7 @@ const ShowReminders = () => {
   
     const usePostAddReminder = async(reminder) => {
       const newData = await usePost(reminder, 'http://localhost:8080/reminders');
-      console.log(`tiltle=${newData.title}`)
+
       let currentReminder = {
         id: newData.id,
         title: newData.title,
@@ -33,7 +34,7 @@ const ShowReminders = () => {
     const usePutUpdateReminder = async (reminder) => {
         console.log(`reminderId=${reminder.showReminderId}`)
         const newData = await usePut(reminder, 'http://localhost:8080/reminders');
-        console.log(`newData=${newData.id}, ${newData.title}`)
+
         let currentReminder = reminders[0];
         for (let reminder of reminders) {
           if (reminder.id === newData.id) {
@@ -46,6 +47,17 @@ const ShowReminders = () => {
         currentReminder.description = newData.description;
         setReminders([...reminders]);
       }
+  
+    
+    const useDeleteReminder = async (reminder) => {
+      useDelete(`http://localhost:8080/reminders/${reminder.id}`);
+      var currentReminder = reminders.filter(r => r.id === reminder.id)[0];
+      var index = reminders.indexOf(currentReminder);
+      setReminders([...reminders.splice(index, 1)]);
+    }
+    
+  
+  
    
     return (
       <div>
@@ -67,8 +79,8 @@ const ShowReminders = () => {
           <ShowReminder key={showReminder.id} 
              showReminder={showReminder} setShowReminder={setShowReminder}
              updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen}
-             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder}
-             modalOpen={modalOpen} />
+             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder} 
+             onDelete={useDeleteReminder}/>
         )) : "No Reminders"}             
       </div>
       </div>     

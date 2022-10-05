@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const UpdateReminder = ({ showReminderId, showReminderTitle, 
     showReminderDate, showReminderTime, showReminderDescription,
     setUpdateModalOpen, onAdd }) => {
-    console.log(`id=${showReminderId}, ${showReminderTitle}`);
+
     const id = showReminderId;
     const [date, setDate] = useState(showReminderDate);
     const [time, setTime] = useState(showReminderTime);
