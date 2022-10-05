@@ -1,3 +1,14 @@
-#firstRow, #secondRow {
+#navbar {
     padding-bottom: 2%;
+}
+
+#icons img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+}
+
+.petIcon {
+    margin-right: 0.5%;
 }
