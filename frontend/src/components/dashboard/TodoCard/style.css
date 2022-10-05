@@ -1,6 +1,7 @@
 #todoCard {
     background-color: #0292ce;
     font-size: large;
+    width: 100%;
 }
 
 #todoTitle {
