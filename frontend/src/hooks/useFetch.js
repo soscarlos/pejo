@@ -6,7 +6,6 @@ const useFetch = (endpoint) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-
         const getData = async () => {
             try {
                 const response = await fetch(endpoint);
@@ -23,11 +22,8 @@ const useFetch = (endpoint) => {
                 setIsLoading(false);
             }
         }
-
         getData();
-
-    }, [endpoint]);
-
+    }, [responseData]);
     return {
         data: data,
         isLoading: isLoading,

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 
 const usePut = async(data, endpoint) => {
     const res = await fetch(endpoint, {
