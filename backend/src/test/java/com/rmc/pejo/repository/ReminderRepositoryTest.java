@@ -28,11 +28,10 @@ class ReminderRepositoryTest {
     @Autowired
     PetRepository petRepository;
 
-    List<Reminder> allReminders;
 
     @BeforeAll
     void addAllData() {
-        allReminders = reminderRepository.saveAll(getRemindersList());
+        reminderRepository.saveAll(getRemindersList());
     }
 
     @AfterAll
@@ -44,33 +43,30 @@ class ReminderRepositoryTest {
     @Test
     @Order(1)
     void findRemindersByPetsIdReturnRemindersSetWithPet() {
-        Optional<Reminder> byId = reminderRepository.findById(1L);
+        Reminder reminder1 = reminderRepository.findById(1L).orElseThrow(RuntimeException::new);
 
-//        reminderRepository.findAllById();
+        List<Reminder> remindersRest = reminderRepository.findAllById(List.of(2L, 3L, 4L));
 
-//        List<Pet> pets = getPets();
-//        Pet pet1 = pets.get(0);
-//        Pet pet2 = pets.get(1);
-//        pet1.setPetReminders(List.of(reminder1));
-//        pet2.setPetReminders(remindersRest);
-//        petRepository.saveAll(List.of(pet2, pet1));
-//
-//        Set<Reminder> result = reminderRepository.findRemindersByReminderPetsId(1L);
-//        Set<Reminder> expected = Set.of(reminder1);
+        List<Pet> pets = getPets();
+        Pet pet1 = pets.get(0);
+        Pet pet2 = pets.get(1);
+        pet1.setPetReminders(List.of(reminder1));
+        pet2.setPetReminders(remindersRest);
+        petRepository.saveAll(List.of(pet2, pet1));
 
-//        result.forEach(reminderResult -> System.out.println("result = " + reminderResult.getTitle()));
-//        expected.forEach(reminderExpected -> System.out.println("result = " + reminderExpected.getTitle()));
+        Set<Reminder> result = reminderRepository.findRemindersByReminderPetsId(1L);
+        Set<Reminder> expected = Set.of(reminder1);
 
-//        assertIterableEquals(expected, result);
+        assertIterableEquals(expected, result);
     }
 
     @Test
     @Order(2)
     void findRemindersByNonExistingPetIdReturnEmptySet() {
-
+        List<Reminder> reminders = reminderRepository.findAll();
         List<Pet> pets = getPets();
         Pet pet1 = pets.get(0);
-        pet1.setPetReminders(allReminders);
+        pet1.setPetReminders(reminders);
         petRepository.save(pet1);
 
         Set<Reminder> result = reminderRepository.findRemindersByReminderPetsId(5L);
@@ -82,7 +78,8 @@ class ReminderRepositoryTest {
     @Test
     @Order(3)
     void findFirst3ByDateAfterOrderByDateAscReturnFirst3Reminders() {
-        List<Reminder> reducedList = allReminders
+        List<Reminder> reminders = reminderRepository.findAll();
+        List<Reminder> reducedList = reminders
                 .stream()
                 .sorted(Comparator.comparing(Reminder::getDate))
                 .filter(reminder -> reminder.getDate().isBefore(today.plusMonths(2)))
@@ -96,14 +93,12 @@ class ReminderRepositoryTest {
 
     @Test
     @Order(4)
-    void findFirst3ByDateAfterOrderByDateAscReturnLessThan3RemindersAsc() {
-        List<Reminder> reminders = allReminders
+    void findFirst3ByDateAfterOrderByDateAscIfDatesAreEqualReturnOrderByTime() {
+        setNewDates();
+        List<Reminder> filteredReminders = reminderRepository.findAllById(List.of(1L, 2L, 3L));
+        List<Reminder> orderedList = filteredReminders
                 .stream()
-                .filter(reminder -> reminder.getId() < 3L)
-                .toList();
-        List<Reminder> orderedList = reminders
-                .stream()
-                .sorted(Comparator.comparing(Reminder::getDate))
+                .sorted(Comparator.comparing(Reminder::getTime))
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(orderedList);
 
@@ -114,20 +109,38 @@ class ReminderRepositoryTest {
 
     @Test
     @Order(5)
-    void findFirst3ByDateAfterOrderByDateAscIfDatesAreEqualReturnOrderByTime() {
-        allReminders.forEach(reminder -> {
-            reminder.setDate(today.plusDays(1));
-        });
-        List<Reminder> orderedList = allReminders
+    void findFirst3ByDateAfterOrderByDateAscReturnLessThan3RemindersAsc() {
+        setBackDates();
+        reminderRepository.deleteById(3L);
+        reminderRepository.deleteById(4L);
+        List<Reminder> reducedReminders = reminderRepository.findAll();
+        List<Reminder> orderedList = reducedReminders
                 .stream()
-                .sorted(Comparator.comparing(Reminder::getTime))
-                .filter(reminder -> reminder.getId() != 4L)
+                .sorted(Comparator.comparing(Reminder::getDate))
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(orderedList);
 
         Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
 
         assertIterableEquals(expected, result);
+    }
+
+    private void setNewDates() {
+        List<Reminder> reminders = reminderRepository.findAll();
+        reminders.forEach(reminder -> {
+            reminder.setDate(today.plusDays(1));
+            reminderRepository.save(reminder);
+        });
+    }
+
+    private void setBackDates() {
+        List<Reminder> reminders = reminderRepository.findAll();
+        for (int i = 0; i < reminders.size(); i++) {
+            Reminder repositoryReminder = reminders.get(i);
+            Reminder reminder = getRemindersList().get(i);
+            repositoryReminder.setDate(reminder.getDate());
+            reminderRepository.save(repositoryReminder);
+        }
     }
 
     private List<Pet> getPets() {
@@ -145,22 +158,7 @@ class ReminderRepositoryTest {
                 .petType(DOG)
                 .sexType(MALE)
                 .build();
-        Pet testPet3 = Pet.builder()
-                .id(3L)
-                .name("Testy 3")
-                .birthDate(today.minusYears(3))
-                .petType(DOG)
-                .sexType(FEMALE)
-                .build();
-        Pet testPet4 = Pet.builder()
-                .id(4L)
-                .name("Testy 4")
-                .birthDate(today.minusMonths(9))
-                .petType(CAT)
-                .sexType(MALE)
-                .build();
-
-        return List.of(testPet1, testPet2, testPet3, testPet4);
+        return List.of(testPet1, testPet2);
     }
 
     private List<Reminder> getRemindersList() {
