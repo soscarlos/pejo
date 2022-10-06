@@ -25,12 +25,18 @@
   background-color: #2596be !important;
   border: none !important;
   margin-left: 1%;
+  font-size: large !important;
 }
 
 #addReminderButton {
   background-color: #dcdcdc !important;
   border-color: black !important;
   color: black;
+  font-size: large !important;
+}
+
+#shownReminderText {
+  font-size: large;
 }
 
 .add-form {

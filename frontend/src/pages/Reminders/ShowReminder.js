@@ -8,7 +8,7 @@ const ShowReminder = ({showReminder, setShowReminder,
         <Card id='shownReminder'>
             <Card.Body>
                 <Card.Title>{showReminder.title}</Card.Title>
-                <Card.Text>{showReminder.description}<br/>
+                <Card.Text id='shownReminderText'>{showReminder.description}<br/>
                 {showReminder.date + " | " + showReminder.time}</Card.Text>
                 <Button className="reminderButton float-end" onClick={() => {
                     setUpdateModalOpen(true);
