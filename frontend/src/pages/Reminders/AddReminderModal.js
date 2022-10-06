@@ -1,6 +1,5 @@
 import AddReminder from "./AddReminder";
 import UpdateReminder from "./UpdateReminder";
-import Button from 'react-bootstrap/Button';
 import CloseButton from 'react-bootstrap/CloseButton';
 import Modal from 'react-bootstrap/Modal';
 import "./style.css";
@@ -30,14 +29,6 @@ const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, mo
         showReminderTime={showReminder.time} showReminderDescription={showReminder.description}
         setUpdateModalOpen={setUpdateModalOpen} onAdd={onAdd} /> }
       </Modal.Body>
-      <Modal.Footer>
-      <Button variant="danger"
-                onClick={() => {
-                  setUpdateModalOpen(false);
-                  setModalOpen(false);                 
-                }}>Cancel
-              </Button>
-      </Modal.Footer>
     </Modal>
       );
     }
