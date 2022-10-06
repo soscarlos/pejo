@@ -32,7 +32,7 @@ public class ReminderService implements ReminderServiceInterface {
 
     public Set<Reminder> getFirst3AfterDate() {
         LocalDate now = LocalDate.now();
-        return reminderRepository.findFirst3ByDateAfterOrderByDateAsc(now);
+        return reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(now);
     }
 
     public Reminder update(Reminder reminder) {

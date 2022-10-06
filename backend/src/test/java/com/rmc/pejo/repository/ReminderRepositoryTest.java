@@ -2,9 +2,7 @@ package com.rmc.pejo.repository;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
-import com.rmc.pejo.exceptions.ResourceNotFoundException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -19,6 +17,7 @@ import static com.rmc.pejo.entity.SexType.MALE;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 @DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReminderRepositoryTest {
 
     LocalDate today = LocalDate.now();
@@ -29,24 +28,25 @@ class ReminderRepositoryTest {
     @Autowired
     PetRepository petRepository;
 
-    @AfterEach
+
+    @BeforeAll
+    void addAllData() {
+        reminderRepository.saveAll(getRemindersList());
+    }
+
+    @AfterAll
     void deleteAll() {
         reminderRepository.deleteAll();
         petRepository.deleteAll();
     }
 
     @Test
+    @Order(1)
     void findRemindersByPetsIdReturnRemindersSetWithPet() {
-        Reminder reminder1 = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() == 1L)
-                .findFirst()
-                .orElseThrow(ResourceNotFoundException::new);
-        List<Reminder> remindersRest = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() != 1L)
-                .toList();
-        reminderRepository.saveAll(getRemindersList());
+        Reminder reminder1 = reminderRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        List<Reminder> remindersRest = reminderRepository.findAllById(List.of(2L, 3L, 4L));
+
         List<Pet> pets = getPets();
         Pet pet1 = pets.get(0);
         Pet pet2 = pets.get(1);
@@ -61,8 +61,9 @@ class ReminderRepositoryTest {
     }
 
     @Test
+    @Order(2)
     void findRemindersByNonExistingPetIdReturnEmptySet() {
-        List<Reminder> reminders = reminderRepository.saveAll(getRemindersList());
+        List<Reminder> reminders = reminderRepository.findAll();
         List<Pet> pets = getPets();
         Pet pet1 = pets.get(0);
         pet1.setPetReminders(reminders);
@@ -75,37 +76,71 @@ class ReminderRepositoryTest {
     }
 
     @Test
+    @Order(3)
     void findFirst3ByDateAfterOrderByDateAscReturnFirst3Reminders() {
-        List<Reminder> remindersList = getRemindersList();
-        List<Reminder> reducedList = remindersList
+        List<Reminder> reminders = reminderRepository.findAll();
+        List<Reminder> reducedList = reminders
                 .stream()
                 .sorted(Comparator.comparing(Reminder::getDate))
                 .filter(reminder -> reminder.getDate().isBefore(today.plusMonths(2)))
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(reducedList);
-        reminderRepository.saveAll(remindersList);
 
-        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAsc(today);
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
 
         assertIterableEquals(expected, result);
     }
 
     @Test
-    void findFirst3ByDateAfterOrderByDateAscReturnLessThan3RemindersAsc() {
-        List<Reminder> reminders = getRemindersList()
+    @Order(4)
+    void findFirst3ByDateAfterOrderByDateAscIfDatesAreEqualReturnOrderByTime() {
+        setNewDates();
+        List<Reminder> filteredReminders = reminderRepository.findAllById(List.of(1L, 2L, 3L));
+        List<Reminder> orderedList = filteredReminders
                 .stream()
-                .filter(reminder -> reminder.getId() < 3L)
+                .sorted(Comparator.comparing(Reminder::getTime))
                 .toList();
-        List<Reminder> orderedList = reminders
+        Set<Reminder> expected = new LinkedHashSet<>(orderedList);
+
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
+
+        assertIterableEquals(expected, result);
+    }
+
+    @Test
+    @Order(5)
+    void findFirst3ByDateAfterOrderByDateAscReturnLessThan3RemindersAsc() {
+        setBackDates();
+        reminderRepository.deleteById(3L);
+        reminderRepository.deleteById(4L);
+        List<Reminder> reducedReminders = reminderRepository.findAll();
+        List<Reminder> orderedList = reducedReminders
                 .stream()
                 .sorted(Comparator.comparing(Reminder::getDate))
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(orderedList);
-        reminderRepository.saveAll(reminders);
 
-        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAsc(today);
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
 
         assertIterableEquals(expected, result);
+    }
+
+    private void setNewDates() {
+        List<Reminder> reminders = reminderRepository.findAll();
+        reminders.forEach(reminder -> {
+            reminder.setDate(today.plusDays(1));
+            reminderRepository.save(reminder);
+        });
+    }
+
+    private void setBackDates() {
+        List<Reminder> reminders = reminderRepository.findAll();
+        for (int i = 0; i < reminders.size(); i++) {
+            Reminder repositoryReminder = reminders.get(i);
+            Reminder reminder = getRemindersList().get(i);
+            repositoryReminder.setDate(reminder.getDate());
+            reminderRepository.save(repositoryReminder);
+        }
     }
 
     private List<Pet> getPets() {
@@ -123,22 +158,7 @@ class ReminderRepositoryTest {
                 .petType(DOG)
                 .sexType(MALE)
                 .build();
-        Pet testPet3 = Pet.builder()
-                .id(3L)
-                .name("Testy 3")
-                .birthDate(today.minusYears(3))
-                .petType(DOG)
-                .sexType(FEMALE)
-                .build();
-        Pet testPet4 = Pet.builder()
-                .id(4L)
-                .name("Testy 4")
-                .birthDate(today.minusMonths(9))
-                .petType(CAT)
-                .sexType(MALE)
-                .build();
-
-        return List.of(testPet1, testPet2, testPet3, testPet4);
+        return List.of(testPet1, testPet2);
     }
 
     private List<Reminder> getRemindersList() {
@@ -147,7 +167,7 @@ class ReminderRepositoryTest {
                 .title("reminder 1")
                 .description("description 1")
                 .date(today.plusMonths(1))
-                .time(testTime.plusHours(1))
+                .time(testTime.plusHours(3))
                 .active(true)
                 .build();
         Reminder testReminder2 = Reminder.builder()
@@ -155,7 +175,7 @@ class ReminderRepositoryTest {
                 .title("reminder 2")
                 .description("description 2")
                 .date(today.plusWeeks(1))
-                .time(testTime.plusHours(2))
+                .time(testTime.plusHours(1))
                 .active(true)
                 .build();
         Reminder testReminder3 = Reminder.builder()
@@ -163,7 +183,7 @@ class ReminderRepositoryTest {
                 .title("reminder 3")
                 .description("description 3")
                 .date(today.plusDays(2))
-                .time(testTime.plusHours(3))
+                .time(testTime.plusHours(4))
                 .active(true)
                 .build();
         Reminder testReminder4 = Reminder.builder()
@@ -171,7 +191,7 @@ class ReminderRepositoryTest {
                 .title("reminder 4")
                 .description("description 4")
                 .date(today.plusMonths(2))
-                .time(testTime.plusHours(4))
+                .time(testTime.plusHours(5))
                 .active(true)
                 .build();
         return List.of(testReminder1, testReminder2, testReminder3, testReminder4);
