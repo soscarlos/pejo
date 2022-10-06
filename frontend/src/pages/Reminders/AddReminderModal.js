@@ -22,9 +22,9 @@ const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, mo
         </CloseButton>
       </Modal.Header>
       <Modal.Body>
-        {modalOpen && <AddReminder display="block" setModalOpen={setModalOpen}
+        {modalOpen && <AddReminder setModalOpen={setModalOpen}
         onAdd={onAdd} /> }
-        {updateModalOpen && <UpdateReminder display="block" showReminderId={showReminder.id}
+        {updateModalOpen && <UpdateReminder showReminderId={showReminder.id}
         showReminderTitle={showReminder.title} showReminderDate={showReminder.date}
         showReminderTime={showReminder.time} showReminderDescription={showReminder.description}
         setUpdateModalOpen={setUpdateModalOpen} onAdd={onAdd} /> }
