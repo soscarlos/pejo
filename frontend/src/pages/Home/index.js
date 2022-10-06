@@ -11,21 +11,21 @@ const Home = () => {
     return (
         <>
         <Row id='firstRow'>
-            <Col>
+            <Col className='container'>
                 <TodoCard />
             </Col>
-            <Col>
+            <Col className='container'>
                 <LocationCard />
             </Col>
-            <Col>
-                <DocumentCard/>
+            <Col className='container'>
+                <DocumentCard />
                 </Col>
         </Row>
         <Row id='secondRow'>
-            <Col>
+            <Col className='container'>
                 <TipsCard />
             </Col>
-            <Col>
+            <Col className='container'>
                 <ReminderCard />
             </Col>
         </Row>

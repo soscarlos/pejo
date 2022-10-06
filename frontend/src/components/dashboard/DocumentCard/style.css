@@ -1,7 +1,17 @@
 #documentCard {
     background-color: #dcdcdc;
+    width: 100%;
 }
 
 #documentTitle {
-    color: #0292ce
+    color: #0292ce;
+    font-size: xx-large;
+}
+
+#documentItemText {
+    font-size: x-large;
+}
+
+#documentItem {
+    margin-bottom: 1%;
 }

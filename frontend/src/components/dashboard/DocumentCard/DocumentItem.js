@@ -4,14 +4,14 @@ import Card from 'react-bootstrap/Card';
 const DocumentItem = () => {
   return (
     <>
-    <Card>
+    <Card id='documentItem'>
         <Card.Body>
-            <Card.Text>Pajti blood test - 08/08/2015</Card.Text>
+            <Card.Text id='documentItemText'>Pajti blood test - 08/08/2015</Card.Text>
         </Card.Body>
     </Card>
-    <Card>
+    <Card id='documentItem'>
         <Card.Body>
-            <Card.Text>Mogli vaccination - 05/03/2021</Card.Text>
+            <Card.Text id='documentItemText'>Mogli vaccination - 05/03/2021</Card.Text>
         </Card.Body>
     </Card>
     </>

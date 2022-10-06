@@ -1,7 +1,21 @@
 #reminderCard {
     background-color: #fa9801;
+    width: 100%;
 }
 
 #reminderTitle {
     color: white;
+    font-size: xx-large;
+}
+
+#reminderItemTitle {
+    font-size: x-large;
+}
+
+#reminderItemText {
+    font-size: larger;
+}
+
+#reminderItem {
+    margin-bottom: 1%;
 }

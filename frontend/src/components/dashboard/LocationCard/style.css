@@ -1,8 +1,14 @@
 
 #locationCard {
     border: 7px solid #dcdcdc;
+    width: 100%;
   }
 
 #locationText {
   color: #0292ce;
+  font-size: x-large;
+}
+
+#locationTitle {
+  font-size: xx-large;
 }

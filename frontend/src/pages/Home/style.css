@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+}
+
+#firstRow, #secondRow {
+    padding-bottom: 1%;
+}

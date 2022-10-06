@@ -1,11 +1,22 @@
 #tipsCard {
     background-color: #dcdcdc;
+    width: 100%;
 }
 
 #tipsTitle {
     color: #0292ce;
+    font-size: xx-large;
 }
 
 #tipItemTitle {
     color: #fa9801;
+    font-size: x-large;
+}
+
+#tipItemText {
+    font-size: larger;
+}
+
+#tipItem {
+    margin-bottom: 1%;
 }
