@@ -8,13 +8,13 @@ import usePut from "../../hooks/usePut";
 import useDelete from "../../hooks/useDelete";
 
 const ShowReminders = () => {
-
+    
     let reminders = useFetch('http://localhost:8080/reminders').data;
     const setReminders = useFetch('http://localhost:8080/reminders').setData;
     const [modalOpen, setModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [showReminder, setShowReminder] = useState(null);
-
+    
   
     const usePostAddReminder = async(reminder) => {
       const newData = await usePost(reminder, 'http://localhost:8080/reminders');

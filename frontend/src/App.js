@@ -7,9 +7,12 @@ import Documents from './pages/Documents';
 import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
 import Reminder from './pages/Reminders';
+import PetProfile from './pages/PetProfiles';
 import './App.css';
 
 const App = () => {
+
+  const petId = 1;
   return (
     <div className="App">
       <BrowserRouter>
@@ -21,6 +24,7 @@ const App = () => {
           <Route path="documents" element={<Documents />} />
           <Route path="tips" element={<Tips />} />
           <Route path="reminders" element={<Reminder />} />
+          <Route path={"pets/" + petId} element={<PetProfile />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
