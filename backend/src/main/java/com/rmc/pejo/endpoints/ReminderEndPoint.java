@@ -36,6 +36,7 @@ public class ReminderEndPoint {
     }
 
     @GetMapping("/first3ByDate")
+//    TODO first3AfterToday
     public Set<Reminder> getFirst3AfterToday() {
         return service.getFirst3AfterDate();
     }

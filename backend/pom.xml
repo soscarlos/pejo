@@ -33,6 +33,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+<!--            TODO define scope for testing after moving to Postgres-->
             <scope>runtime</scope>
         </dependency>
         <dependency>

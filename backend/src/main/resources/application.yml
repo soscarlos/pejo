@@ -9,7 +9,7 @@ spring:
 
   datasource:
     url: jdbc:h2:mem:dcbapp
-    username: sa
+    username: ${DB_USERNAME}
     password: password
 
 # Dataset
