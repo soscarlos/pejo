@@ -30,8 +30,8 @@ dataset:
   reminders:
     - date: 2022-10-28
       time: "09:15:00"
-      title: Take Mogli to the Vet
-      description: Remember to bring its blood test
+      title: Take Mogli to meet a sitter
+      description: Remember to bring its goodies
       active: true
     - date: 2022-10-29
       time: "10:20:00"
