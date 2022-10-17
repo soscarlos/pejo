@@ -1,0 +1,16 @@
+#formContainer {
+    justify-content: center;
+}
+
+#loginButton {
+    background-color: #fa9801;
+    border: none;
+}
+
+#loginForm {
+    background-color: #2596be;
+    padding: 2%;
+    border-radius: 5%;
+    color: white;
+    font-size: large;
+}
