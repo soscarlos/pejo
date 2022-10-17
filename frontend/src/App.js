@@ -7,6 +7,7 @@ import Documents from './pages/Documents';
 import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
 import Reminder from './pages/Reminders';
+import Login from "./pages/Login";
 import './App.css';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="tips" element={<Tips />} />
           <Route path="reminders" element={<Reminder />} />
         </Route>
+        <Route path="login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       </BrowserRouter>
