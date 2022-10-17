@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("pets")
 @RequiredArgsConstructor

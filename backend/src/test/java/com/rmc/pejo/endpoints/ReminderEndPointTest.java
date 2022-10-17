@@ -164,7 +164,7 @@ class ReminderEndPointTest {
 
     @Test
     void getFirst3AfterToday() {
-        String filterUri = uri + "/first3ByDate";
+        String filterUri = uri + "/first3AfterToday";
 
         webTestClient.get()
                 .uri(filterUri)
