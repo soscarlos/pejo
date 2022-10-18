@@ -27,15 +27,16 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors().disable()
                 .csrf().disable()
+                .cors()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
+                .authenticated();
+//                .and() TODO: Still need to see connection with front end login page
+//                .formLogin();
 
         return http.build();
     }
@@ -52,30 +53,4 @@ public class SecurityConfiguration {
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         return provider;
     }
-
-//    Source from this configuration: https://reflectoring.io/spring-cors/
-    @Bean
-    public CorsConfigurationSource corsConfiguration() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.applyPermitDefaultValues();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedMethod("GET");
-        corsConfiguration.addAllowedMethod("POST");
-        corsConfiguration.addAllowedMethod("PUT");
-        corsConfiguration.addAllowedMethod("DELETE");
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
-//        TODO I might not need the Authorization header since this is going to be a form based auth
-        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Requestor-Type"));
-        corsConfiguration.setExposedHeaders(List.of("X-Get-Header"));
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-    }
-
-    @Bean
-    public CorsWebFilter corsWebFilter() {
-        return new CorsWebFilter(corsConfiguration());
-    }
-
 }

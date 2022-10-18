@@ -11,10 +11,10 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
-//@CrossOrigin
 @RestController
 @RequestMapping("reminders")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class ReminderEndPoint {
     private final ReminderService service;
 
@@ -36,7 +36,6 @@ public class ReminderEndPoint {
     }
 
     @GetMapping("/first3AfterToday")
-//    TODO first3AfterToday
     public Set<Reminder> getFirst3AfterToday() {
         return service.getFirst3AfterDate();
     }
