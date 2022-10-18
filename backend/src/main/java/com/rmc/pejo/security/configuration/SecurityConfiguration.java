@@ -34,9 +34,11 @@ public class SecurityConfiguration {
                 .antMatchers("/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated();
-//                .and() TODO: Still need to see connection with front end login page
-//                .formLogin();
+                .authenticated()
+                .and()
+                .formLogin();
+
+//        TODO: Still need to see connection with front end login page
 
         return http.build();
     }
