@@ -11,12 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -24,8 +18,10 @@ import java.util.List;
 public class SecurityConfiguration {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //        TODO: Still need to implement JWT authorization/authentication
         http
                 .csrf().disable()
                 .cors()
@@ -38,8 +34,6 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin();
 
-//        TODO: Still need to see connection with front end login page
-
         return http.build();
     }
 
@@ -48,6 +42,7 @@ public class SecurityConfiguration {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .authenticationProvider(authenticationProvider()).build();
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
