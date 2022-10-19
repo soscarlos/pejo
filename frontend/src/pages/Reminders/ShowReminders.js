@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddReminderModal from "./AddReminderModal";
 import ShowReminder from "./ShowReminder";
 import "./style.css";
@@ -6,14 +6,17 @@ import useFetch from '../../hooks/useFetch';
 import usePost from "../../hooks/usePost";
 import usePut from "../../hooks/usePut";
 import useDelete from "../../hooks/useDelete";
+import { ModalContext } from "./reminderContext";
+import useFetchReminders from "../../hooks/useFetchReminders";
 
 const ShowReminders = () => {
     
     let reminders = useFetch('http://localhost:8080/reminders').data;
     const setReminders = useFetch('http://localhost:8080/reminders').setData;
-    const [modalOpen, setModalOpen] = useState(false);
+    //const [modalOpen, setModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
     const [showReminder, setShowReminder] = useState(null);
+    
     
   
     const usePostAddReminder = async(reminder) => {
@@ -57,33 +60,34 @@ const ShowReminders = () => {
     }
     
   
-  
+    const modal = useContext(ModalContext);
+    console.log(modal.modalOpen)
    
-    return (
+    return (    
       <div>
-        {modalOpen && <AddReminderModal showReminder={reminders[0]} 
+        {modal.modalOpen && <AddReminderModal showReminder={reminders[0]} 
               updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen} 
-              modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePostAddReminder} />}
+              modalOpen={modal.modalOpen} setModalOpen={modal.toggleModalOpen} onAdd={usePostAddReminder} />}
         
         {updateModalOpen && <AddReminderModal showReminder={showReminder} 
              updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen}
-             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder} />}          
+             modalOpen={modal.modalOpen} setModalOpen={modal.toggleModalOpen} onAdd={usePutUpdateReminder} />}          
       <div className="container2">
         <div className="reminderHeader">
         <h1>Reminders</h1>
           <button onClick={() => {
-          setModalOpen(true);
+          modal.toggleModalOpen(true);
         }}>Add Reminder</button>   
         </div>
         {reminders!= null? reminders.map(showReminder => (
           <ShowReminder key={showReminder.id} 
              showReminder={showReminder} setShowReminder={setShowReminder}
              updateModalOpen={updateModalOpen} setUpdateModalOpen={setUpdateModalOpen}
-             modalOpen={modalOpen} setModalOpen={setModalOpen} onAdd={usePutUpdateReminder} 
+             modalOpen={modal.modalOpen} setModalOpen={modal.toggleModalOpen} onAdd={usePutUpdateReminder} 
              onDelete={useDeleteReminder}/>
         )) : "No Reminders"}             
       </div>
-      </div>     
+      </div>   
     )  
 }
 
