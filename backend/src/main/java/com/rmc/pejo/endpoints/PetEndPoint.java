@@ -12,10 +12,10 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin
 @RestController
 @RequestMapping("pets")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class PetEndPoint {
     private final PetService service;
     private final ReminderService reminderService;
