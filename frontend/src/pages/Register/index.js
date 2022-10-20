@@ -4,6 +4,7 @@ import dashboard_logo from '../../img/dashboard_logo.png';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import usePost from "../../hooks/usePost";
 import './style.css';
 
 
@@ -18,11 +19,15 @@ const Register = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        UseStoreUser({firstName, lastName, email, password});
         setFirstName('');
         setLastName('');
         setEmail('');
         setPassword('');
-        
+    }
+
+    const UseStoreUser = async(user) => {
+        await usePost(user, 'http://localhost:8080/registration');
     }
 
     return (
