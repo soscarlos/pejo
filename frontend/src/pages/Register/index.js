@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import usePost from "../../hooks/usePost";
+import { Navigate } from 'react-router-dom';
 import './style.css';
 
 
@@ -14,23 +15,19 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
         UseStoreUser({firstName, lastName, email, password});
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
+        setIsSubmitted(true);
     }
 
     const UseStoreUser = async(user) => {
         await usePost(user, 'http://localhost:8080/registration');
     }
 
-    return (
+    const registerForm = (
         <>
         <Navbar bg="light" variant="light">
             <Container fluid>
@@ -67,6 +64,12 @@ const Register = () => {
             <Button type="submit" id="loginButton">Register</Button>
         </Form>
         </Container>
+        </>
+    )
+
+    return (
+        <>
+        {isSubmitted ? <Navigate to="/login" /> : registerForm}
         </>
     )
 };
