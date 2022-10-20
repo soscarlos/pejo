@@ -7,14 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
-
-import javax.mail.MessagingException;
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
     @Mock
@@ -23,15 +23,10 @@ class EmailServiceTest {
     EmailService service;
     MimeMessage testMessage;
 
-    MimeMessageHelper helper;
-
     @BeforeEach
-    void initialize() throws MessagingException {
-        EmailBuilder builder = new EmailBuilder();
-        testMessage = mailSender.createMimeMessage();
-        helper = new MimeMessageHelper(testMessage, "utf-8");
-        String email = builder.buildEmail("test name", "link");
-        helper.setText(email, true);
+    void initialize() {
+        testMessage = new MimeMessage((Session) null);
+        when(mailSender.createMimeMessage()).thenReturn(testMessage);
     }
 
     @Test
@@ -42,5 +37,12 @@ class EmailServiceTest {
 
         verify(mailSender).createMimeMessage();
         verify(mailSender).send(testMessage);
+    }
+
+    @Test
+    void sendThrowsIllegalStateExceptionWhenMailMalformed() {
+        String to = "@mail.com";
+        String email = "email";
+        assertThrows(IllegalStateException.class, () -> service.send(to, email));
     }
 }
