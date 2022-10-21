@@ -8,6 +8,8 @@ import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
 import Reminder from './pages/Reminders';
 import PetProfile from './pages/PetProfiles';
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import './App.css';
 
 const App = () => {
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="reminders" element={<Reminder />} />
           <Route path={"pets/" + petId} element={<PetProfile />} />
         </Route>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       </BrowserRouter>

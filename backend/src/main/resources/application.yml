@@ -10,7 +10,26 @@ spring:
   datasource:
     url: jdbc:h2:mem:dcbapp
     username: sa
+# TODO if using Postgres we need to use environmental var and call them like that ${DB_USERNAME}
     password: password
+
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
 
 # Dataset
 dataset:
@@ -30,8 +49,8 @@ dataset:
   reminders:
     - date: 2022-10-28
       time: "09:15:00"
-      title: Take Mogli to the Vet
-      description: Remember to bring its blood test
+      title: Take Mogli to meet a sitter
+      description: Remember to bring its goodies
       active: true
     - date: 2022-10-29
       time: "10:20:00"
