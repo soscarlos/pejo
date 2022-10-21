@@ -33,6 +33,7 @@ class EmailServiceTest {
     void sendSuccesfullAttempt() {
         String to = "test@mail.com";
         String email = "email";
+
         service.send(to, email);
 
         verify(mailSender).createMimeMessage();
@@ -43,6 +44,7 @@ class EmailServiceTest {
     void sendThrowsIllegalStateExceptionWhenMailMalformed() {
         String to = "@mail.com";
         String email = "email";
+
         assertThrows(IllegalStateException.class, () -> service.send(to, email));
     }
 }
