@@ -1,0 +1,13 @@
+.reminderButton {
+    background-color: #2596be !important;
+    border: none !important;
+    margin-left: 1%;
+    font-size: large !important;
+  }
+  
+  #addPetReminderButton {
+    background-color: #dcdcdc !important;
+    color: black;
+    font-size: large !important;
+  }
+  
