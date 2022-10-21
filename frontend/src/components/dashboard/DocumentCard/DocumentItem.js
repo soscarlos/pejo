@@ -6,7 +6,7 @@ const DocumentItem = () => {
     <>
     <Card id='documentItem'>
         <Card.Body>
-            <Card.Text id='documentItemText'>Pajti blood test - 08/08/2015</Card.Text>
+            <Card.Text id='documentItemText'>Bob blood test - 08/08/2015</Card.Text>
         </Card.Body>
     </Card>
     <Card id='documentItem'>

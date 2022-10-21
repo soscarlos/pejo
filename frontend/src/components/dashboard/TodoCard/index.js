@@ -9,7 +9,7 @@ const TodoCard = () => {
             <Card.Text>
                 <ul>
                     <li>Take Mogli to the vet</li>
-                    <li>Take Pajti for a walk</li>
+                    <li>Take Bob for a walk</li>
                     <li>Buy dog & cat food</li>
                 </ul>
             </Card.Text>

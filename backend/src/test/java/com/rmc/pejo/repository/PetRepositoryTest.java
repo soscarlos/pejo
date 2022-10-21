@@ -2,9 +2,10 @@ package com.rmc.pejo.repository;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -21,6 +22,7 @@ import static com.rmc.pejo.entity.SexType.MALE;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 @DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PetRepositoryTest {
 
     LocalDate testDate = LocalDate.now();
@@ -31,7 +33,19 @@ class PetRepositoryTest {
     @Autowired
     ReminderRepository reminderRepository;
 
-    @AfterEach
+    @BeforeAll
+    void addAllData() {
+        reminderRepository.saveAll(getRemindersList());
+        List<Reminder> remindersSelection1 = reminderRepository.findAllById(List.of(1L, 2L));
+        List<Reminder> remindersSelection2 = reminderRepository.findAllById(List.of(3L, 4L));
+        Pet pet1 = getPets().get(0);
+        Pet pet2 = getPets().get(1);
+        pet1.setPetReminders(remindersSelection1);
+        pet2.setPetReminders(remindersSelection2);
+        petRepository.saveAll(List.of(pet1, pet2));
+    }
+
+    @AfterAll
     void deleteAll() {
         petRepository.deleteAll();
         reminderRepository.deleteAll();
@@ -39,48 +53,21 @@ class PetRepositoryTest {
 
     @Test
     void findPetsByRemindersIdReturnPetSetWithReminder() {
-        List<Reminder> remindersSelection1 = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() < 3L)
-                .toList();
-        List<Reminder> remindersSelection2 = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() > 2L)
-                .toList();
-        reminderRepository.saveAll(getRemindersList());
-        List<Pet> pets = getPets();
-        Pet pet1 = pets.get(0);
-        Pet pet2 = pets.get(1);
-        pet1.setPetReminders(remindersSelection1);
-        pet2.setPetReminders(remindersSelection2);
-        petRepository.saveAll(List.of(pet1, pet2));
+        Pet pet1 = petRepository.findById(1L).orElseThrow(RuntimeException::new);
+        Set<Pet> expected = Set.of(pet1);
 
         Set<Pet> result = petRepository.findPetsByPetRemindersId(1L);
-        Set<Pet> expected = Set.of(pet1);
 
         assertIterableEquals(expected, result);
     }
+
     @Test
     void findPetsByNonExistingRemindersIdReturnEmptySet() {
-        List<Reminder> remindersSelection1 = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() < 3L)
-                .toList();
-        List<Reminder> remindersSelection2 = getRemindersList()
-                .stream()
-                .filter(reminder -> reminder.getId() > 2L)
-                .toList();
-        reminderRepository.saveAll(getRemindersList());
-        List<Pet> pets = getPets();
-        Pet pet1 = pets.get(0);
-        Pet pet2 = pets.get(1);
-        pet1.setPetReminders(remindersSelection1);
-        pet2.setPetReminders(remindersSelection2);
-        petRepository.saveAll(List.of(pet1, pet2));
-
-        Set<Pet> result = petRepository.findPetsByPetRemindersId(5L);
         Set<Pet> expected = Collections.emptySet();
 
+        Set<Pet> result = petRepository.findPetsByPetRemindersId(5L);
+
+        System.out.println("result = " + result);
         assertIterableEquals(expected, result);
     }
 
@@ -99,22 +86,8 @@ class PetRepositoryTest {
                 .petType(DOG)
                 .sexType(MALE)
                 .build();
-        Pet testPet3 = Pet.builder()
-                .id(3L)
-                .name("Testy 3")
-                .birthDate(testDate.minusYears(3))
-                .petType(DOG)
-                .sexType(FEMALE)
-                .build();
-        Pet testPet4 = Pet.builder()
-                .id(4L)
-                .name("Testy 4")
-                .birthDate(testDate.minusMonths(9))
-                .petType(CAT)
-                .sexType(MALE)
-                .build();
 
-        return List.of(testPet1, testPet2, testPet3, testPet4);
+        return List.of(testPet1, testPet2);
     }
 
     private List<Reminder> getRemindersList() {

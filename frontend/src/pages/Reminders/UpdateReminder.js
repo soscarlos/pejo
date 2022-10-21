@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { ShowReminderContext, UpdateModalContext } from './reminderContext';
 
-const UpdateReminder = ({ showReminderId, showReminderTitle, 
-    showReminderDate, showReminderTime, showReminderDescription,
-    setUpdateModalOpen, onAdd }) => {
+const UpdateReminder = ({ onAdd }) => {
 
-    const id = showReminderId;
-    const [date, setDate] = useState(showReminderDate);
-    const [time, setTime] = useState(showReminderTime);
-    const [title, setTitle] = useState(showReminderTitle);
-    const [description, setDescription] = useState(showReminderDescription);
+    const currentReminder = useContext(ShowReminderContext);
+    const updateModal = useContext(UpdateModalContext);
+    
+    const id = currentReminder.showReminder.id;
+    const [date, setDate] = useState(currentReminder.showReminder.date);
+    const [time, setTime] = useState(currentReminder.showReminder.time);
+    const [title, setTitle] = useState(currentReminder.showReminder.title);
+    const [description, setDescription] = useState(currentReminder.showReminder.description);
     
 
     const onSubmit = (e) => {
@@ -18,50 +22,35 @@ const UpdateReminder = ({ showReminderId, showReminderTitle,
         setDate('');
         setDescription('');
         setTime('');
-        setUpdateModalOpen(false);
+        updateModal.toggleUpdateModalOpen(false);
       }
 
     return (
-        <form className='update-form' onSubmit={onSubmit}>
-        <div className='form-control'>
-          <label>Title</label>
-          <input
-            type='text'
-            placeholder='Add Title'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className='form-control'>
-          <label>Date</label>
-          <input
-            type='date'
-            placeholder='Add Date'
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div className='form-control'>
-          <label>Time</label>
-          <input
-            type='time'
-            placeholder='Add Time'
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          />
-        </div>
-        <div className='form-control'>
-          <label>Description</label>
-          <input
-            type='text'
-            placeholder='Add Description'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <input style={{ background: 'grey' }} type='submit' value='Save Reminder' 
-        className='btn btn-block' />
-      </form>
+      <Form onSubmit={onSubmit}>
+      <Form.Group className="mb-3">
+        <Form.Label>Title</Form.Label>
+        <Form.Control type='text' placeholder='Add title' value={title}
+          onChange={(e) => setTitle(e.target.value)}/>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Date</Form.Label>
+        <Form.Control type="date" placeholder='Add date' value={date}
+          onChange={(e) => setDate(e.target.value)}/>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Time</Form.Label>
+        <Form.Control type='time' placeholder='Add time' value={time}
+          onChange={(e) => setTime(e.target.value)}/>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Description</Form.Label>
+        <Form.Control type='text' placeholder='Add description' value={description}
+          onChange={(e) => setDescription(e.target.value)}/>
+      </Form.Group>
+      <Button id='reminderSubmitButton' type="submit">
+        Submit
+      </Button>
+    </Form>
     ) 
 }
 export default UpdateReminder

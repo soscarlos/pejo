@@ -1,49 +1,59 @@
 import useFetch from '../../hooks/useFetch';
 import './style.css';
 import Card from 'react-bootstrap/Card';
-import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import { useContext, useEffect, useState } from 'react';
+import ShowReminder from '../Reminders/ShowReminder';
+import AddReminderModal from '../Reminders/AddReminderModal';
+import PetReminder from './PetReminder'
+import useDeleteReminder from '../../hooks/useDeleteReminder';
+import { UseFetchPetRemindersContext, UseFetchPetsContext, ModalContext, UpdateModalContext } from './petContext';
 
-const ShowPetProfile = () => {
+ const ShowPetProfile = () => {
 
-    const [petData, setPetData] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    //let petData = useFetch('http://localhost:8080/pets/1').data;
-    //setPetData(newData);
-    //console.log(petData.id)
-    const endpoint = 'http://localhost:8080/pets/1';
-
-    useEffect(() => {
-        const getData = async () => {
-            const response = await fetch(endpoint);
-            let responseData = await response.json();
-            console.log(responseData.id)
-            setPetData(responseData);
-        }
-        getData();
-    }, petData)
-        //getData();
-    //}, [endpoint])
-    
-    
-  
-    
+    let petData = useContext(UseFetchPetsContext).pet;    
+    const modal = useContext(ModalContext);
+    const updateModal = useContext(UpdateModalContext);
+    const petReminders = useContext(UseFetchPetRemindersContext).petReminders;
+    const setPetReminders = useContext(UseFetchPetRemindersContext).setPetReminders;
 
     return (
-        <Card id='documentCard' border="light">
-        <Card.Body>
-        <Card.Title id='documentTitle'><a href='/documents'> Documents </a></Card.Title>
-        
-        <Card.Text>
-        {petData != null ?
-          petData.id : "nix"}
-        </Card.Text> 
-        </Card.Body>
-    </Card>  
-    
+        <container id='petContainer'>
+         <Card id='shownPet'>
+            {petData != null &&
+            <Card.Body>
+                     
+                <Card.Title>{petData.name}</Card.Title>
+                <Card.Text id='shownPetText'>
+                {petData.sexType + " | " + petData.birthDate}</Card.Text>
+                <Button className="reminderButton float-end" onClick={() => {
+               
+                }}>Update</Button>
+                <Button className="reminderButton float-end" onClick={() => {
+                   
+                }}>Delete</Button>
+            </Card.Body>
+           }
+         </Card>
 
+         <Card id='shownPetReminders'>         
+            <Card.Body>
+               {/*modal.modalOpen && <AddReminderModal onAdd={usePostAddReminder} />*/}
+               {/*updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}*/}     
+                <Card.Title>Reminders</Card.Title>
+                <Button id='addPetReminderButton' className="float-end" onClick={() => {
+                 // modal.toggleModalOpen(true);
+                }}>Add Reminder</Button>
+                <Card.Text id='shownPetReminders'>
+                {petReminders != null ? petReminders.map(petReminder => (
+                <PetReminder key={petReminder.id}
+                petReminder={petReminder} onDelete={useDeleteReminder}/>
+                )) : "No Reminders"}
+                </Card.Text>
+                </Card.Body>
+         </Card>
+        </container>        
     )
-
 }
 
 export default ShowPetProfile;

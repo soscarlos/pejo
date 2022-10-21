@@ -10,5 +10,5 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
 
     Set<Reminder> findRemindersByReminderPetsId(Long id);
 
-    Set<Reminder> findFirst3ByDateAfterOrderByDateAsc(LocalDate startDate);
+    Set<Reminder> findFirst3ByDateAfterOrderByDateAscTimeAsc(LocalDate startDate);
 }

@@ -1,4 +1,3 @@
-
 const usePut = async(data, endpoint) => {
     const res = await fetch(endpoint, {
         method: 'PUT',
