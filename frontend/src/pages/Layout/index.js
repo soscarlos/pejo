@@ -18,7 +18,7 @@ const Layout = () => {
           </Navbar.Brand>
           <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end" id='icons'>
-          <Nav.Link href="#pet1" className='petIcon'><img src={dog} alt="Pet1"/></Nav.Link>
+          <Nav.Link href="pets/1" className='petIcon'><img src={dog} alt="Pet1"/></Nav.Link>
           <Nav.Link href="#pet2" className='petIcon'><img src={cat} alt="Pet2"/></Nav.Link>
           <Nav.Link href="#user"><img src={profile} alt="User"/></Nav.Link>
         </Navbar.Collapse>

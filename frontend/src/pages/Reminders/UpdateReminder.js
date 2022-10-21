@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ShowReminderContext, UpdateModalContext } from './reminderContext';
 
-const UpdateReminder = ({ showReminderId, showReminderTitle, 
-    showReminderDate, showReminderTime, showReminderDescription,
-    setUpdateModalOpen, onAdd }) => {
+const UpdateReminder = ({ onAdd }) => {
 
-    const id = showReminderId;
-    const [date, setDate] = useState(showReminderDate);
-    const [time, setTime] = useState(showReminderTime);
-    const [title, setTitle] = useState(showReminderTitle);
-    const [description, setDescription] = useState(showReminderDescription);
+    const currentReminder = useContext(ShowReminderContext);
+    const updateModal = useContext(UpdateModalContext);
+    
+    const id = currentReminder.showReminder.id;
+    const [date, setDate] = useState(currentReminder.showReminder.date);
+    const [time, setTime] = useState(currentReminder.showReminder.time);
+    const [title, setTitle] = useState(currentReminder.showReminder.title);
+    const [description, setDescription] = useState(currentReminder.showReminder.description);
     
 
     const onSubmit = (e) => {
@@ -20,7 +22,7 @@ const UpdateReminder = ({ showReminderId, showReminderTitle,
         setDate('');
         setDescription('');
         setTime('');
-        setUpdateModalOpen(false);
+        updateModal.toggleUpdateModalOpen(false);
       }
 
     return (

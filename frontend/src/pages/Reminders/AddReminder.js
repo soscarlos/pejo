@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "./style.css";
+import { ModalContext } from './reminderContext';
 
-const AddReminder = ({ setModalOpen, onAdd }) => {
+const AddReminder = ({ onAdd }) => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const modal = useContext(ModalContext);
     
 
     const onSubmit = (e) => {
@@ -17,7 +19,7 @@ const AddReminder = ({ setModalOpen, onAdd }) => {
         setDate('');
         setDescription('');
         setTime('');
-        setModalOpen(false);
+        modal.toggleModalOpen(false);
 
       }
 

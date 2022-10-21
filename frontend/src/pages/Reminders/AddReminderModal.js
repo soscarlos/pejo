@@ -3,31 +3,31 @@ import UpdateReminder from "./UpdateReminder";
 import CloseButton from 'react-bootstrap/CloseButton';
 import Modal from 'react-bootstrap/Modal';
 import "./style.css";
+import { ModalContext, UpdateModalContext } from "./reminderContext";
+import { useContext } from "react";
 
-const AddReminderModal = ({showReminder, updateModalOpen, setUpdateModalOpen, modalOpen, 
-  setModalOpen, onAdd})=> {
+const AddReminderModal = ({ onAdd })=> {
+
+    const modal = useContext(ModalContext);
+    const updateModal = useContext(UpdateModalContext);
 
   return (
-    <Modal show={modalOpen || updateModalOpen}>
+    <Modal show={modal.modalOpen || updateModal.updateModalOpen}>
       <Modal.Header>
         <Modal.Title>
-          {modalOpen && <h1>Add Reminder</h1>}
-          {updateModalOpen && <h1>Update Reminder</h1>}
+          {modal.modalOpen && <h1>Add Reminder</h1>}
+          {updateModal.updateModalOpen && <h1>Update Reminder</h1>}
         </Modal.Title>
         <CloseButton
           onClick={() => {
-            setUpdateModalOpen(false);
-            setModalOpen(false);              
+            updateModal.toggleUpdateModalOpen(false);
+            modal.toggleModalOpen(false);              
           }}>
         </CloseButton>
       </Modal.Header>
       <Modal.Body>
-        {modalOpen && <AddReminder setModalOpen={setModalOpen}
-        onAdd={onAdd} /> }
-        {updateModalOpen && <UpdateReminder showReminderId={showReminder.id}
-        showReminderTitle={showReminder.title} showReminderDate={showReminder.date}
-        showReminderTime={showReminder.time} showReminderDescription={showReminder.description}
-        setUpdateModalOpen={setUpdateModalOpen} onAdd={onAdd} /> }
+        {modal.modalOpen && <AddReminder onAdd={onAdd} /> }
+        {updateModal.updateModalOpen && <UpdateReminder onAdd={onAdd} /> }
       </Modal.Body>
     </Modal>
       );
