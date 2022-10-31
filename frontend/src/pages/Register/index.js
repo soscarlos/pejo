@@ -15,12 +15,22 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [error, setError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
         UseStoreUser({firstName, lastName, email, password});
         setIsSubmitted(true);
+    }
+
+    const validateInput = () => {
+        if (confirmedPassword !== password) {
+            setError("Passwords don't match");
+        } else {
+            setError('');
+        }
     }
 
     const UseStoreUser = async(user) => {
@@ -59,7 +69,9 @@ const Register = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPasswordControl">
                 <Form.Label>Confirm password</Form.Label>
-                <Form.Control required type="password" placeholder="Retype your password" />
+                <Form.Control required type="password" placeholder="Retype your password" value={confirmedPassword}
+                onChange={(e) => {setConfirmedPassword(e.target.value)}} onKeyUp={validateInput}/>
+                <span>{error}</span>
             </Form.Group>
             <Button type="submit" id="loginButton">Register</Button>
         </Form>
