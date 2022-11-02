@@ -8,19 +8,15 @@ import Tips from './pages/Tips';
 import PageNotFound from './pages/PageNotFound';
 import Reminder from './pages/Reminders';
 import PetProfile from './pages/PetProfiles';
-<<<<<<< HEAD
 import { useContext, useState } from "react";
-=======
 import Login from "./pages/Login";
 import Register from "./pages/Register";
->>>>>>> 0cfceb9bfd890b165730385a42878c9a6ee63635
 import './App.css';
 import { PetIdContext } from "./pages/PetProfiles/petContext";
 import useFetch from "./hooks/useFetch";
 
 const App = () => {
 
-  //const [petId, setPetId] = useState(2);
   const pets = useFetch('http://localhost:8080/pets').data;
 
   return (
