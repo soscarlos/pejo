@@ -1,39 +1,43 @@
-import { UseFetchPetRemindersContext, UseFetchPetsContext, UpdateModalContext, 
-  ModalContext, PetReminderContext } from './petContext';
+import { UseFetchPetRemindersContext, UseFetchPetsContext, PetUpdateModalContext, 
+  PetModalContext, PetReminderContext, PetIdContext, FetchPetUrlContext, FetchPetRemindersUrlContext } from './petContext';
 import ShowPetProfile from './ShowPetProfile';
 import useFetch from '../../hooks/useFetch';
 import { useContext, useState } from "react";
-
 import './style.css';
 import { ShowReminderContext } from '../Reminders/reminderContext';
+import { IsPetContext } from '../Reminders/reminderContext';
 
-const PetProfile = () => {
+const PetProfile = ({ petId }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [petReminder, setPetReminder] = useState(null);
 
-
-
+  const fetchPetUrl = useContext(FetchPetUrlContext);
+  const fetchPetRemindersUrl = useContext(FetchPetRemindersUrlContext);
 
   return (
-    <UseFetchPetsContext.Provider value={{ pet: useFetch('http://localhost:8080/pets/1').data,
-    setPet: useFetch('http://localhost:8080/pets/1').setData}}>
-      <ModalContext.Provider value={{modalOpen: modalOpen, toggleModalOpen: setModalOpen}}>
-      <UpdateModalContext.Provider value={{updateModalOpen: updateModalOpen,
+    <PetIdContext.Provider value={{petId: petId}}>
+    <IsPetContext.Provider value={{isPet: true}}>
+    <UseFetchPetsContext.Provider value={{ pet: useFetch(fetchPetUrl + petId).data,
+    setPet: useFetch(fetchPetUrl + petId).setData}}>
+      <PetModalContext.Provider value={{modalOpen: modalOpen, toggleModalOpen: setModalOpen}}>
+      <PetUpdateModalContext.Provider value={{updateModalOpen: updateModalOpen,
        toggleUpdateModalOpen: setUpdateModalOpen}}>
-         <PetReminderContext.Provider value={{petReminder: petReminder,
-           setPetReminder: setPetReminder}}> 
+         <PetReminderContext.Provider value={{showReminder: petReminder,
+           setShowReminder: setPetReminder}}> 
            <UseFetchPetRemindersContext.Provider value={{ petReminders: 
-            useFetch('http://localhost:8080/reminders/pet/1').data,
-            setPetReminders: useFetch('http://localhost:8080/reminders/pet/1').setData }}>
+            useFetch(fetchPetRemindersUrl + petId).data,
+            setPetReminders: useFetch(fetchPetRemindersUrl + petId).setData }}>
     <div>
         <ShowPetProfile />
     </div>
     </UseFetchPetRemindersContext.Provider>  
     </PetReminderContext.Provider>
-    </UpdateModalContext.Provider>
-    </ModalContext.Provider>
+    </PetUpdateModalContext.Provider>
+    </PetModalContext.Provider>
     </UseFetchPetsContext.Provider>
+    </IsPetContext.Provider>
+    </PetIdContext.Provider>
   )
 }
 

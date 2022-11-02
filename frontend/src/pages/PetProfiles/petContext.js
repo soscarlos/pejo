@@ -5,12 +5,12 @@ export const UseFetchPetsContext = React.createContext({
     setPet: () => {},
 });
 
-export const ModalContext = React.createContext({
+export const PetModalContext = React.createContext({
     modalOpen: false,
     toggleModalOpen: () => {},
 });
 
-export const UpdateModalContext = React.createContext({
+export const PetUpdateModalContext = React.createContext({
     updateModalOpen: false,
     toggleUpdateModalOpen: () => {},
 });
@@ -21,6 +21,15 @@ export const UseFetchPetRemindersContext = React.createContext({
 })
 
 export const PetReminderContext = React.createContext({
-    PetReminder: null,
-    setPetReminder: () => {},
+    showReminder: null,
+    setShowReminder: () => {},
 });
+
+export const PetIdContext = React.createContext({
+    petId: 1,
+})
+
+export const FetchPetUrlContext = React.createContext('http://localhost:8080/pets/');
+
+export const FetchPetRemindersUrlContext = React.createContext('http://localhost:8080/reminders/pet/');
+

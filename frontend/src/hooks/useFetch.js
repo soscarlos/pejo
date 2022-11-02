@@ -6,6 +6,7 @@ const useFetch = (endpoint) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+    
         const getData = async () => {
             try {
                 const response = await fetch(endpoint);
