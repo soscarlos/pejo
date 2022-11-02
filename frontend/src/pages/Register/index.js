@@ -17,6 +17,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [style, setStyle] = useState("hidePasswordChecklist");
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const onSubmit = (e) => {
@@ -27,6 +28,10 @@ const Register = () => {
 
     const UseStoreUser = async(user) => {
         await usePost(user, 'http://localhost:8080/registration');
+    }
+
+    const showPasswordChecklist = () => {
+        setStyle("showPasswordChecklist");
     }
 
     const registerForm = (
@@ -57,19 +62,21 @@ const Register = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control required type="password" placeholder="Your password" value={password}
-                onChange={(e) => setPassword(e.target.value)} />
+                onChange={(e) => {setPassword(e.target.value) ; showPasswordChecklist() }} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPasswordControl">
                 <Form.Label>Confirm password</Form.Label>
                 <Form.Control required type="password" placeholder="Retype your password" value={confirmedPassword}
-                onChange={(e) => {setConfirmedPassword(e.target.value)}} />
+                onChange={(e) => setConfirmedPassword(e.target.value)} />
             </Form.Group>
-            <PasswordChecklist
-				rules={["minLength","specialChar","number","capital","match"]}
-				minLength={5}
-				value={password}
-                valueAgain={confirmedPassword}
-			/>
+            <Form.Group id={style}>
+                <PasswordChecklist
+                    rules={["minLength","specialChar","number","capital","match"]}
+                    minLength={5}
+                    value={password}
+                    valueAgain={confirmedPassword}
+                />
+            </Form.Group>
             <Button type="submit" id="loginButton">Register</Button>
         </Form>
         </Container>
