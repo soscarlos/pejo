@@ -14,3 +14,11 @@
     color: white;
     font-size: large;
 }
+
+#hidePasswordChecklist {
+    display: none;
+}
+
+#showPasswordChecklist {
+    display: block;
+}
