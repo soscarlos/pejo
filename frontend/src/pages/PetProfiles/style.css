@@ -1,3 +1,4 @@
+
 #petContainer {
     justify-content: center;
   }
@@ -23,13 +24,15 @@
     margin-top: 2%;
   }
   
-  .reminderButton {
+
+.reminderButton {
     background-color: #2596be !important;
     border: none !important;
     margin-left: 1%;
     font-size: large !important;
   }
   
+
   #addReminderButton {
     background-color: #dcdcdc !important;
     border-color: black !important;
@@ -45,3 +48,5 @@
     background-color: #2596be !important;
     border: none !important;
   }
+
+

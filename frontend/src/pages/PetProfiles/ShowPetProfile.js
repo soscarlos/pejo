@@ -30,10 +30,6 @@ import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetU
                 <Card.Title>{petData.name}</Card.Title>
                 <Card.Text id='shownPetText'>
                 {petData.sexType + " | " + petData.birthDate}</Card.Text>
-                {/*<Button className="reminderButton float-end" onClick={() => {             
-                }}>Update</Button>
-                <Button className="reminderButton float-end" onClick={() => {                  
-                }}>Delete</Button>*/}
             </Card.Body>
            }
          </Card>
