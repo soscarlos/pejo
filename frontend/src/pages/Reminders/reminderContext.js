@@ -24,3 +24,7 @@ export const UseFetchRemindersContext = React.createContext({
     setReminders: () => {},
 });
 
+export const IsPetContext = React.createContext({
+    isPet: false,
+})
+

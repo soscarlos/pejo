@@ -7,8 +7,12 @@ import dog from '../../img/dog.jpg'
 import cat from '../../img/cat.jpg'
 import { Outlet } from "react-router-dom";
 import './style.css';
+import useFetch from '../../hooks/useFetch';
 
-const Layout = () => {
+const Layout = ({pets}) => {
+  
+
+
   return (
     <>
       <Navbar bg="light" variant="light" id='navbar'>
@@ -18,8 +22,9 @@ const Layout = () => {
           </Navbar.Brand>
           <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end" id='icons'>
-          <Nav.Link href="pets/1" className='petIcon'><img src={dog} alt="Pet1"/></Nav.Link>
-          <Nav.Link href="#pet2" className='petIcon'><img src={cat} alt="Pet2"/></Nav.Link>
+          {pets != null ? pets.map(pet => <Nav.Link        
+          href={"http://localhost:3000/pets/" + pet.id} className='petIcon'><img src={pet.petType==="DOG"? dog : cat}
+           alt={"pet" + pet.id}/></Nav.Link>) : "No pets!"}
           <Nav.Link href="#user"><img src={profile} alt="User"/></Nav.Link>
         </Navbar.Collapse>
         </Container>

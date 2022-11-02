@@ -11,6 +11,8 @@ import usePost from "../../hooks/usePost";
 import usePut from "../../hooks/usePut";
 import useDelete from "../../hooks/useDelete";
 import useDeleteReminder from "../../hooks/useDeleteReminder";
+import usePostAddReminder from "../../hooks/usePostAddReminder";
+import usePutUpdateReminder from "../../hooks/usePutUpdateReminder";
 import { FetchUrlContext, ModalContext, ShowReminderContext, UseFetchRemindersContext } from "./reminderContext";
 import { UpdateModalContext } from "./reminderContext";
 import "./style.css";
@@ -22,34 +24,6 @@ const ShowReminders = () => {
   let reminders = useContext(UseFetchRemindersContext).reminders;
   const setReminders = useContext(UseFetchRemindersContext).setReminders;
   
-
-
-  const usePostAddReminder = async(reminder) => {
-    const newData = await usePost(reminder, fetchUrl);
-
-    let currentReminder = {
-      id: newData.id,
-      title: newData.title,
-      time: newData.time,
-      date: newData.date,
-      description: newData.description
-    }
-    reminders.push(currentReminder);
-    setReminders([...reminders]);
-  }
-    
-
-  const usePutUpdateReminder = async (reminder) => {
-      const newData = await usePut(reminder, fetchUrl);
-
-      let currentReminder = reminders.filter(r => r.id === newData.id)[0];   
-      currentReminder.title = newData.title;
-      currentReminder.date = newData.date;
-      currentReminder.time = newData.time;
-      currentReminder.description = newData.description;
-      setReminders([...reminders]);
-    }
-
   return (
     <Container id="reminderContainer">
       <Row id="reminderRow">
