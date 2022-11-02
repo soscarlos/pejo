@@ -1,26 +1,52 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { FetchUrlContext, ShowReminderContext, UpdateModalContext, UseFetchRemindersContext, IsPetContext } from './reminderContext';
+import { PetIdContext, PetUpdateModalContext, FetchPetUrlContext, UseFetchPetRemindersContext, PetReminderContext } from '../PetProfiles/petContext';
 
-const UpdateReminder = ({ showReminderId, showReminderTitle, 
-    showReminderDate, showReminderTime, showReminderDescription,
-    setUpdateModalOpen, onAdd }) => {
+const UpdateReminder = ({ onAdd }) => {
 
-    const id = showReminderId;
-    const [date, setDate] = useState(showReminderDate);
-    const [time, setTime] = useState(showReminderTime);
-    const [title, setTitle] = useState(showReminderTitle);
-    const [description, setDescription] = useState(showReminderDescription);
     
+
+    //const currentReminder = useContext(ShowReminderContext);
+    //const currentPetReminder = useContext(PetReminderContext)
+    const updateModal = useContext(UpdateModalContext);
+    const petUpdateModal = useContext(PetUpdateModalContext);
+
+    const petId = useContext(PetIdContext).petId;
+    const isPet = useContext(IsPetContext).isPet;
+
+    const currentContext = isPet ? PetReminderContext : ShowReminderContext;
+    const currentReminder = useContext(currentContext);
+
+    const id = currentReminder.showReminder.id;
+    const [date, setDate] = useState(currentReminder.showReminder.date);
+    const [time, setTime] = useState(currentReminder.showReminder.time);
+    const [title, setTitle] = useState(currentReminder.showReminder.title);
+    const [description, setDescription] = useState(currentReminder.showReminder.description);
+
+    const fetchUrl = useContext(FetchUrlContext);
+    let reminders = useContext(UseFetchRemindersContext).reminders;
+    const setReminders = useContext(UseFetchRemindersContext).setReminders;
+
+    let petReminders = useContext(UseFetchPetRemindersContext).petReminders;
+    const setPetReminders = useContext(UseFetchPetRemindersContext).setPetReminders;
+
+  
 
     const onSubmit = (e) => {
         e.preventDefault(); 
-        onAdd({ id, title, date, time, description });
+        if (!isPet) {
+           onAdd({ id, title, date, time, description }, reminders, setReminders, fetchUrl, false);
+           updateModal.toggleUpdateModalOpen(false);
+        } else {
+           onAdd({ id, title, date, time, description }, petReminders, setPetReminders, fetchUrl, false);
+           petUpdateModal.toggleUpdateModalOpen(false);
+        }
         setTitle('');
         setDate('');
         setDescription('');
         setTime('');
-        setUpdateModalOpen(false);
       }
 
     return (

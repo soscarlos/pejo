@@ -1,8 +1,16 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { useContext } from 'react';
+import { FetchUrlContext, UpdateModalContext } from './reminderContext';
+import { ShowReminderContext, UseFetchRemindersContext } from './reminderContext';
 
-const ShowReminder = ({showReminder, setShowReminder, 
-    setUpdateModalOpen, onDelete}) => {
+const ShowReminder = ({showReminder, onDelete}) => {
+
+        const updateModal = useContext(UpdateModalContext);
+        const currentReminder = useContext(ShowReminderContext);
+        const fetchUrl = useContext(FetchUrlContext)+ '/' + showReminder.id;
+        let reminders = useContext(UseFetchRemindersContext).reminders;
+        const setReminders = useContext(UseFetchRemindersContext).setReminders;
      
     return (
         <Card id='shownReminder'>
@@ -11,11 +19,11 @@ const ShowReminder = ({showReminder, setShowReminder,
                 <Card.Text id='shownReminderText'>{showReminder.description}<br/>
                 {showReminder.date + " | " + showReminder.time}</Card.Text>
                 <Button className="reminderButton float-end" onClick={() => {
-                    setUpdateModalOpen(true);
-                    setShowReminder(showReminder);      
+                    updateModal.toggleUpdateModalOpen(true);
+                    currentReminder.setShowReminder(showReminder);      
                 }}>Update</Button>
                 <Button className="reminderButton float-end" onClick={() => {
-                    onDelete(showReminder);
+                    onDelete(showReminder, reminders, setReminders, fetchUrl);
                 }}>Delete</Button>
             </Card.Body>
         </Card>
