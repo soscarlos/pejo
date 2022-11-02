@@ -9,12 +9,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
     @Mock
@@ -22,7 +21,6 @@ class EmailServiceTest {
     @InjectMocks
     EmailService service;
     MimeMessage testMessage;
-
     MimeMessageHelper helper;
 
     @BeforeEach
@@ -38,6 +36,7 @@ class EmailServiceTest {
     void sendSuccesfullAttempt() {
         String to = "test@mail.com";
         String email = "email";
+
         service.send(to, email);
 
         verify(mailSender).createMimeMessage();
