@@ -67,3 +67,8 @@ dataset:
       title: Take Bob to the Vet
       description: Need to ask for dewormer
       active: true
+
+# Certifications
+rsa:
+  private-key: classpath:certifications/private.pem
+  public-key: classpath:certifications/public.pem
