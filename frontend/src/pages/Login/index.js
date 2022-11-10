@@ -21,7 +21,10 @@ const Login = () => {
     }
 
     const UseLoginUser = async(user) => {
-        await usePost(user, 'http://localhost:8080/login');
+
+        console.log(user);
+
+        // await usePost(user, 'http://localhost:8080/login');
     }
 
     const loginForm = (
