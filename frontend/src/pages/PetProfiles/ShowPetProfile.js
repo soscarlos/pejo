@@ -26,8 +26,8 @@ import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetU
         <Col>
          <Card id='shownPet'>
             {petData != null &&
-            <Card.Body>                     
-                <Card.Title>{petData.name}</Card.Title>
+            <Card.Body >                     
+                <Card.Title id="petProfilePetName">{petData.name}</Card.Title>
                 <Card.Text id='shownPetText'>
                 {petData.sexType + " | " + petData.birthDate}</Card.Text>
             </Card.Body>
@@ -42,7 +42,7 @@ import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetU
             <Card.Body>
                {modal.modalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}
                {updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}    
-                <Card.Title>Reminders</Card.Title>
+                <Card.Title id="petProfileRemindersTitle">Reminders</Card.Title>
                 <Button id='addPetReminderButton' className="float-end" onClick={() => {
                  modal.toggleModalOpen(true);
                 }}>Add Reminder</Button>

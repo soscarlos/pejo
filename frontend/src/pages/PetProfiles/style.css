@@ -1,52 +1,65 @@
-
 #petContainer {
     justify-content: center;
   }
-  
-  #petRemindersRow, #petRow {
-    width: 100%;
-  }
-  
-  #shownPetReminders, #shownPet {
-    margin-left: 25%;
-    margin-right: 25%;
-    background-color: #fa9801;
-  }
+
+#petRemindersRow, #petRow {
+  width: 100%;
+}
+
+#shownPetReminders, #shownPet {
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color: #fa9801;
+}
 
 
-  
-  #remindersTitle {
-    color: white;
-    font-size: xx-large;
-  }
-  
-  #shownReminder {
-    margin-top: 2%;
-  }
-  
+
+#remindersTitle {
+  color: white;
+  font-size: xx-large;
+}
+
+#shownReminder {
+  margin-top: 2%;
+}
+
 
 .reminderButton {
-    background-color: #2596be !important;
-    border: none !important;
-    margin-left: 1%;
-    font-size: large !important;
-  }
-  
-
-  #addReminderButton {
-    background-color: #dcdcdc !important;
-    border-color: black !important;
-    color: black;
-    font-size: large !important;
-  }
-  
-  #shownPetText {
-    font-size: large;
-  }
-  
-  #reminderSubmitButton {
-    background-color: #2596be !important;
-    border: none !important;
-  }
+  background-color: #2596be !important;
+  border: none !important;
+  margin-left: 1%;
+  font-size: large !important;
+}
 
 
+#addReminderButton {
+  background-color: #dcdcdc !important;
+  border-color: black !important;
+  color: black;
+  font-size: large !important;
+}
+
+#shownPetText {
+  font-size: large;
+  color: white;
+}
+
+#reminderSubmitButton {
+  background-color: #2596be !important;
+  border: none !important;
+}
+
+#addPetReminderButton {
+  background-color: #2596be !important;
+  border: none;
+}
+
+#petProfileRemindersTitle {
+  color: white;
+  font-size: x-large;
+}
+
+#petProfilePetName {
+  color: white;
+  font-size: xx-large;
+}
