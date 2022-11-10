@@ -1,8 +1,8 @@
-import useFetch from './useFetch';
+import useFetchToken from './useFetchToken';
 
-const useFetchReminders = () => {
+const useFetchReminders = ( accessToken ) => {
     const remindersEndPoint = 'http://localhost:8080/reminders/first3AfterToday';
-    const {data, ...otherData} = useFetch(remindersEndPoint);
+    const {data, ...otherData} = useFetchToken(remindersEndPoint, accessToken);
     return {
         reminders: data,
         ...otherData

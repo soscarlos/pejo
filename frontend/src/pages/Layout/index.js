@@ -10,8 +10,9 @@ import './style.css';
 import useFetch from '../../hooks/useFetch';
 
 const Layout = ({pets}) => {
-  
-
+  const logOut = () => {
+    localStorage.removeItem('token');
+  }
 
   return (
     <>
@@ -25,7 +26,7 @@ const Layout = ({pets}) => {
           {pets != null ? pets.map(pet => <Nav.Link        
           href={"http://localhost:3000/pets/" + pet.id} className='petIcon'><img src={pet.petType==="DOG"? dog : cat}
            alt={"pet" + pet.id}/></Nav.Link>) : "No pets!"}
-          <Nav.Link href="#user"><img src={profile} alt="User"/></Nav.Link>
+          <Nav.Link href="" onClick={logOut} ><img src={profile} alt="User"/></Nav.Link>
         </Navbar.Collapse>
         </Container>
       </Navbar>

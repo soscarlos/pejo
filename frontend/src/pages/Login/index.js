@@ -4,12 +4,13 @@ import dashboard_logo from '../../img/dashboard_logo.png';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import usePost from "../../hooks/usePost";
 import { Navigate } from 'react-router-dom';
 import './style.css';
+import usePostUser from '../../hooks/usePostUser';
+import useAuthorization from '../../hooks/useAuthorization';
 
 const Login = () => {
-
+    const { setAuthorization } = useAuthorization();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -21,10 +22,10 @@ const Login = () => {
     }
 
     const UseLoginUser = async(user) => {
-
         console.log(user);
-
-        // await usePost(user, 'http://localhost:8080/login');
+        let accessToken = await usePostUser(user, 'http://localhost:8080/login');
+        setAuthorization({accessToken});
+        localStorage.setItem('token', accessToken);
     }
 
     const loginForm = (
