@@ -37,14 +37,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //        TODO: Still need to define the authenticated matchers and the permitted by default
         http
                 .csrf().disable()
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
+                .antMatchers("/registration/**", "/login").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
