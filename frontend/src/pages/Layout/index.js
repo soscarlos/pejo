@@ -7,26 +7,35 @@ import dog from '../../img/dog.jpg'
 import cat from '../../img/cat.jpg'
 import { Outlet } from "react-router-dom";
 import './style.css';
-import useFetch from '../../hooks/useFetch';
+import useAuthorization from '../../hooks/useAuthorization';
+import useFetchToken from '../../hooks/useFetchToken';
 
-const Layout = ({pets}) => {
+const Layout = () => {  
+  const { authorization, setAuthorization } = useAuthorization();
+  const storedToken = localStorage.getItem('token');
+  const isLoggedIn = authorization != null || storedToken != null;
+
+  const pets = useFetchToken('http://localhost:8080/pets', isLoggedIn ? storedToken? storedToken : authorization.accessToken : '').data;
+
   const logOut = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
+    setAuthorization(null);
   }
 
   return (
     <>
       <Navbar bg="light" variant="light" id='navbar'>
         <Container fluid>
-          <Navbar.Brand href="/">
+          <Navbar.Brand href={pets ? "/": "/login"}>
             <img src={dashboard_logo} alt="PeJo" height={50}/>
           </Navbar.Brand>
           <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end" id='icons'>
           {pets != null ? pets.map(pet => <Nav.Link        
           href={"http://localhost:3000/pets/" + pet.id} className='petIcon'><img src={pet.petType==="DOG"? dog : cat}
-           alt={"pet" + pet.id}/></Nav.Link>) : "No pets!"}
-          <Nav.Link href="" onClick={logOut} ><img src={profile} alt="User"/></Nav.Link>
+           alt={"pet" + pet.id}/></Nav.Link>)
+           : ""}
+          {pets && <Nav.Link href="/login" onClick={logOut} ><img src={profile} alt="User"/></Nav.Link>}
         </Navbar.Collapse>
         </Container>
       </Navbar>

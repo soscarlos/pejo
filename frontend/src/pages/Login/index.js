@@ -1,6 +1,4 @@
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import dashboard_logo from '../../img/dashboard_logo.png';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
@@ -22,7 +20,6 @@ const Login = () => {
     }
 
     const UseLoginUser = async(user) => {
-        console.log(user);
         let accessToken = await usePostUser(user, 'http://localhost:8080/login');
         setAuthorization({accessToken});
         localStorage.setItem('token', accessToken);
@@ -30,11 +27,6 @@ const Login = () => {
 
     const loginForm = (
         <>
-        <Navbar bg="light" variant="light">
-            <Container fluid>
-                <Navbar.Brand href="/"><img src={dashboard_logo} alt="PeJo" height={50}/></Navbar.Brand>
-            </Container>
-        </Navbar>
         <Container id='formContainer'>
         <Form id="loginForm" onSubmit={onSubmit}>
             <h1>Login</h1>
