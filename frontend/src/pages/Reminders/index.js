@@ -1,13 +1,17 @@
 import ShowReminders from './ShowReminders';
 import { ModalContext, UpdateModalContext, ShowReminderContext, UseFetchRemindersContext,
-   FetchUrlContext, IsPetContext} from './reminderContext';
-import { FetchPetUrlContext, PetIdContext, UseFetchPetRemindersContext } from '../PetProfiles/petContext';
+   FetchUrlContext } from './reminderContext';
 import { useState, useContext } from "react";
-import useFetch from '../../hooks/useFetch'; 
+import useFetchToken from '../../hooks/useFetchToken';
+import useAuthorization from '../../hooks/useAuthorization';
 import './style.css';
 
 
 const Reminder = () => {
+  const { authorization } = useAuthorization();
+  const storedToken = localStorage.getItem('token');
+  const token = storedToken? storedToken : authorization.accessToken;
+
   const [modalOpen, setModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [showReminder, setShowReminder] = useState(null);
@@ -16,8 +20,8 @@ const Reminder = () => {
  
   return (
 
-    <UseFetchRemindersContext.Provider value={{ reminders: useFetch(fetchUrl).data,
-      setReminders: useFetch(fetchUrl).setData }}>
+    <UseFetchRemindersContext.Provider value={{ reminders: useFetchToken(fetchUrl, token).data,
+      setReminders: useFetchToken(fetchUrl, token).setData }}>
     <ModalContext.Provider value={{modalOpen: modalOpen, toggleModalOpen: setModalOpen}}>
     <UpdateModalContext.Provider value={{updateModalOpen: updateModalOpen,
        toggleUpdateModalOpen: setUpdateModalOpen}}>

@@ -16,13 +16,15 @@ const Login = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         UseLoginUser({email, password});
-        setIsSubmitted(true);
     }
 
     const UseLoginUser = async(user) => {
         let accessToken = await usePostUser(user, 'http://localhost:8080/login');
+        let tokenIsPresent = accessToken.length !== 0;
+        console.log(tokenIsPresent);
         setAuthorization({accessToken});
         localStorage.setItem('token', accessToken);
+        setIsSubmitted(tokenIsPresent);
     }
 
     const loginForm = (

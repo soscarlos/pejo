@@ -5,6 +5,7 @@ import { FetchUrlContext, UpdateModalContext } from './reminderContext';
 import { ShowReminderContext, UseFetchRemindersContext } from './reminderContext';
 
 const ShowReminder = ({showReminder, onDelete}) => {
+        const token = localStorage.getItem('token');
 
         const updateModal = useContext(UpdateModalContext);
         const currentReminder = useContext(ShowReminderContext);
@@ -23,7 +24,7 @@ const ShowReminder = ({showReminder, onDelete}) => {
                     currentReminder.setShowReminder(showReminder);      
                 }}>Update</Button>
                 <Button className="reminderButton float-end" onClick={() => {
-                    onDelete(showReminder, reminders, setReminders, fetchUrl);
+                    onDelete(showReminder, reminders, setReminders, fetchUrl, token);
                 }}>Delete</Button>
             </Card.Body>
         </Card>

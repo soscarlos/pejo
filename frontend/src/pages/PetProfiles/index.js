@@ -1,13 +1,18 @@
 import { UseFetchPetRemindersContext, UseFetchPetsContext, PetUpdateModalContext, 
   PetModalContext, PetReminderContext, PetIdContext, FetchPetUrlContext, FetchPetRemindersUrlContext } from './petContext';
 import ShowPetProfile from './ShowPetProfile';
-import useFetch from '../../hooks/useFetch';
+import useFetchToken from '../../hooks/useFetchToken';
 import { useContext, useState } from "react";
-import './style.css';
-import { ShowReminderContext } from '../Reminders/reminderContext';
+import useAuthorization from '../../hooks/useAuthorization';
 import { IsPetContext } from '../Reminders/reminderContext';
+import './style.css';
+
 
 const PetProfile = ({ petId }) => {
+  const { authorization } = useAuthorization();
+  const storedToken = localStorage.getItem('token');
+  const token = storedToken? storedToken : authorization.accessToken;
+
   const [modalOpen, setModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [petReminder, setPetReminder] = useState(null);
@@ -18,16 +23,16 @@ const PetProfile = ({ petId }) => {
   return (
     <PetIdContext.Provider value={{petId: petId}}>
     <IsPetContext.Provider value={{isPet: true}}>
-    <UseFetchPetsContext.Provider value={{ pet: useFetch(fetchPetUrl + petId).data,
-    setPet: useFetch(fetchPetUrl + petId).setData}}>
+    <UseFetchPetsContext.Provider value={{ pet: useFetchToken(fetchPetUrl + petId, token).data,
+    setPet: useFetchToken(fetchPetUrl + petId, token).setData}}>
       <PetModalContext.Provider value={{modalOpen: modalOpen, toggleModalOpen: setModalOpen}}>
       <PetUpdateModalContext.Provider value={{updateModalOpen: updateModalOpen,
        toggleUpdateModalOpen: setUpdateModalOpen}}>
          <PetReminderContext.Provider value={{showReminder: petReminder,
            setShowReminder: setPetReminder}}> 
            <UseFetchPetRemindersContext.Provider value={{ petReminders: 
-            useFetch(fetchPetRemindersUrl + petId).data,
-            setPetReminders: useFetch(fetchPetRemindersUrl + petId).setData }}>
+            useFetchToken(fetchPetRemindersUrl + petId, token).data,
+            setPetReminders: useFetchToken(fetchPetRemindersUrl + petId, token).setData }}>
     <div>
         <ShowPetProfile />
     </div>

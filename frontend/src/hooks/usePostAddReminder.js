@@ -1,7 +1,7 @@
 import usePost from "./usePost";
 
-const usePostAddReminder = async(reminder, reminders, setReminders, url) => {
-    const newData = await usePost(reminder, url);
+const usePostAddReminder = async(reminder, reminders, setReminders, url, token) => {
+    const newData = await usePost(reminder, url, token);
 
     let currentReminder = {
       id: newData.id,

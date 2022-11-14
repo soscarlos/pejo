@@ -21,8 +21,8 @@ const App = () => {
       <BrowserRouter>
       <AuthorizationProvider>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route element={<RequireAuthorization />}>
+          <Route element={<RequireAuthorization />}>
+            <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="todos" element={<ToDos />} />
               <Route path="locations" element={<Locations />} />
@@ -30,11 +30,11 @@ const App = () => {
               <Route path="tips" element={<Tips />} />
               <Route path="reminders" element={<Reminder />} />
               <Route path="pets/*" element={<Pets/>} />
-            </Route>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="*" element={<PageNotFound />} />        
+            </Route>      
           </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="*" element={<PageNotFound />} />  
         </Routes>
       </AuthorizationProvider>
       </BrowserRouter>

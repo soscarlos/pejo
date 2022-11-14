@@ -1,8 +1,9 @@
-const usePost = async(data, endpoint) => {
+const usePost = async(data, endpoint, token) => {
     const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(data),
       })

@@ -2,10 +2,12 @@ import { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "./style.css";
-import { FetchUrlContext, IsPetContext, ModalContext, ShowReminderContext, UseFetchRemindersContext } from "./reminderContext";
+import { FetchUrlContext, IsPetContext, ModalContext, UseFetchRemindersContext } from "./reminderContext";
 import { PetIdContext, UseFetchPetRemindersContext, FetchPetUrlContext, PetModalContext } from '../PetProfiles/petContext';
 
 const AddReminder = ({ onAdd }) => {
+    const token = localStorage.getItem('token');
+
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
@@ -28,10 +30,10 @@ const AddReminder = ({ onAdd }) => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (!isPet) {
-          onAdd({ title, date, time, description }, reminders, setReminders, fetchUrl);
+          onAdd({ title, date, time, description }, reminders, setReminders, fetchUrl, token);
           modal.toggleModalOpen(false);
         } else {
-            onAdd({ title, date, time, description }, petReminders, setPetReminders, fetchAddPetReminderUrl, isPet);
+            onAdd({ title, date, time, description }, petReminders, setPetReminders, fetchAddPetReminderUrl, isPet, token);
             petModal.toggleModalOpen(false);
         }
         setTitle('');
