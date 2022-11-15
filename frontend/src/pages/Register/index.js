@@ -1,8 +1,9 @@
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import logo from '../../img/logo_orange.png';
 import { useState } from 'react';
-import usePost from "../../hooks/usePost";
+import usePostRegister from '../../hooks/usePostRegister';
 import { Navigate } from 'react-router-dom';
 import PasswordChecklist from "react-password-checklist"
 import './style.css';
@@ -25,7 +26,7 @@ const Register = () => {
     }
 
     const UseStoreUser = async(user) => {
-        await usePost(user, 'http://localhost:8080/registration');
+        await usePostRegister(user, 'http://localhost:8080/registration');
     }
 
     const showPasswordChecklist = () => {
@@ -35,6 +36,7 @@ const Register = () => {
     const registerForm = (
         <>
         <Container id='formContainer'>
+            <img id='pejo-logo-register' src={logo} alt="pejo-logo" height={80} ></img>
         <Form id="loginForm" onSubmit={onSubmit}>
             <h1>Register</h1>
             <Form.Group className="mb-3" controlId="formBasicFirstName">

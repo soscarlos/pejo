@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import logo from '../../img/logo_orange.png';
 import './style.css';
 import usePostUser from '../../hooks/usePostUser';
 import useAuthorization from '../../hooks/useAuthorization';
@@ -30,6 +31,7 @@ const Login = () => {
     const loginForm = (
         <>
         <Container id='formContainer'>
+            <img id='pejo-logo-login' src={logo} alt="pejo-logo" height={80} ></img>
         <Form id="loginForm" onSubmit={onSubmit}>
             <h1>Login</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
