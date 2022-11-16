@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import usePost from "./usePost";
-import usePutUpdateReminder from "./usePutUpdateReminder";
 
 const usePostAddReminder = async(reminder, reminders, setReminders, url, token) => {
     const newData = await usePost(reminder, url, token);

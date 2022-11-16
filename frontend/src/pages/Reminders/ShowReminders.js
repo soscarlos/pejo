@@ -17,9 +17,7 @@ const ShowReminders = () => {
   const modal = useContext(ModalContext);
   const updateModal = useContext(UpdateModalContext);
   let reminders = useContext(UseFetchRemindersContext).reminders;
-  const setReminders = useContext(UseFetchRemindersContext).setReminders;
 
-  
   return (
     <Container id="reminderContainer">
       <Row id="reminderRow">

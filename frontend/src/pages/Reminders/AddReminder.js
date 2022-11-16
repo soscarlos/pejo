@@ -3,8 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "./style.css";
 import { FetchUrlContext, IsPetContext, ModalContext, UseFetchRemindersContext } from "./reminderContext";
-//ToDO import useFetchToken
-import useFetch from '../../hooks/useFetch';
+import useFetchToken from '../../hooks/useFetchToken';
 
 import { PetIdContext, UseFetchPetRemindersContext, FetchPetUrlContext, PetModalContext } from '../PetProfiles/petContext';
 
@@ -17,14 +16,7 @@ const AddReminder = ({ onAdd }) => {
     const [description, setDescription] = useState('');
     const modal = useContext(ModalContext);
     const petModal = useContext(PetModalContext);
-
-    // ToDo addUseFetchToken
-    const pets = useFetch('http://localhost:8080/pets').data;
-    
-    
-    useEffect(() => {if (!isPet && pets != null) {pets.forEach(element => {
-      document.getElementById(element.id).addEventListener('change', handleCheckbox)});}},
-      pets);
+    const pets = useFetchToken('http://localhost:8080/pets', token).data;
     
     const [reminderPets, setReminderPets] = useState([]);
   
@@ -47,14 +39,16 @@ const AddReminder = ({ onAdd }) => {
           currentPet = pet;
         }
       }
-      //const currentPet = pets.filter((el) => {return el.id === currentPetId})[0];
       if (e.currentTarget.checked) {    
         setReminderPets(arr => [...arr, currentPet]);      
       } else {
-        setReminderPets((current) => {current.filter((el) => {return el.id != currentPetId;})});       
+        setReminderPets((current) => {current.filter((el) => {return el.id !== currentPetId;})});       
       }
     }
-    
+
+    useEffect(() => {if (!isPet && pets != null) {pets.forEach(element => {
+      document.getElementById(element.id).addEventListener('change', handleCheckbox)});}},
+      pets);
 
     const onSubmit = async (e) => {
         e.preventDefault();
