@@ -1,15 +1,15 @@
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import dashboard_logo from '../../img/dashboard_logo.png';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import usePost from "../../hooks/usePost";
 import { Navigate } from 'react-router-dom';
+import logo from '../../img/logo_orange.png';
 import './style.css';
+import usePostUser from '../../hooks/usePostUser';
+import useAuthorization from '../../hooks/useAuthorization';
 
 const Login = () => {
-
+    const { setAuthorization } = useAuthorization();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,24 +17,21 @@ const Login = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         UseLoginUser({email, password});
-        setIsSubmitted(true);
     }
 
     const UseLoginUser = async(user) => {
-
-        console.log(user);
-
-        // await usePost(user, 'http://localhost:8080/login');
+        let accessToken = await usePostUser(user, 'http://localhost:8080/login');
+        let tokenIsPresent = accessToken.length !== 0;
+        console.log(tokenIsPresent);
+        setAuthorization({accessToken});
+        localStorage.setItem('token', accessToken);
+        setIsSubmitted(tokenIsPresent);
     }
 
     const loginForm = (
         <>
-        <Navbar bg="light" variant="light">
-            <Container fluid>
-                <Navbar.Brand href="/"><img src={dashboard_logo} alt="PeJo" height={50}/></Navbar.Brand>
-            </Container>
-        </Navbar>
         <Container id='formContainer'>
+            <img id='pejo-logo-login' src={logo} alt="pejo-logo" height={80} ></img>
         <Form id="loginForm" onSubmit={onSubmit}>
             <h1>Login</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">

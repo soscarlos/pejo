@@ -1,31 +1,49 @@
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import dashboard_logo from '../../img/dashboard_logo.png';
 import profile from '../../img/profile.png';
 import dog from '../../img/dog.jpg'
 import cat from '../../img/cat.jpg'
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import './style.css';
-import useFetch from '../../hooks/useFetch';
+import useAuthorization from '../../hooks/useAuthorization';
+import useFetchToken from '../../hooks/useFetchToken';
 
-const Layout = ({pets}) => {
+const Layout = () => {  
+  const { authorization, setAuthorization } = useAuthorization();
+  const storedToken = localStorage.getItem('token');
+  const isLoggedIn = authorization !== null || storedToken !== null;
+
+  const pets = useFetchToken('http://localhost:8080/pets', isLoggedIn ? storedToken? storedToken : authorization.accessToken : '').data;
   
+  const navigate = useNavigate();
 
+  const redirect = () => {
+    console.log(authorization);
+    console.log(storedToken);
+    console.log(isLoggedIn);
+    pets ? navigate("/") : navigate("/login")
+  }
+
+  const logOut = () => {
+    localStorage.clear();
+    setAuthorization(null);
+    navigate("/login");
+  }
 
   return (
     <>
       <Navbar bg="light" variant="light" id='navbar'>
         <Container fluid>
-          <Navbar.Brand href="/">
-            <img src={dashboard_logo} alt="PeJo" height={50}/>
+          <Navbar.Brand>
+            <img src={dashboard_logo} alt="PeJo" height={50} onClick={redirect}/>
           </Navbar.Brand>
           <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end" id='icons'>
-          {pets != null ? pets.map(pet => <Nav.Link        
-          href={"http://localhost:3000/pets/" + pet.id} className='petIcon'><img src={pet.petType==="DOG"? dog : cat}
-           alt={"pet" + pet.id}/></Nav.Link>) : "No pets!"}
-          <Nav.Link href="#user"><img src={profile} alt="User"/></Nav.Link>
+          {pets != null ? pets.map(pet => <img src={pet.petType==="DOG"? dog : cat}
+           alt={"pet" + pet.id} onClick={() => navigate(`/pets/${pet.id}`)}/>)
+           : ""}
+          {pets && <img src={profile} onClick={logOut} alt="User"/>}
         </Navbar.Collapse>
         </Container>
       </Navbar>

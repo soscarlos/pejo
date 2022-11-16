@@ -2,11 +2,12 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { UseFetchPetRemindersContext, PetUpdateModalContext, PetReminderContext } from './petContext';
 import { FetchUrlContext } from '../Reminders/reminderContext';
-import { useContext, useEffect, useState } from 'react';
-
+import { useContext } from 'react';
 
 
 const PetReminder = ({petReminder, onDelete}) => {
+
+    const token = localStorage.getItem('token');
 
     const petUpdateModal = useContext(PetUpdateModalContext);
     const currentReminder = useContext(PetReminderContext);
@@ -27,7 +28,7 @@ const PetReminder = ({petReminder, onDelete}) => {
                     currentReminder.setShowReminder(petReminder);      
                 }}>Update</Button>
                 <Button className="reminderButton float-end" onClick={() => {
-                    onDelete(petReminder, petReminders, setPetReminders, fetchUrl);
+                    onDelete(petReminder, petReminders, setPetReminders, fetchUrl, token);
                 }}>Delete</Button>
             </Card.Body>
         </Card>

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import usePost from "./usePost";
 import usePutUpdateReminder from "./usePutUpdateReminder";
 
-const usePostAddReminder = async(reminder, reminders, setReminders, url) => {
-    const newData = await usePost(reminder, url);
-    console.log("postId="+newData.id)
+const usePostAddReminder = async(reminder, reminders, setReminders, url, token) => {
+    const newData = await usePost(reminder, url, token);
+
     let currentReminder = {
       id: newData.id,
       title: newData.title,

@@ -67,7 +67,6 @@ class PetRepositoryTest {
 
         Set<Pet> result = petRepository.findPetsByPetRemindersId(5L);
 
-        System.out.println("result = " + result);
         assertIterableEquals(expected, result);
     }
 

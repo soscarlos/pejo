@@ -1,9 +1,8 @@
-const usePost = async(data, endpoint, token) => {
+const usePostRegister = async(data, endpoint) => {
     const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json',
-          'Authorization': 'Bearer ' + token
+          'Content-type': 'application/json'
         },
         body: JSON.stringify(data),
       })
@@ -11,4 +10,4 @@ const usePost = async(data, endpoint, token) => {
     return newData;
 }
 
-export default usePost;
+export default usePostRegister;

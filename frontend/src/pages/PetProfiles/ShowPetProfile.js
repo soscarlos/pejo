@@ -1,10 +1,9 @@
-
 import './style.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import AddReminderModal from '../Reminders/AddReminderModal';
 import PetReminder from './PetReminder'
 import useDeleteReminder from '../../hooks/useDeleteReminder';

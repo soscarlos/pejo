@@ -10,7 +10,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:dcbapp
     username: sa
-# TODO if using Postgres we need to use environmental var and call them like that ${DB_USERNAME}
+# TODO if using Postgres we need to use environmental var and call them like this ${DB_USERNAME}
     password: password
 
   mail:
@@ -67,3 +67,8 @@ dataset:
       title: Take Bob to the Vet
       description: Need to ask for dewormer
       active: true
+
+# Certifications
+rsa:
+  private-key: classpath:certifications/private.pem
+  public-key: classpath:certifications/public.pem

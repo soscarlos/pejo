@@ -2,11 +2,15 @@ import { useContext, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "./style.css";
+import { FetchUrlContext, IsPetContext, ModalContext, UseFetchRemindersContext } from "./reminderContext";
+//ToDO import useFetchToken
 import useFetch from '../../hooks/useFetch';
-import { FetchUrlContext, IsPetContext, ModalContext, ShowReminderContext, UseFetchRemindersContext } from "./reminderContext";
+
 import { PetIdContext, UseFetchPetRemindersContext, FetchPetUrlContext, PetModalContext } from '../PetProfiles/petContext';
 
 const AddReminder = ({ onAdd }) => {
+    const token = localStorage.getItem('token');
+
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [title, setTitle] = useState('');
@@ -14,6 +18,7 @@ const AddReminder = ({ onAdd }) => {
     const modal = useContext(ModalContext);
     const petModal = useContext(PetModalContext);
 
+    // ToDo addUseFetchToken
     const pets = useFetch('http://localhost:8080/pets').data;
     
     
@@ -54,15 +59,17 @@ const AddReminder = ({ onAdd }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (!isPet) {
-          const id = await onAdd.first({ title, date, time, description }, reminders, setReminders, fetchUrl);
+
+          const id = await onAdd.first({ title, date, time, description }, reminders, setReminders, fetchUrl, token);
           for (let pet of reminderPets) {
             onAdd.second({ id, title, date, time, description }, null, 
-              null, 'http://localhost:8080/pets/'+pet.id, false);
+              null, 'http://localhost:8080/pets/'+pet.id, false, token);
           }
           setReminderPets([]);
+
           modal.toggleModalOpen(false);
         } else {
-            onAdd({ title, date, time, description }, petReminders, setPetReminders, fetchAddPetReminderUrl, isPet);
+            onAdd({ title, date, time, description }, petReminders, setPetReminders, fetchAddPetReminderUrl, isPet, token);
             petModal.toggleModalOpen(false);
         }
         setTitle('');
