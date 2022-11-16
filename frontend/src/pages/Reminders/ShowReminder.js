@@ -1,8 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useContext } from 'react';
-import { FetchUrlContext, UpdateModalContext } from './reminderContext';
-import { ShowReminderContext, UseFetchRemindersContext } from './reminderContext';
+import { FetchUrlContext, UpdateModalContext, ShowReminderContext,
+     UseFetchRemindersContext } from './reminderContext';
+
 
 const ShowReminder = ({showReminder, onDelete}) => {
 
