@@ -6,7 +6,6 @@ spring:
   datasource:
     url: jdbc:h2:mem:dcbapp
     username: sa
-    # TODO if using Postgres we need to use environmental var and call them like that ${DB_USERNAME}
     password: password
 
   mail:
@@ -26,40 +25,3 @@ spring:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
-
-# Dataset
-dataset:
-  pets:
-    - name: Mogli
-      birthDate: 2021-01-01
-      petType: CAT
-      sexType: MALE
-    - name: Bob
-      birthDate: 2020-02-10
-      petType: DOG
-      sexType: MALE
-    - name: Lala
-      birthDate: 2019-02-10
-      petType: DOG
-      sexType: FEMALE
-  reminders:
-    - date: 2022-10-28
-      time: "09:15:00"
-      title: Take Mogli to the Vet
-      description: Remember to bring its blood test
-      active: true
-    - date: 2022-10-29
-      time: "10:20:00"
-      title: Vaccinate Mogli and Bob
-      description: Remember bring vaccination card
-      active: true
-    - date: 2022-10-30
-      time: "13:30:00"
-      title: Take Bob to meet its dog sitter
-      description: Check if he behaves
-      active: true
-    - date: 2022-11-04
-      time: "08:30:00"
-      title: Take Bob to the Vet
-      description: Need to ask for dewormer
-      active: true
