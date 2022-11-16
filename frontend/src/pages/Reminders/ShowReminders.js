@@ -17,6 +17,8 @@ const ShowReminders = () => {
   const modal = useContext(ModalContext);
   const updateModal = useContext(UpdateModalContext);
   let reminders = useContext(UseFetchRemindersContext).reminders;
+  const setReminders = useContext(UseFetchRemindersContext).setReminders;
+
   
   return (
     <Container id="reminderContainer">
@@ -24,7 +26,7 @@ const ShowReminders = () => {
         <Col>
           <Card id="reminders">
             <Card.Body>
-              {modal.modalOpen && <AddReminderModal onAdd={usePostAddReminder} />}
+              {modal.modalOpen && <AddReminderModal onAdd={{first: usePostAddReminder, second: usePutUpdateReminder}} />}
               {updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}
               <Card.Title id='remindersTitle'>Reminders
                 <Button id='addReminderButton' className="float-end" onClick={() => {
