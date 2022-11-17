@@ -21,9 +21,7 @@ public class PetEndPoint {
     private final ReminderService reminderService;
 
     @PostMapping
-    public Pet save(@Valid @RequestBody Pet pet) {
-        return service.save(pet);
-    }
+    public Pet save(@Valid @RequestBody Pet pet) {return service.save(pet);}
 
     @GetMapping
     public List<Pet> getAll() {
