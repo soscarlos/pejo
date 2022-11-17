@@ -18,7 +18,7 @@ export const PetUpdateModalContext = React.createContext({
 export const UseFetchPetRemindersContext = React.createContext({
     petReminders: null,
     setPetReminders: () => {},
-})
+});
 
 export const PetReminderContext = React.createContext({
     showReminder: null,
@@ -27,9 +27,16 @@ export const PetReminderContext = React.createContext({
 
 export const PetIdContext = React.createContext({
     petId: 1,
-})
+});
 
 export const FetchPetUrlContext = React.createContext('http://localhost:8080/pets/');
 
 export const FetchPetRemindersUrlContext = React.createContext('http://localhost:8080/reminders/pet/');
+
+export const AddPetModalContext = React.createContext({
+    addPetModalOpen: false,
+    toggleAddPetModalOpen: () => {},
+});
+
+
 
