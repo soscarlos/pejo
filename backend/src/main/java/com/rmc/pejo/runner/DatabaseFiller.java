@@ -22,28 +22,28 @@ public class DatabaseFiller {
     @Bean
     ApplicationRunner filler(PetRepository petRepository, ReminderRepository reminderRepository) {
         return args -> {
-            petRepository.saveAll(pets);
-            reminderRepository.saveAll(reminders);
-
-            Pet mogli = pets.get(0);
-            Pet bob = pets.get(1);
-
-            mogli.setPetReminders(new ArrayList<>());
-            bob.setPetReminders(new ArrayList<>());
-
-            List<Reminder> mogliReminders = mogli.getPetReminders();
-            List<Reminder> bobReminders = bob.getPetReminders();
-
-            Reminder reminder1 = reminders.get(0);
-            Reminder reminder2 = reminders.get(1);
-            Reminder reminder3 = reminders.get(2);
-            Reminder reminder4 = reminders.get(3);
-
-            Collections.addAll(mogliReminders, reminder1, reminder2, reminder3);
-            Collections.addAll(bobReminders, reminder2, reminder4);
-
-            petRepository.save(mogli);
-            petRepository.save(bob);
+//            petRepository.saveAll(pets);
+//            reminderRepository.saveAll(reminders);
+//
+//            Pet mogli = pets.get(0);
+//            Pet bob = pets.get(1);
+//
+//            mogli.setPetReminders(new ArrayList<>());
+//            bob.setPetReminders(new ArrayList<>());
+//
+//            List<Reminder> mogliReminders = mogli.getPetReminders();
+//            List<Reminder> bobReminders = bob.getPetReminders();
+//
+//            Reminder reminder1 = reminders.get(0);
+//            Reminder reminder2 = reminders.get(1);
+//            Reminder reminder3 = reminders.get(2);
+//            Reminder reminder4 = reminders.get(3);
+//
+//            Collections.addAll(mogliReminders, reminder1, reminder2, reminder3);
+//            Collections.addAll(bobReminders, reminder2, reminder4);
+//
+//            petRepository.save(mogli);
+//            petRepository.save(bob);
         };
     }
 

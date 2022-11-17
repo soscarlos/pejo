@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 class ReminderRepositoryTest {
 
     LocalDate today = LocalDate.now();
-    LocalTime testTime = LocalTime.now();
+    LocalTime testTime = LocalTime.of(9, 30, 0);
 
     @Autowired
     ReminderRepository reminderRepository;
