@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import './App.css';
 import { AuthorizationProvider } from "./components/contexts/AuthorizationContext";
 import RequireAuthorization from "./components/authorization/RequireAuthorization";
+import { AddPetContextProvider } from "./components/contexts/AddPetContext";
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
       <AuthorizationProvider>
+        <AddPetContextProvider>
         <Routes>
           <Route element={<RequireAuthorization />}>
             <Route path="/" element={<Layout />}>
@@ -30,12 +32,13 @@ const App = () => {
               <Route path="tips" element={<Tips />} />
               <Route path="reminders" element={<Reminder />} />
               <Route path="pets/*" element={<Pets/>} />
-            </Route>      
+            </Route>               
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />  
         </Routes>
+        </AddPetContextProvider>
       </AuthorizationProvider>
       </BrowserRouter>
     </div>
