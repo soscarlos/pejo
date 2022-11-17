@@ -23,7 +23,6 @@ const AddPet = ({ onAdd }) => {
         addPetModal.toggleAddPetModalOpen(false);
         const newPet = await onAdd({name, birthDate, petType, sexType}, 'http://localhost:8080/pets', token);
         const id = newPet.id;
-        console.log("petId=" + id)
         setPets(arr => [...arr, {id, name, birthDate, petType, sexType}]);
 
 

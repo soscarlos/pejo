@@ -2,7 +2,6 @@ import usePut from "./usePut";
 
 const usePutUpdateReminder = async (reminder, reminders, setReminders, url, isPet, token) => {
     const newData = await usePut(reminder, url, token);
-    console.log("newId="+newData.id)
 
     if (!isPet) {
       if (reminders != null) {
