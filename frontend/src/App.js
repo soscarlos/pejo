@@ -26,7 +26,7 @@ const App = () => {
           <Route element={<RequireAuthorization />}>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="todos" element={<ToDos />} />
+              <Route path="to-dos" element={<ToDos />} />
               <Route path="locations" element={<Locations />} />
               <Route path="documents" element={<Documents />} />
               <Route path="tips" element={<Tips />} />
