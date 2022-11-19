@@ -35,9 +35,6 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const redirect = () => {
-    console.log(authorization);
-    console.log(storedToken);
-    console.log(isLoggedIn);
     pets ? navigate("/") : navigate("/login")
   }
 

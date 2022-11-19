@@ -1,5 +1,4 @@
 const usePost = async(data, endpoint, token) => {
-    console.log("hello")
     const res = await fetch(endpoint, {
         method: 'POST',
         headers: {

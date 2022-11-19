@@ -14,7 +14,6 @@ const PetReminder = ({petReminder, onDelete}) => {
     const petReminders = useContext(UseFetchPetRemindersContext).petReminders;
     const setPetReminders = useContext(UseFetchPetRemindersContext).setPetReminders;
     const fetchUrl = useContext(FetchUrlContext) + '/' + petReminder.id;
-    console.log(petReminder.id)
 
 
     return (
