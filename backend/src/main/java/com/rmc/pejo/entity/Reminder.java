@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class Reminder {
     private String description;
     @NonNull
     private boolean active;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reminderDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime reminderTime;
     @JsonIgnore
     @ManyToMany(mappedBy = "petReminders")
     private List<Pet> reminderPets;
