@@ -1,5 +1,6 @@
 package com.rmc.pejo.endpoints;
 
+import com.rmc.pejo.endpoints.request.ReminderTimeRequest;
 import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.exceptions.ResourceNotFoundException;
 import com.rmc.pejo.service.PetService;
@@ -43,6 +44,11 @@ public class ReminderEndPoint {
     @PutMapping
     public Reminder update(@Valid @RequestBody Reminder reminder) {
         return service.update(reminder);
+    }
+
+    @PatchMapping("{id}")
+    public Reminder setReminderTime(@PathVariable long id, @RequestBody ReminderTimeRequest reminderTimeRequest){
+        return service.setReminderTime(id, reminderTimeRequest).orElseThrow(ResourceNotFoundException::new);
     }
 
     @DeleteMapping("{id}")

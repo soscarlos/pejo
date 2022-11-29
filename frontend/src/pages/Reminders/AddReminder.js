@@ -100,9 +100,9 @@ const AddReminder = ({ onAdd }) => {
         </Button>
       </Form>
       {!isPet && pets != null ? pets.map(pet =>
-        <div>
+        <div className='add-to-pet' >
         <input type="checkbox" id={pet.id} name={"addPet"+pet.id} value={pet.id}></input>
-        <label for={"addPet"+pet.id} >add to {pet.name}</label>
+        <label className='add-to-pet-label' for={"addPet"+pet.id} > Add to {pet.name}</label>
         </div>
         ) : ""}
       </container>  

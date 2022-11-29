@@ -43,3 +43,11 @@
   background-color: #2596be !important;
   border: none !important;
 }
+
+.add-to-pet {
+  padding-top: 3%;
+}
+
+.add-to-pet-label {
+  margin-left: 3%;
+}

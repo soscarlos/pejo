@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import dashboard_logo from '../../img/dashboard_logo.png';
 import add_pet from '../../img/add_pet_button.png';
-import profile from '../../img/profile.png';
+import exit from '../../img/log-out.png';
 import dog from '../../img/dog.jpg'
 import cat from '../../img/cat.jpg'
 import { Outlet, useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ const Layout = () => {
            alt={"pet" + pet.id} onClick={() => navigate(`/pets/${pet.id}`)}/>)
            : ""}
            <img src={add_pet} onClick={addPet} />
-          {pets && <img src={profile} onClick={logOut} alt="User"/>}
+          {pets && <img src={exit}  onClick={logOut} alt="User"/>}
         </Navbar.Collapse>
         </Container>
       </Navbar>
