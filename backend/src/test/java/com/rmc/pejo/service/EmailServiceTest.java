@@ -23,6 +23,9 @@ class EmailServiceTest {
     EmailService service;
     MimeMessage testMessage;
 
+    String email = "email";
+    String subject = "Confirm your email";
+
     @BeforeEach
     void initialize() {
         testMessage = new MimeMessage((Session) null);
@@ -32,9 +35,8 @@ class EmailServiceTest {
     @Test
     void sendSuccesfullAttempt() {
         String to = "test@mail.com";
-        String email = "email";
 
-        service.send(to, email);
+        service.send(to, email, subject);
 
         verify(mailSender).createMimeMessage();
         verify(mailSender).send(testMessage);
@@ -43,8 +45,7 @@ class EmailServiceTest {
     @Test
     void sendThrowsIllegalStateExceptionWhenMailMalformed() {
         String to = "@mail.com";
-        String email = "email";
 
-        assertThrows(IllegalStateException.class, () -> service.send(to, email));
+        assertThrows(IllegalStateException.class, () -> service.send(to, email, subject));
     }
 }
