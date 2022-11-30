@@ -58,8 +58,6 @@ public class ReminderEndPoint {
 
     @GetMapping("pet/{petId}")
     public Set<Reminder> getRemindersByPetId(@PathVariable("petId") long petId) {
-//        TODO: Reminder delegate validation logic to a validation layer
-        if (petService.get(petId).isEmpty()) throw new ResourceNotFoundException();
         return service.getRemindersByPetId(petId);
     }
 }
