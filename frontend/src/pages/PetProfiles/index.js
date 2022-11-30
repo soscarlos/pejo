@@ -4,7 +4,7 @@ import ShowPetProfile from './ShowPetProfile';
 import useFetchToken from '../../hooks/useFetchToken';
 import { useContext, useState } from "react";
 import useAuthorization from '../../hooks/useAuthorization';
-import { IsPetContext } from '../Reminders/reminderContext';
+import { IsPetContext, ReminderNotificationModalContext } from '../Reminders/reminderContext';
 import './style.css';
 
 
@@ -15,6 +15,7 @@ const PetProfile = ({ petId }) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [reminderNotificationModalOpen, setReminderNotificationModalOpen] = useState(false);
   const [petReminder, setPetReminder] = useState(null);
 
   const fetchPetUrl = useContext(FetchPetUrlContext);
@@ -28,6 +29,8 @@ const PetProfile = ({ petId }) => {
       <PetModalContext.Provider value={{modalOpen: modalOpen, toggleModalOpen: setModalOpen}}>
       <PetUpdateModalContext.Provider value={{updateModalOpen: updateModalOpen,
        toggleUpdateModalOpen: setUpdateModalOpen}}>
+         <ReminderNotificationModalContext.Provider value={{reminderNotificationModalOpen: reminderNotificationModalOpen,
+          toggleReminderNotificationModalOpen: setReminderNotificationModalOpen}}> 
          <PetReminderContext.Provider value={{showReminder: petReminder,
            setShowReminder: setPetReminder}}> 
            <UseFetchPetRemindersContext.Provider value={{ petReminders: 
@@ -38,6 +41,7 @@ const PetProfile = ({ petId }) => {
     </div>
     </UseFetchPetRemindersContext.Provider>  
     </PetReminderContext.Provider>
+    </ReminderNotificationModalContext.Provider>
     </PetUpdateModalContext.Provider>
     </PetModalContext.Provider>
     </UseFetchPetsContext.Provider>
