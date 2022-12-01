@@ -1,5 +1,5 @@
 const usePatch = async(data, endpoint, token) => {
-    const res = await fetch(endpoint, {
+    const response = await fetch(endpoint, {
         method: 'PATCH',
         headers: {
           'Content-type': 'application/json',
@@ -7,7 +7,7 @@ const usePatch = async(data, endpoint, token) => {
         },
         body: JSON.stringify(data),
       })
-      return await res.json();
+      return await response.json();
 }
 
 export default usePatch;
