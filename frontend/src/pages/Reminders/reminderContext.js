@@ -12,6 +12,11 @@ export const UpdateModalContext = React.createContext({
     toggleUpdateModalOpen: () => {},
 });
 
+export const ReminderNotificationModalContext = React.createContext({
+    reminderNotificationModalOpen: false,
+    toggleReminderNotificationModalOpen: () => {},
+});
+
 export const ShowReminderContext = React.createContext({
     showReminder: null,
     setShowReminder: () => {},

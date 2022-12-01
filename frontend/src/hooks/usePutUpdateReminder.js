@@ -12,7 +12,6 @@ const usePutUpdateReminder = async (reminder, reminders, setReminders, url, isPe
        currentReminder.description = newData.description;      
        setReminders([...reminders]);
        }
-
     } else {
       let currentReminder = {
         title: reminder.title,
@@ -22,7 +21,6 @@ const usePutUpdateReminder = async (reminder, reminders, setReminders, url, isPe
       }
       reminders.push(currentReminder);
       setReminders([...reminders]);
-
     }
   }
 

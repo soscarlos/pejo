@@ -9,13 +9,17 @@ import ShowReminder from "./ShowReminder";
 import useDeleteReminder from "../../hooks/useDeleteReminder";
 import usePostAddReminder from "../../hooks/usePostAddReminder";
 import usePutUpdateReminder from "../../hooks/usePutUpdateReminder";
-import { ModalContext, UseFetchRemindersContext } from "./reminderContext";
+import usePatchAddNotificationToReminder from "../../hooks/usePatchAddNotificationToReminder";
+import { ModalContext, ReminderNotificationModalContext, UseFetchRemindersContext } from "./reminderContext";
 import { UpdateModalContext } from "./reminderContext";
 import "./style.css";
+import ReminderNotificationModal from "./ReminderNotificationModal";
 
 const ShowReminders = () => {
   const modal = useContext(ModalContext);
   const updateModal = useContext(UpdateModalContext);
+  const reminderNotificationModal = useContext(ReminderNotificationModalContext);
+  
   let reminders = useContext(UseFetchRemindersContext).reminders;
 
   return (
@@ -26,6 +30,7 @@ const ShowReminders = () => {
             <Card.Body>
               {modal.modalOpen && <AddReminderModal onAdd={{first: usePostAddReminder, second: usePutUpdateReminder}} />}
               {updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}
+              {reminderNotificationModal.reminderNotificationModalOpen && <ReminderNotificationModal onAdd={usePatchAddNotificationToReminder} />}
               <Card.Title id='remindersTitle'>Reminders
                 <Button id='addReminderButton' className="float-end" onClick={() => {
                   modal.toggleModalOpen(true);
