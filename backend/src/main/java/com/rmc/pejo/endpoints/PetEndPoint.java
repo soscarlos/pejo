@@ -50,7 +50,6 @@ public class PetEndPoint {
 
     @GetMapping("reminder/{reminderId}")
     public Set<Pet> getPetsByReminderId(@PathVariable long reminderId) {
-        if (reminderService.get(reminderId).isEmpty()) throw new ResourceNotFoundException();
         return service.getPetsByReminderId(reminderId);
     }
 }

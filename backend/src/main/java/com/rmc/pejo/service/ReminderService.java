@@ -68,6 +68,7 @@ public class ReminderService implements ReminderServiceInterface {
         Reminder foundReminder = optionalReminder.get();
         LocalDate date = reminderTimeRequest.date();
         LocalTime time = reminderTimeRequest.time();
+        foundReminder.setActive(true);
         foundReminder.setReminderTime(time);
         foundReminder.setReminderDate(date);
         Reminder savedReminder = reminderRepository.save(foundReminder);
