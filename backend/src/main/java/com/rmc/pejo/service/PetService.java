@@ -7,6 +7,7 @@ import com.rmc.pejo.repository.ReminderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -65,7 +66,6 @@ public class PetService implements PetServiceInterface {
     public Set<Pet> getPetsByReminderId(long reminderId) {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
-
     public Optional<Pet> addReminder(long id, Reminder reminder) {
         System.out.println(reminder.getId());
         Optional<Pet> petOptional = petRepository.findById(id);

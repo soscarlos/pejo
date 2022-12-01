@@ -9,6 +9,9 @@ import PetReminder from './PetReminder'
 import useDeleteReminder from '../../hooks/useDeleteReminder';
 import usePutUpdateReminder from '../../hooks/usePutUpdateReminder';
 import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetUpdateModalContext } from './petContext';
+import { ReminderNotificationModalContext } from '../Reminders/reminderContext';
+import ReminderNotificationModal from '../Reminders/ReminderNotificationModal';
+import usePatchAddNotificationToReminder from '../../hooks/usePatchAddNotificationToReminder';
 
  const ShowPetProfile = () => {
 
@@ -16,6 +19,10 @@ import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetU
     const modal = useContext(PetModalContext);
 
     const updateModal = useContext(PetUpdateModalContext);
+
+    const reminderNotificationModal = useContext(ReminderNotificationModalContext);
+    
+
     const petReminders = useContext(UseFetchPetRemindersContext).petReminders;
    
 
@@ -40,7 +47,9 @@ import { UseFetchPetRemindersContext, UseFetchPetsContext, PetModalContext, PetU
          <Card id='shownPetReminders'>         
             <Card.Body>
                {modal.modalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}
-               {updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />}    
+               {updateModal.updateModalOpen && <AddReminderModal onAdd={usePutUpdateReminder} />} 
+               {reminderNotificationModal.reminderNotificationModalOpen && <ReminderNotificationModal 
+               onAdd={usePatchAddNotificationToReminder} />}   
                 <Card.Title id="petProfileRemindersTitle">Reminders</Card.Title>
                 <Button id='addPetReminderButton' className="float-end" onClick={() => {
                  modal.toggleModalOpen(true);

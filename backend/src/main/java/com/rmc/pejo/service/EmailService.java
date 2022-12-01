@@ -1,6 +1,7 @@
 package com.rmc.pejo.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,22 +14,23 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmailService implements EmailSender {
-    private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    private final static String ENCODING = "utf-8";
     private final JavaMailSender mailSender;
     @Override
     @Async
-    public void send(String to, String email) {
+    public void send(String to, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, ENCODING);
             helper.setText(email, true);
             helper.setTo(to);
             helper.setFrom("soscarlos@pejo.com");
-            helper.setSubject("Confirm your email");
+            helper.setSubject(subject);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            LOGGER.error("Failed to send email", e);
+            log.error("Failed to send email", e);
             throw new IllegalStateException("failed to send email");
         }
     }
