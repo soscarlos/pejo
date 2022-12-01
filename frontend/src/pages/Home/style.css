@@ -5,3 +5,8 @@
 #firstRow, #secondRow {
     padding-bottom: 1%;
 }
+
+#reminderCloseButton {
+    background-color: #0292ce !important;
+    border: none;
+}
