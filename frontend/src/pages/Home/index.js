@@ -17,13 +17,19 @@ const Home = () => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const token = localStorage.getItem('token');
     const reminders = useFetchToken('http://localhost:8080/reminders', token).data;
+    const today = new Date();
+    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
     useEffect(() => {
-        console.log(reminders)
+        setTimeout(() => {
+            reminders.map(reminder => {
+                reminder.active ? setShow(true) : setShow(false);
+            })
+        }, 1000)
     })
+
 
     return (
         <>
@@ -49,10 +55,6 @@ const Home = () => {
             </Row>
         </Container>
 
-        <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-        </Button>
-
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Notifications</Modal.Title>
@@ -60,8 +62,8 @@ const Home = () => {
             <Modal.Body>
                 {reminders != null ? reminders.map(reminder =>
                 <div key={reminder.id}>
-                <h5>{reminder.title}</h5>
-                {reminder.reminderDate} {reminder.reminderTime}
+                <h5>{reminder.active ? reminder.title : ""}</h5>
+                {reminder.active ? reminder.reminderDate + " " + reminder.reminderTime : ""}
                 </div>) : ""}
             </Modal.Body>
             <Modal.Footer>
@@ -69,8 +71,6 @@ const Home = () => {
             </Modal.Footer>
         </Modal>
         </>
-
-        // setTimeOut > date - current date
     )
   };
   
