@@ -67,13 +67,11 @@ public class PetService implements PetServiceInterface {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
     public Optional<Pet> addReminder(long id, Reminder reminder) {
-        System.out.println(reminder.getId());
         Optional<Pet> petOptional = petRepository.findById(id);
         if (petOptional.isPresent()) {
             Pet presentPet = petOptional.get();
             List<Reminder> petReminders = presentPet.getPetReminders();
             Reminder savedReminder = getReminder(reminder);
-            System.out.println(savedReminder.getId());
             petReminders.add(savedReminder);
             Pet savedPet = petRepository.save(presentPet);
             return Optional.of(savedPet);
@@ -85,6 +83,6 @@ public class PetService implements PetServiceInterface {
     private Reminder getReminder(Reminder reminder) {
         long reminderId = reminder.getId();
         Optional<Reminder> optionalReminder = reminderRepository.findById(reminderId);
-        return optionalReminder.isEmpty() ? reminderRepository.save(reminder) : optionalReminder.get();
+        return optionalReminder.orElseGet(() -> reminderRepository.save(reminder));
     }
 }
