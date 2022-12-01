@@ -8,14 +8,22 @@ import TipsCard from '../../components/dashboard/TipsCard';
 import ReminderCard from '../../components/dashboard/ReminderCard';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import useFetchToken from '../../hooks/useFetchToken';
 import './style.css';
+
 
 const Home = () => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const token = localStorage.getItem('token');
+    const reminders = useFetchToken('http://localhost:8080/reminders', token).data;
+
+    useEffect(() => {
+        console.log(reminders)
+    })
 
     return (
         <>
@@ -49,7 +57,13 @@ const Home = () => {
             <Modal.Header closeButton>
                 <Modal.Title>Notifications</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Notification</Modal.Body>
+            <Modal.Body>
+                {reminders != null ? reminders.map(reminder =>
+                <div key={reminder.id}>
+                <h5>{reminder.title}</h5>
+                {reminder.reminderDate} {reminder.reminderTime}
+                </div>) : ""}
+            </Modal.Body>
             <Modal.Footer>
                 <Button id='reminderCloseButton' onClick={handleClose}>Close</Button>
             </Modal.Footer>
