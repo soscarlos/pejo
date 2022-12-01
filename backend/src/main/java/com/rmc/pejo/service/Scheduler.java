@@ -36,9 +36,9 @@ public class Scheduler {
                 .findAllByActiveAndReminderDateAndReminderTimeBefore(true, today, now);
 
         activeReminders.forEach(reminder -> {
+            emailSender.send(owner, buildEmail(name, reminder), buildSubject(reminder));
             reminder.setActive(false);
             reminderRepository.save(reminder);
-            emailSender.send(owner, buildEmail(name, reminder), buildSubject(reminder));
         });
     }
 
