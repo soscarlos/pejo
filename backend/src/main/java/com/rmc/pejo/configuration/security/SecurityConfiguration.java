@@ -1,4 +1,4 @@
-package com.rmc.pejo.security.configuration;
+package com.rmc.pejo.configuration.security;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -6,7 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.rmc.pejo.security.RsaKeyProperties;
+import com.rmc.pejo.configuration.RsaKeyProperties;
 import com.rmc.pejo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ConfirmationTokenService tokenService;
+    private final Clock clock;
     private final String notFoundMessage = "User with email %s not found";
 
     @Override
@@ -42,8 +44,8 @@ public class UserService implements UserDetailsService {
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(EXPIRATION_TIME),
+                LocalDateTime.now(clock),
+                LocalDateTime.now(clock).plusMinutes(EXPIRATION_TIME),
                 user);
         tokenService.saveConfirmationToken(confirmationToken);
 

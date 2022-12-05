@@ -4,14 +4,17 @@ import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.repository.PetRepository;
 import com.rmc.pejo.repository.ReminderRepository;
+import com.rmc.pejo.service.clock.DateTimeProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -24,17 +27,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ReminderServiceTest {
     long testId1 = 1;
-    long testId2 = 2;
-    LocalDate testDate = LocalDate.now().plusDays(1);
-    LocalTime testTime = LocalTime.now();
-    Reminder testReminder1 = Reminder.builder()
-            .id(testId1)
-            .title("reminder 1")
-            .description("description 1")
-            .date(testDate)
-            .time(testTime)
-            .active(true)
-            .build();
+    DateTimeProvider provider = new DateTimeProvider();
+    LocalDate testDate = provider.getLocalDate();
     Pet testPet1 = Pet.builder()
             .id(testId1)
             .name("Testy")
@@ -43,11 +37,14 @@ class ReminderServiceTest {
             .sexType(FEMALE)
             .petReminders(new ArrayList<>())
             .build();
-    Reminder testReminder2 = Reminder.builder()
-            .id(testId2)
-            .title("reminder 2")
-            .description("description 2")
-            .date(testDate.plusWeeks(1))
+    LocalTime testTime = provider.getLocalTime();
+
+    ZonedDateTime NOW_FIXED = provider.getZonedDateTime();
+    Reminder testReminder1 = Reminder.builder()
+            .id(testId1)
+            .title("reminder 1")
+            .description("description 1")
+            .date(testDate)
             .time(testTime)
             .active(true)
             .build();
@@ -55,6 +52,8 @@ class ReminderServiceTest {
     ReminderRepository reminderRepository;
     @Mock
     PetRepository petRepository;
+    @Mock
+    Clock clock;
     @InjectMocks
     ReminderService service;
 
@@ -81,10 +80,12 @@ class ReminderServiceTest {
 
     @Test
     void testGetFirst3AfterDateCallRepositoryMethod() {
-        service.getFirst3AfterDate();
-        LocalDate today = LocalDate.now();
+        when(clock.getZone()).thenReturn(NOW_FIXED.getZone());
+        when(clock.instant()).thenReturn(NOW_FIXED.toInstant());
 
-        verify(reminderRepository).findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
+        service.getFirst3AfterDate();
+
+        verify(reminderRepository).findFirst3ByDateAfterOrderByDateAscTimeAsc(testDate);
     }
 
     @Test

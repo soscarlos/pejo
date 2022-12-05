@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -24,13 +25,14 @@ public class Scheduler {
     private final ReminderRepository reminderRepository;
     private final PetRepository petRepository;
     private final EmailSender emailSender;
+    private final Clock clock;
     private String owner = "sosa@mail.com";
     private String name = "Carlos";
 
     @Scheduled(fixedRateString = EVERY_30_SECONDS)
     public void checkDateTimeReminders() {
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
+        LocalDate today = LocalDate.now(clock);
+        LocalTime now = LocalTime.now(clock);
 
         List<Reminder> activeReminders = reminderRepository
                 .findAllByActiveAndReminderDateAndReminderTimeBefore(true, today, now);

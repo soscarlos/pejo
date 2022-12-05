@@ -8,6 +8,7 @@ import com.rmc.pejo.repository.ReminderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class ReminderService implements ReminderServiceInterface {
     private final ReminderRepository reminderRepository;
     private final PetRepository petRepository;
+    private final Clock clock;
 
     public Reminder save(Reminder reminder) {
         return reminderRepository.save(reminder);
@@ -33,7 +35,7 @@ public class ReminderService implements ReminderServiceInterface {
     }
 
     public Set<Reminder> getFirst3AfterDate() {
-        LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now(clock);
         return reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(now);
     }
 

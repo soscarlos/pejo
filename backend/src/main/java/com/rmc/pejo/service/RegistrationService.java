@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 import static com.rmc.pejo.entity.UserRole.USER;
@@ -21,24 +21,25 @@ public class RegistrationService {
     private final EmailSender emailSender;
     private final String confirmationEndPoint = "http://localhost:8080/registration/confirm?token=";
     private final String SUBJECT = "Confirm your email";
+    private final Clock clock;
 
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = validator.test(request.getEmail());
+        boolean isValidEmail = validator.test(request.email());
         if (!isValidEmail) throw new IllegalStateException("Email not valid");
 
         String token = userService.signUpUser(
                 new User(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword(),
+                        request.firstName(),
+                        request.lastName(),
+                        request.email(),
+                        request.password(),
                         USER
                 ));
 
         String link = confirmationEndPoint + token;
 
-        emailSender.send(request.getEmail(),
-                buildEmail(request.getFirstName(), link), SUBJECT);
+        emailSender.send(request.email(),
+                buildEmail(request.firstName(), link), SUBJECT);
 
         return token;
     }
@@ -53,7 +54,7 @@ public class RegistrationService {
 
         LocalDateTime expiresAt = confirmationToken.getExpiresAt();
 
-        if(expiresAt.isBefore(LocalDateTime.now())) {
+        if (expiresAt.isBefore(LocalDateTime.now(clock))) {
             throw new IllegalStateException("token expired");
         }
         tokenService.setConfirmedAt(token);

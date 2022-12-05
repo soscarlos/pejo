@@ -5,6 +5,7 @@ import com.rmc.pejo.repository.ConfirmationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository repository;
-
+    private final Clock clock;
     public void saveConfirmationToken(ConfirmationToken token) {
         repository.save(token);
     }
@@ -25,7 +26,7 @@ public class ConfirmationTokenService {
         Optional<ConfirmationToken> optionalConfirmationToken = repository.findByToken(token);
         if (optionalConfirmationToken.isPresent()) {
             ConfirmationToken confirmationToken = optionalConfirmationToken.get();
-            confirmationToken.setConfirmedAt(LocalDateTime.now());
+            confirmationToken.setConfirmedAt(LocalDateTime.now(clock));
             repository.save(confirmationToken);
         }
     }

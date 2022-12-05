@@ -1,4 +1,4 @@
-package com.rmc.pejo.security;
+package com.rmc.pejo.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -20,14 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReminderRepositoryTest {
 
-    LocalDate today = LocalDate.now();
+    LocalDate testDate = LocalDate.of(2022, 10, 10);
     LocalTime testTime = LocalTime.of(9, 30, 0);
-
     @Autowired
     ReminderRepository reminderRepository;
     @Autowired
     PetRepository petRepository;
-
 
     @BeforeAll
     void addAllData() {
@@ -82,11 +80,11 @@ class ReminderRepositoryTest {
         List<Reminder> reducedList = reminders
                 .stream()
                 .sorted(Comparator.comparing(Reminder::getDate))
-                .filter(reminder -> reminder.getDate().isBefore(today.plusMonths(2)))
+                .filter(reminder -> reminder.getDate().isBefore(testDate.plusMonths(2)))
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(reducedList);
 
-        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(testDate);
 
         assertIterableEquals(expected, result);
     }
@@ -102,7 +100,7 @@ class ReminderRepositoryTest {
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(orderedList);
 
-        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(testDate);
 
         assertIterableEquals(expected, result);
     }
@@ -120,7 +118,7 @@ class ReminderRepositoryTest {
                 .toList();
         Set<Reminder> expected = new LinkedHashSet<>(orderedList);
 
-        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(today);
+        Set<Reminder> result = reminderRepository.findFirst3ByDateAfterOrderByDateAscTimeAsc(testDate);
 
         assertIterableEquals(expected, result);
     }
@@ -128,7 +126,7 @@ class ReminderRepositoryTest {
     private void setNewDates() {
         List<Reminder> reminders = reminderRepository.findAll();
         reminders.forEach(reminder -> {
-            reminder.setDate(today.plusDays(1));
+            reminder.setDate(testDate.plusDays(1));
             reminderRepository.save(reminder);
         });
     }
@@ -147,14 +145,14 @@ class ReminderRepositoryTest {
         Pet testPet1 = Pet.builder()
                 .id(1L)
                 .name("Testy 1")
-                .birthDate(today.minusYears(2))
+                .birthDate(testDate.minusYears(2))
                 .petType(CAT)
                 .sexType(FEMALE)
                 .build();
         Pet testPet2 = Pet.builder()
                 .id(2L)
                 .name("Testy 2")
-                .birthDate(today.minusYears(1))
+                .birthDate(testDate.minusYears(1))
                 .petType(DOG)
                 .sexType(MALE)
                 .build();
@@ -166,7 +164,7 @@ class ReminderRepositoryTest {
                 .id(1L)
                 .title("reminder 1")
                 .description("description 1")
-                .date(today.plusMonths(1))
+                .date(testDate.plusMonths(1))
                 .time(testTime.plusHours(3))
                 .active(true)
                 .build();
@@ -174,7 +172,7 @@ class ReminderRepositoryTest {
                 .id(2L)
                 .title("reminder 2")
                 .description("description 2")
-                .date(today.plusWeeks(1))
+                .date(testDate.plusWeeks(1))
                 .time(testTime.plusHours(1))
                 .active(true)
                 .build();
@@ -182,7 +180,7 @@ class ReminderRepositoryTest {
                 .id(3L)
                 .title("reminder 3")
                 .description("description 3")
-                .date(today.plusDays(2))
+                .date(testDate.plusDays(2))
                 .time(testTime.plusHours(4))
                 .active(true)
                 .build();
@@ -190,7 +188,7 @@ class ReminderRepositoryTest {
                 .id(4L)
                 .title("reminder 4")
                 .description("description 4")
-                .date(today.plusMonths(2))
+                .date(testDate.plusMonths(2))
                 .time(testTime.plusHours(5))
                 .active(true)
                 .build();
