@@ -5,11 +5,14 @@ import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.exceptions.ResourceNotFoundException;
 import com.rmc.pejo.service.PetService;
 import com.rmc.pejo.service.ReminderService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,6 +22,7 @@ import static com.rmc.pejo.entity.PetType.CAT;
 import static com.rmc.pejo.entity.SexType.FEMALE;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class PetEndPointTest {
@@ -52,15 +56,26 @@ class PetEndPointTest {
             .time(LocalTime.now())
             .active(true)
             .build();
-    @Autowired
-    WebTestClient webTestClient;
     @MockBean
     PetService petService;
     @MockBean
     ReminderService reminderService;
+    @Autowired
+    private WebApplicationContext context;
+    private WebTestClient webTestClient;
+
+    @BeforeEach
+    void setUp() {
+        webTestClient = MockMvcWebTestClient.bindToApplicationContext(this.context).build();
+//        TODO: More specific implementation. check again configuration class for test in stackoverflow
+    }
+
     @Test
     void save() {
-        webTestClient.post()
+
+        webTestClient
+                .mutateWith(mockJwt())
+                .post()
                 .uri(uri)
                 .bodyValue(testPet)
                 .exchange()

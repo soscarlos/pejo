@@ -1,0 +1,23 @@
+// pipeline {
+//
+//     agent any
+//     stages {
+//         stage('Checkout Codebase') {
+//                steps {
+//                     cleanWs()
+//                     checkout scm: [$class: 'GitSCM', branches: [[name: '*/development']],
+//                     userRemoteConfigs: [[credentialsId: 'c559a843-28af-4595-991d-f0c1c595000d', url: 'git@github.com:soscarlos/pejo.git']]
+//                }
+//         }
+//
+//         stage('Build') {
+//             steps {
+//             }
+//         }
+//         stage('Test') {
+//             steps {
+//
+//             }
+//         }
+//     }
+// }

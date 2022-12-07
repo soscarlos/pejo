@@ -30,8 +30,6 @@ spring:
           timeout: 3000
           writetimeout: 5000
 
-
-
 # Certifications
 rsa:
   private-key: classpath:certifications/private.pem

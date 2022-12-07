@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ReminderRepositoryTest {
 
     LocalDate testDate = LocalDate.of(2022, 10, 10);

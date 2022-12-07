@@ -67,13 +67,11 @@ public class PetService implements PetServiceInterface {
         return petRepository.findPetsByPetRemindersId(reminderId);
     }
     public Optional<Pet> addReminder(long id, Reminder reminder) {
-        System.out.println(reminder.getId());
         Optional<Pet> petOptional = petRepository.findById(id);
         if (petOptional.isPresent()) {
             Pet presentPet = petOptional.get();
             List<Reminder> petReminders = presentPet.getPetReminders();
             Reminder savedReminder = getReminder(reminder);
-            System.out.println(savedReminder.getId());
             petReminders.add(savedReminder);
             Pet savedPet = petRepository.save(presentPet);
             return Optional.of(savedPet);
