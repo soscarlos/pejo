@@ -3,16 +3,18 @@
 <img src="frontend/src/img/logo.png" alt="PeJo logo" height="100">
 
 ### A web application that helps you keep your pet healthy and happy!
+(In Development)
 
 This is a web application thought for users that have pets and need an intelligent software solution
 to manage the different responsibilities related to having a pet.
 
-The main components of the application are:
+Main components of the application are:
 
-- Reminder: 
+- Reminder (MVP): 
   - It contains a calendar type of functionality in which the owner can enter different appointments and
     reminders regarding the pet (vaccination schedules, deworming, health checks and so on).
 
+(Nice to have additional functionalities)
 - Tips:
   - Contains some recommendations regarding:
     - Pet care 
