@@ -3,12 +3,18 @@ package com.rmc.pejo.endpoints;
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
 import com.rmc.pejo.exceptions.ResourceNotFoundException;
+import com.rmc.pejo.service.JwtTokenService;
 import com.rmc.pejo.service.PetService;
 import com.rmc.pejo.service.ReminderService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
@@ -17,11 +23,13 @@ import java.util.Optional;
 
 import static com.rmc.pejo.entity.PetType.DOG;
 import static com.rmc.pejo.entity.SexType.FEMALE;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureWebTestClient
+@WithMockUser
 class ReminderEndPointTest {
     String uri = "/reminders";
     long testId1 = 1;
@@ -38,15 +46,23 @@ class ReminderEndPointTest {
             .build();
     @Autowired
     WebTestClient webTestClient;
+    @Autowired
+    JwtTokenService tokenService;
     @MockBean
     ReminderService reminderService;
     @MockBean
     PetService petService;
+    String token;
 
+    @BeforeAll
+    void setUp(){
+        token = tokenService.generateToken(new UsernamePasswordAuthenticationToken("user", "password"));
+    }
     @Test
     void saveSuccesfull() {
         webTestClient.post()
                 .uri(uri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .bodyValue(testReminder)
                 .exchange()
                 .expectStatus()
@@ -59,11 +75,23 @@ class ReminderEndPointTest {
     void getAllSuccesfull() {
         webTestClient.get()
                 .uri(uri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
 
         verify(reminderService).getAll();
+    }
+
+    @Test
+    void getAllWithoutTokenReturnsStatusUnauthorized() {
+        webTestClient.get()
+                .uri(uri)
+                .exchange()
+                .expectStatus()
+                .isUnauthorized();
+
+        verify(reminderService, never()).getAll();
     }
 
     @Test
@@ -79,6 +107,7 @@ class ReminderEndPointTest {
 
         webTestClient.put()
                 .uri(uri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .bodyValue(updatedReminder)
                 .exchange()
                 .expectStatus()
@@ -94,6 +123,7 @@ class ReminderEndPointTest {
 
         webTestClient.delete()
                 .uri(deleteUri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -116,24 +146,12 @@ class ReminderEndPointTest {
 
         webTestClient.get()
                 .uri(filterUri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
 
         verify(reminderService).getRemindersByPetId(testId1);
-    }
-
-    @Test
-    void getRemindersByPetIdNotFound() {
-        String filterUri = uri + "/pet/" + testId2;
-
-        when(petService.get(testId2).isEmpty()).thenThrow(ResourceNotFoundException.class);
-
-        webTestClient.get()
-                .uri(filterUri)
-                .exchange()
-                .expectStatus()
-                .isNotFound();
     }
 
     @Test
@@ -143,6 +161,7 @@ class ReminderEndPointTest {
 
         webTestClient.get()
                 .uri(filterUri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -155,6 +174,7 @@ class ReminderEndPointTest {
 
         webTestClient.get()
                 .uri(filterUri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -168,6 +188,7 @@ class ReminderEndPointTest {
 
         webTestClient.get()
                 .uri(filterUri)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
