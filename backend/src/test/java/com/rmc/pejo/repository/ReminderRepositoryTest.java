@@ -18,18 +18,17 @@ class ReminderRepositoryTest {
     @Autowired
     PetRepository petRepository;
     SampleDataProvider dataProvider = new SampleDataProvider();
-
     LocalDate testDate = dataProvider.getTestDate();
 
     @Test
     void findRemindersByPetsIdReturnRemindersSetWithPet() {
         Reminder firstReminder = dataProvider.getRemindersList().get(0);
         Reminder savedReminder = reminderRepository.save(firstReminder);
-        Pet savedPet = dataProvider.getPets().get(0);
-        savedPet.setPetReminders(List.of(savedReminder));
-        Pet savedPet1 = petRepository.save(savedPet);
+        Pet pet = dataProvider.getPets().get(0);
+        pet.setPetReminders(List.of(savedReminder));
+        Pet savedPet = petRepository.save(pet);
 
-        Set<Reminder> result = reminderRepository.findRemindersByReminderPetsId(savedPet1.getId());
+        Set<Reminder> result = reminderRepository.findRemindersByReminderPetsId(savedPet.getId());
 
         Set<Reminder> expected = Set.of(savedReminder);
         assertIterableEquals(expected, result);

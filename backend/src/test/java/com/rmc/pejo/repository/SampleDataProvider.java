@@ -2,6 +2,7 @@ package com.rmc.pejo.repository;
 
 import com.rmc.pejo.entity.Pet;
 import com.rmc.pejo.entity.Reminder;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
